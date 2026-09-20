@@ -1,0 +1,196 @@
+<div>
+  <h2 id="page-heading" data-cy="PickListItemHeading">
+    <span sysTranslate="snpApp.pickListItem.home.title">Pick List Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.pickListItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-pick-list-item"
+        [routerLink]="['/pick-list-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.pickListItem.home.createLabel">Create a new Pick List Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (pickListItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.pickListItem.home.notFound">No Pick List Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="pickList.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.pickList">Pick List</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.inventoryItem">Inventory Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityLocation.locationSeqId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.facilityLocation">Facility Location</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.pickListItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (pickListItem of pickListItems(); track trackId(pickListItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/pick-list-item', pickListItem.id, 'view']">{{ pickListItem.id }}</a>
+              </td>
+              <td>{{ pickListItem.quantity }}</td>
+              <td>
+                @if (pickListItem.pickList) {
+                  <div>
+                    <a [routerLink]="['/pick-list', pickListItem.pickList.id, 'view']">{{ pickListItem.pickList.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.order) {
+                  <div>
+                    <a [routerLink]="['/order', pickListItem.order.id, 'view']">{{ pickListItem.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', pickListItem.orderItem.id, 'view']">{{ pickListItem.orderItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.inventoryItem) {
+                  <div>
+                    <a [routerLink]="['/inventory-item', pickListItem.inventoryItem.id, 'view']">{{ pickListItem.inventoryItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', pickListItem.product.id, 'view']">{{ pickListItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.facilityLocation) {
+                  <div>
+                    <a [routerLink]="['/facility-location', pickListItem.facilityLocation.id, 'view']">{{
+                      pickListItem.facilityLocation.locationSeqId
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (pickListItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', pickListItem.status.id, 'view']">{{ pickListItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/pick-list-item', pickListItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/pick-list-item', pickListItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(pickListItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (pickListItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

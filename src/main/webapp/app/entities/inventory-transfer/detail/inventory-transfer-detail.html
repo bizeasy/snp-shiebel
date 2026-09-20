@@ -1,0 +1,106 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inventoryTransfer(); as inventoryTransferRef) {
+      <div>
+        <h2 data-cy="inventoryTransferDetailsHeading">
+          <span sysTranslate="snpApp.inventoryTransfer.detail.title">Inventory Transfer</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inventoryTransferRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.sentDate">Sent Date</span></dt>
+          <dd>
+            <span>{{ inventoryTransferRef.sentDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.receivedDate">Received Date</span></dt>
+          <dd>
+            <span>{{ inventoryTransferRef.receivedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.comments">Comments</span></dt>
+          <dd>
+            <span>{{ inventoryTransferRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', inventoryTransfer()!.inventoryItem?.id, 'view']">{{
+                  inventoryTransferRef.inventoryItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.status">Status</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.status) {
+              <div>
+                <a [routerLink]="['/status', inventoryTransfer()!.status?.id, 'view']">{{ inventoryTransferRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.facility">Facility</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', inventoryTransfer()!.facility?.id, 'view']">{{ inventoryTransferRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.facilityLocation">Facility Location</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.facilityLocation) {
+              <div>
+                <a [routerLink]="['/facility-location', inventoryTransfer()!.facilityLocation?.id, 'view']">{{
+                  inventoryTransferRef.facilityLocation?.locationSeqId
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.facilityTo">Facility To</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.facilityTo) {
+              <div>
+                <a [routerLink]="['/facility', inventoryTransfer()!.facilityTo?.id, 'view']">{{ inventoryTransferRef.facilityTo?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.facilityLocationTo">Facility Location To</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.facilityLocationTo) {
+              <div>
+                <a [routerLink]="['/facility-location', inventoryTransfer()!.facilityLocationTo?.id, 'view']">{{
+                  inventoryTransferRef.facilityLocationTo?.locationSeqId
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryTransfer.issuance">Issuance</span></dt>
+          <dd>
+            @if (inventoryTransfer()!.issuance) {
+              <div>
+                <a [routerLink]="['/item-issuance', inventoryTransfer()!.issuance?.id, 'view']">{{ inventoryTransferRef.issuance?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inventory-transfer', inventoryTransferRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

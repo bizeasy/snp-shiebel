@@ -1,0 +1,65 @@
+{
+  "annotations": {
+    "changelogDate": "20231214211605"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "fromDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "thruDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "relationshipName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PartyRelationship",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "party",
+      "relationshipName": "partyFrom",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "party",
+      "relationshipName": "partyTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "roleType",
+      "relationshipName": "roleTypeFrom",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "roleType",
+      "relationshipName": "roleTypeTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "partyRelationshipType",
+      "relationshipName": "relationshipType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

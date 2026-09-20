@@ -1,0 +1,294 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-supplier-product-heading"
+        data-cy="SupplierProductCreateUpdateHeading"
+        sysTranslate="snpApp.supplierProduct.home.createOrEditLabel"
+      >
+        Create or edit a Supplier Product
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let fromDateRef = editForm.get('fromDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fromDate" sysTranslate="snpApp.supplierProduct.fromDate">From Date</label>
+          <div class="d-flex">
+            <input
+              id="field_fromDate"
+              data-cy="fromDate"
+              type="datetime-local"
+              class="form-control"
+              name="fromDate"
+              formControlName="fromDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (fromDateRef.invalid && (fromDateRef.dirty || fromDateRef.touched)) {
+            <div>
+              @if (fromDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!fromDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_thruDate" sysTranslate="snpApp.supplierProduct.thruDate">Thru Date</label>
+          <div class="d-flex">
+            <input
+              id="field_thruDate"
+              data-cy="thruDate"
+              type="datetime-local"
+              class="form-control"
+              name="thruDate"
+              formControlName="thruDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let supplierProductIdRef = editForm.get('supplierProductId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_supplierProductId" sysTranslate="snpApp.supplierProduct.supplierProductId"
+            >Supplier Product Id</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="supplierProductId"
+            id="field_supplierProductId"
+            data-cy="supplierProductId"
+            formControlName="supplierProductId"
+          />
+          @if (supplierProductIdRef.invalid && (supplierProductIdRef.dirty || supplierProductIdRef.touched)) {
+            <div>
+              @if (supplierProductIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_minOrderQty" sysTranslate="snpApp.supplierProduct.minOrderQty">Min Order Qty</label>
+          <input
+            type="number"
+            class="form-control"
+            name="minOrderQty"
+            id="field_minOrderQty"
+            data-cy="minOrderQty"
+            formControlName="minOrderQty"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastPrice" sysTranslate="snpApp.supplierProduct.lastPrice">Last Price</label>
+          <input type="number" class="form-control" name="lastPrice" id="field_lastPrice" data-cy="lastPrice" formControlName="lastPrice" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shippingPrice" sysTranslate="snpApp.supplierProduct.shippingPrice">Shipping Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="shippingPrice"
+            id="field_shippingPrice"
+            data-cy="shippingPrice"
+            formControlName="shippingPrice"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cgst" sysTranslate="snpApp.supplierProduct.cgst">Cgst</label>
+          <input type="number" class="form-control" name="cgst" id="field_cgst" data-cy="cgst" formControlName="cgst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_igst" sysTranslate="snpApp.supplierProduct.igst">Igst</label>
+          <input type="number" class="form-control" name="igst" id="field_igst" data-cy="igst" formControlName="igst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sgst" sysTranslate="snpApp.supplierProduct.sgst">Sgst</label>
+          <input type="number" class="form-control" name="sgst" id="field_sgst" data-cy="sgst" formControlName="sgst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_totalPrice" sysTranslate="snpApp.supplierProduct.totalPrice">Total Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalPrice"
+            id="field_totalPrice"
+            data-cy="totalPrice"
+            formControlName="totalPrice"
+          />
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.supplierProduct.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_leadTimeDays" sysTranslate="snpApp.supplierProduct.leadTimeDays">Lead Time Days</label>
+          <input
+            type="number"
+            class="form-control"
+            name="leadTimeDays"
+            id="field_leadTimeDays"
+            data-cy="leadTimeDays"
+            formControlName="leadTimeDays"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_unitsIncluded" sysTranslate="snpApp.supplierProduct.unitsIncluded">Units Included</label>
+          <input
+            type="number"
+            class="form-control"
+            name="unitsIncluded"
+            id="field_unitsIncluded"
+            data-cy="unitsIncluded"
+            formControlName="unitsIncluded"
+          />
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="canDropShip"
+            id="field_canDropShip"
+            data-cy="canDropShip"
+            formControlName="canDropShip"
+          />
+          <label class="form-check-label" for="field_canDropShip" sysTranslate="snpApp.supplierProduct.canDropShip">Can Drop Ship</label>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.supplierProduct.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.supplierProduct.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            @if (!editForm.get('party')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['party'])!.invalid && (editForm.get(['party'])!.dirty || editForm.get(['party'])!.touched)) {
+          <div>
+            @if (editForm.get(['party'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantityUom" sysTranslate="snpApp.supplierProduct.quantityUom">Quantity Uom</label>
+          <select
+            class="form-select"
+            id="field_quantityUom"
+            data-cy="quantityUom"
+            name="quantityUom"
+            formControlName="quantityUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyUom" sysTranslate="snpApp.supplierProduct.currencyUom">Currency Uom</label>
+          <select
+            class="form-select"
+            id="field_currencyUom"
+            data-cy="currencyUom"
+            name="currencyUom"
+            formControlName="currencyUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

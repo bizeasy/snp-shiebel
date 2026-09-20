@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (party(); as partyRef) {
+      <div>
+        <h2 data-cy="partyDetailsHeading"><span sysTranslate="snpApp.party.detail.title">Party</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.isOrganisation">Is Organisation</span></dt>
+          <dd>
+            <span>{{ partyRef.isOrganisation }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.organisationName">Organisation Name</span></dt>
+          <dd>
+            <span>{{ partyRef.organisationName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.organisationShortName">Organisation Short Name</span></dt>
+          <dd>
+            <span>{{ partyRef.organisationShortName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.salutation">Salutation</span></dt>
+          <dd>
+            <span>{{ partyRef.salutation }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ partyRef.firstName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.middleName">Middle Name</span></dt>
+          <dd>
+            <span>{{ partyRef.middleName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ partyRef.lastName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.gender">Gender</span></dt>
+          <dd>
+            <span [sysTranslate]="'snpApp.Gender.' + (partyRef.gender ?? 'null')">{{
+              { null: '', MALE: 'MALE', FEMALE: 'FEMALE', OTHER: 'OTHER' }[partyRef.gender ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.birthDate">Birth Date</span></dt>
+          <dd>
+            <span>{{ partyRef.birthDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.primaryPhone">Primary Phone</span></dt>
+          <dd>
+            <span>{{ partyRef.primaryPhone }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.primaryEmail">Primary Email</span></dt>
+          <dd>
+            <span>{{ partyRef.primaryEmail }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.isTemporaryPassword">Is Temporary Password</span></dt>
+          <dd>
+            <span>{{ partyRef.isTemporaryPassword }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.logoImageUrl">Logo Image Url</span></dt>
+          <dd>
+            <span>{{ partyRef.logoImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.profileImageUrl">Profile Image Url</span></dt>
+          <dd>
+            <span>{{ partyRef.profileImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.notes">Notes</span></dt>
+          <dd>
+            <span>{{ partyRef.notes }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.postalAddress">Postal Address</span></dt>
+          <dd>
+            <span>{{ partyRef.postalAddress }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.user">User</span></dt>
+          <dd>
+            <span>{{ partyRef.user?.login }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.party.partyType">Party Type</span></dt>
+          <dd>
+            @if (party()!.partyType) {
+              <div>
+                <a [routerLink]="['/party-type', party()!.partyType?.id, 'view']">{{ partyRef.partyType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.party.status">Status</span></dt>
+          <dd>
+            @if (party()!.status) {
+              <div>
+                <a [routerLink]="['/status', party()!.status?.id, 'view']">{{ partyRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.party.address">Address</span></dt>
+          <dd>
+            @if (party()!.address) {
+              <div>
+                <a [routerLink]="['/postal-address', party()!.address?.id, 'view']">{{ partyRef.address?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party', partyRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

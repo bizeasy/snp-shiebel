@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "facilityCarrierShipment": {
+      "home": {
+        "title": "FacilityCarrierShipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Facility Carrier Shipment बनाएँ",
+        "createOrEditLabel": "Facility Carrier Shipment बनाएँ या संपादित करें",
+        "notFound": "No Facility Carrier Shipments found"
+      },
+      "created": "एक नया Facility Carrier Shipment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Facility Carrier Shipment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Facility Carrier Shipment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Facility Carrier Shipment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Facility Carrier Shipment"
+      },
+      "id": "ID",
+      "facility": "Facility",
+      "party": "Party",
+      "roleType": "Role Type",
+      "shipmentMethodType": "Shipment Method Type"
+    }
+  }
+}

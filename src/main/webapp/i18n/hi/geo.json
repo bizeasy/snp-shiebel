@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "geo": {
+      "home": {
+        "title": "Geos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Geo बनाएँ",
+        "createOrEditLabel": "Geo बनाएँ या संपादित करें",
+        "notFound": "No Geos found"
+      },
+      "created": "एक नया Geo [identifier: {{ param }}] तैयार है",
+      "updated": "एक Geo [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Geo [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Geo [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Geo"
+      },
+      "id": "ID",
+      "name": "Name",
+      "code": "Code",
+      "abbreviation": "Abbreviation",
+      "geoType": "Geo Type"
+    }
+  }
+}

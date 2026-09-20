@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20231214215805"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "FacilityGroup",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facilityGroupType",
+      "relationshipName": "facilityGroupType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facilityGroup",
+      "relationshipName": "parentFacilityGroup",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

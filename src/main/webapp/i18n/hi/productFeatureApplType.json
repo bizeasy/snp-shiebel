@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "productFeatureApplType": {
+      "home": {
+        "title": "ProductFeatureApplTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Feature Appl Type बनाएँ",
+        "createOrEditLabel": "Product Feature Appl Type बनाएँ या संपादित करें",
+        "notFound": "No Product Feature Appl Types found"
+      },
+      "created": "एक नया Product Feature Appl Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Feature Appl Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Feature Appl Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Feature Appl Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Feature Appl Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

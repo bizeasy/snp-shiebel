@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "contactMech": {
+      "home": {
+        "title": "ContactMeches",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Contact Mech बनाएँ",
+        "createOrEditLabel": "Contact Mech बनाएँ या संपादित करें",
+        "notFound": "No Contact Meches found"
+      },
+      "created": "एक नया Contact Mech [identifier: {{ param }}] तैयार है",
+      "updated": "एक Contact Mech [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Contact Mech [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Contact Mech [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Contact Mech"
+      },
+      "id": "ID",
+      "infoString": "Info String",
+      "contactMechType": "Contact Mech Type"
+    }
+  }
+}

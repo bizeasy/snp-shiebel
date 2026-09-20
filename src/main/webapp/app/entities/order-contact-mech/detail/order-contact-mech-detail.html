@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderContactMech(); as orderContactMechRef) {
+      <div>
+        <h2 data-cy="orderContactMechDetailsHeading">
+          <span sysTranslate="snpApp.orderContactMech.detail.title">Order Contact Mech</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderContactMechRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderContactMech.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ orderContactMechRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderContactMech.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ orderContactMechRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderContactMech.order">Order</span></dt>
+          <dd>
+            @if (orderContactMech()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderContactMech()!.order?.id, 'view']">{{ orderContactMechRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderContactMech.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (orderContactMech()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', orderContactMech()!.contactMech?.id, 'view']">{{
+                  orderContactMechRef.contactMech?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderContactMech.contactMechPurpose">Contact Mech Purpose</span></dt>
+          <dd>
+            @if (orderContactMech()!.contactMechPurpose) {
+              <div>
+                <a [routerLink]="['/contact-mech-purpose', orderContactMech()!.contactMechPurpose?.id, 'view']">{{
+                  orderContactMechRef.contactMechPurpose?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-contact-mech', orderContactMechRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

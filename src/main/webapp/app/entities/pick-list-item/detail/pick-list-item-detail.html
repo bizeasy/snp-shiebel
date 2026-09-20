@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (pickListItem(); as pickListItemRef) {
+      <div>
+        <h2 data-cy="pickListItemDetailsHeading"><span sysTranslate="snpApp.pickListItem.detail.title">Pick List Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ pickListItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ pickListItemRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.pickList">Pick List</span></dt>
+          <dd>
+            @if (pickListItem()!.pickList) {
+              <div>
+                <a [routerLink]="['/pick-list', pickListItem()!.pickList?.id, 'view']">{{ pickListItemRef.pickList?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.order">Order</span></dt>
+          <dd>
+            @if (pickListItem()!.order) {
+              <div>
+                <a [routerLink]="['/order', pickListItem()!.order?.id, 'view']">{{ pickListItemRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.orderItem">Order Item</span></dt>
+          <dd>
+            @if (pickListItem()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', pickListItem()!.orderItem?.id, 'view']">{{ pickListItemRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (pickListItem()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', pickListItem()!.inventoryItem?.id, 'view']">{{ pickListItemRef.inventoryItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.product">Product</span></dt>
+          <dd>
+            @if (pickListItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', pickListItem()!.product?.id, 'view']">{{ pickListItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.facilityLocation">Facility Location</span></dt>
+          <dd>
+            @if (pickListItem()!.facilityLocation) {
+              <div>
+                <a [routerLink]="['/facility-location', pickListItem()!.facilityLocation?.id, 'view']">{{
+                  pickListItemRef.facilityLocation?.locationSeqId
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickListItem.status">Status</span></dt>
+          <dd>
+            @if (pickListItem()!.status) {
+              <div>
+                <a [routerLink]="['/status', pickListItem()!.status?.id, 'view']">{{ pickListItemRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/pick-list-item', pickListItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

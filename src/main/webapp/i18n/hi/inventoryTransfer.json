@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "inventoryTransfer": {
+      "home": {
+        "title": "InventoryTransfers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Inventory Transfer बनाएँ",
+        "createOrEditLabel": "Inventory Transfer बनाएँ या संपादित करें",
+        "notFound": "No Inventory Transfers found"
+      },
+      "created": "एक नया Inventory Transfer [identifier: {{ param }}] तैयार है",
+      "updated": "एक Inventory Transfer [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Inventory Transfer [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Inventory Transfer [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Inventory Transfer"
+      },
+      "id": "ID",
+      "sentDate": "Sent Date",
+      "receivedDate": "Received Date",
+      "comments": "Comments",
+      "inventoryItem": "Inventory Item",
+      "status": "Status",
+      "facility": "Facility",
+      "facilityLocation": "Facility Location",
+      "facilityTo": "Facility To",
+      "facilityLocationTo": "Facility Location To",
+      "issuance": "Issuance"
+    }
+  }
+}

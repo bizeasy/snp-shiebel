@@ -1,0 +1,269 @@
+<div>
+  <h2 id="page-heading" data-cy="ShipmentHeading">
+    <span sysTranslate="snpApp.shipment.home.title">Shipments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.shipment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-shipment"
+        [routerLink]="['/shipment/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.shipment.home.createLabel">Create a new Shipment</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (shipments().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.shipment.home.notFound">No Shipments found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedShipDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.estimatedShipDate">Estimated Ship Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedReadyDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.estimatedReadyDate">Estimated Ready Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedArrivalDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.estimatedArrivalDate">Estimated Arrival Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedShipCost">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.estimatedShipCost">Estimated Ship Cost</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipmentType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.shipmentType">Shipment Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipmentMethodType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.shipmentMethodType">Shipment Method Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="originFacility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.originFacility">Origin Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="destinationFacility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.destinationFacility">Destination Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.fromParty">From Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="toParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.toParty">To Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="carrierParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.carrierParty">Carrier Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="contactMech.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shipment.contactMech">Contact Mech</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (shipment of shipments(); track trackId(shipment)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/shipment', shipment.id, 'view']">{{ shipment.id }}</a>
+              </td>
+              <td>{{ shipment.estimatedShipDate | formatMediumDatetime }}</td>
+              <td>{{ shipment.estimatedReadyDate | formatMediumDatetime }}</td>
+              <td>{{ shipment.estimatedArrivalDate | formatMediumDatetime }}</td>
+              <td>{{ shipment.estimatedShipCost }}</td>
+              <td>
+                @if (shipment.shipmentType) {
+                  <div>
+                    <a [routerLink]="['/shipment-type', shipment.shipmentType.id, 'view']">{{ shipment.shipmentType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.shipmentMethodType) {
+                  <div>
+                    <a [routerLink]="['/shipment-method-type', shipment.shipmentMethodType.id, 'view']">{{
+                      shipment.shipmentMethodType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.status) {
+                  <div>
+                    <a [routerLink]="['/status', shipment.status.id, 'view']">{{ shipment.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.order) {
+                  <div>
+                    <a [routerLink]="['/order', shipment.order.id, 'view']">{{ shipment.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', shipment.orderItem.id, 'view']">{{ shipment.orderItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.originFacility) {
+                  <div>
+                    <a [routerLink]="['/facility', shipment.originFacility.id, 'view']">{{ shipment.originFacility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.destinationFacility) {
+                  <div>
+                    <a [routerLink]="['/facility', shipment.destinationFacility.id, 'view']">{{ shipment.destinationFacility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.fromParty) {
+                  <div>
+                    <a [routerLink]="['/party', shipment.fromParty.id, 'view']">{{ shipment.fromParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.toParty) {
+                  <div>
+                    <a [routerLink]="['/party', shipment.toParty.id, 'view']">{{ shipment.toParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.carrierParty) {
+                  <div>
+                    <a [routerLink]="['/party', shipment.carrierParty.id, 'view']">{{ shipment.carrierParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shipment.contactMech) {
+                  <div>
+                    <a [routerLink]="['/contact-mech', shipment.contactMech.id, 'view']">{{ shipment.contactMech.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/shipment', shipment.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/shipment', shipment.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(shipment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (shipments().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

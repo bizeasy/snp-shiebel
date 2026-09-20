@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "locationType": {
+      "home": {
+        "title": "LocationTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Location Type बनाएँ",
+        "createOrEditLabel": "Location Type बनाएँ या संपादित करें",
+        "notFound": "No Location Types found"
+      },
+      "created": "एक नया Location Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Location Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Location Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Location Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Location Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "productAttachment": {
+      "home": {
+        "title": "ProductAttachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Attachment बनाएँ",
+        "createOrEditLabel": "Product Attachment बनाएँ या संपादित करें",
+        "notFound": "No Product Attachments found"
+      },
+      "created": "एक नया Product Attachment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Attachment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Attachment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Attachment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "product": "Product",
+      "attachment": "Attachment"
+    }
+  }
+}

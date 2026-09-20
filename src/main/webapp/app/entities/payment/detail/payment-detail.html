@@ -1,0 +1,150 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (payment(); as paymentRef) {
+      <div>
+        <h2 data-cy="paymentDetailsHeading"><span sysTranslate="snpApp.payment.detail.title">Payment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentRefNumber">Payment Ref Number</span></dt>
+          <dd>
+            <span>{{ paymentRef.paymentRefNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.effectiveDate">Effective Date</span></dt>
+          <dd>
+            <span>{{ paymentRef.effectiveDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentDate">Payment Date</span></dt>
+          <dd>
+            <span>{{ paymentRef.paymentDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.amount">Amount</span></dt>
+          <dd>
+            <span>{{ paymentRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.actualAmount">Actual Amount</span></dt>
+          <dd>
+            <span>{{ paymentRef.actualAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentStatus">Payment Status</span></dt>
+          <dd>
+            <span>{{ paymentRef.paymentStatus }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.mihpayId">Mihpay Id</span></dt>
+          <dd>
+            <span>{{ paymentRef.mihpayId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.txnId">Txn Id</span></dt>
+          <dd>
+            <span>{{ paymentRef.txnId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.email">Email</span></dt>
+          <dd>
+            <span>{{ paymentRef.email }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.phone">Phone</span></dt>
+          <dd>
+            <span>{{ paymentRef.phone }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.productInfo">Product Info</span></dt>
+          <dd>
+            <span>{{ paymentRef.productInfo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentType">Payment Type</span></dt>
+          <dd>
+            @if (payment()!.paymentType) {
+              <div>
+                <a [routerLink]="['/payment-type', payment()!.paymentType?.id, 'view']">{{ paymentRef.paymentType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentMethodType">Payment Method Type</span></dt>
+          <dd>
+            @if (payment()!.paymentMethodType) {
+              <div>
+                <a [routerLink]="['/payment-method-type', payment()!.paymentMethodType?.id, 'view']">{{
+                  paymentRef.paymentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentMethod">Payment Method</span></dt>
+          <dd>
+            @if (payment()!.paymentMethod) {
+              <div>
+                <a [routerLink]="['/payment-method', payment()!.paymentMethod?.id, 'view']">{{ paymentRef.paymentMethod?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.paymentGatewayResponse">Payment Gateway Response</span></dt>
+          <dd>
+            @if (payment()!.paymentGatewayResponse) {
+              <div>
+                <a [routerLink]="['/payment-gateway-response', payment()!.paymentGatewayResponse?.id, 'view']">{{
+                  paymentRef.paymentGatewayResponse?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.status">Status</span></dt>
+          <dd>
+            @if (payment()!.status) {
+              <div>
+                <a [routerLink]="['/status', payment()!.status?.id, 'view']">{{ paymentRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.fromParty">From Party</span></dt>
+          <dd>
+            @if (payment()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', payment()!.fromParty?.id, 'view']">{{ paymentRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.toParty">To Party</span></dt>
+          <dd>
+            @if (payment()!.toParty) {
+              <div>
+                <a [routerLink]="['/party', payment()!.toParty?.id, 'view']">{{ paymentRef.toParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.roleType">Role Type</span></dt>
+          <dd>
+            @if (payment()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', payment()!.roleType?.id, 'view']">{{ paymentRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.payment.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (payment()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', payment()!.currencyUom?.id, 'view']">{{ paymentRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment', paymentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

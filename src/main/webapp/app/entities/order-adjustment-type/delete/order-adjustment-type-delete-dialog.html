@@ -1,0 +1,30 @@
+@if (orderAdjustmentType) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(orderAdjustmentType.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="orderAdjustmentTypeDeleteDialogHeading" sysTranslate="entity.delete.title">
+        Confirm delete operation
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p
+        id="sys-delete-orderAdjustmentType-heading"
+        sysTranslate="snpApp.orderAdjustmentType.delete.question"
+        [translateValues]="{ id: orderAdjustmentType.id }"
+      >
+        Are you sure you want to delete Order Adjustment Type {{ orderAdjustmentType.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-orderAdjustmentType" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

@@ -1,0 +1,535 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-inventory-item-heading"
+        data-cy="InventoryItemCreateUpdateHeading"
+        sysTranslate="snpApp.inventoryItem.home.createOrEditLabel"
+      >
+        Create or edit a Inventory Item
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_receivedDate" sysTranslate="snpApp.inventoryItem.receivedDate">Received Date</label>
+          <div class="d-flex">
+            <input
+              id="field_receivedDate"
+              data-cy="receivedDate"
+              type="datetime-local"
+              class="form-control"
+              name="receivedDate"
+              formControlName="receivedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_manufacturedDate" sysTranslate="snpApp.inventoryItem.manufacturedDate"
+            >Manufactured Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_manufacturedDate"
+              data-cy="manufacturedDate"
+              type="datetime-local"
+              class="form-control"
+              name="manufacturedDate"
+              formControlName="manufacturedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_expiryDate" sysTranslate="snpApp.inventoryItem.expiryDate">Expiry Date</label>
+          <div class="d-flex">
+            <input
+              id="field_expiryDate"
+              data-cy="expiryDate"
+              type="datetime-local"
+              class="form-control"
+              name="expiryDate"
+              formControlName="expiryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_retestDate" sysTranslate="snpApp.inventoryItem.retestDate">Retest Date</label>
+          <div class="d-flex">
+            <input
+              id="field_retestDate"
+              data-cy="retestDate"
+              type="datetime-local"
+              class="form-control"
+              name="retestDate"
+              formControlName="retestDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let containerIdRef = editForm.get('containerId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_containerId" sysTranslate="snpApp.inventoryItem.containerId">Container Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="containerId"
+            id="field_containerId"
+            data-cy="containerId"
+            formControlName="containerId"
+          />
+          @if (containerIdRef.invalid && (containerIdRef.dirty || containerIdRef.touched)) {
+            <div>
+              @if (containerIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let batchNoRef = editForm.get('batchNo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_batchNo" sysTranslate="snpApp.inventoryItem.batchNo">Batch No</label>
+          <input type="text" class="form-control" name="batchNo" id="field_batchNo" data-cy="batchNo" formControlName="batchNo" />
+          @if (batchNoRef.invalid && (batchNoRef.dirty || batchNoRef.touched)) {
+            <div>
+              @if (batchNoRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mfgBatchNoRef = editForm.get('mfgBatchNo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mfgBatchNo" sysTranslate="snpApp.inventoryItem.mfgBatchNo">Mfg Batch No</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mfgBatchNo"
+            id="field_mfgBatchNo"
+            data-cy="mfgBatchNo"
+            formControlName="mfgBatchNo"
+          />
+          @if (mfgBatchNoRef.invalid && (mfgBatchNoRef.dirty || mfgBatchNoRef.touched)) {
+            <div>
+              @if (mfgBatchNoRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let lotNoStrRef = editForm.get('lotNoStr')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lotNoStr" sysTranslate="snpApp.inventoryItem.lotNoStr">Lot No Str</label>
+          <input type="text" class="form-control" name="lotNoStr" id="field_lotNoStr" data-cy="lotNoStr" formControlName="lotNoStr" />
+          @if (lotNoStrRef.invalid && (lotNoStrRef.dirty || lotNoStrRef.touched)) {
+            <div>
+              @if (lotNoStrRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let binNumberRef = editForm.get('binNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_binNumber" sysTranslate="snpApp.inventoryItem.binNumber">Bin Number</label>
+          <input type="text" class="form-control" name="binNumber" id="field_binNumber" data-cy="binNumber" formControlName="binNumber" />
+          @if (binNumberRef.invalid && (binNumberRef.dirty || binNumberRef.touched)) {
+            <div>
+              @if (binNumberRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.inventoryItem.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantityOnHandTotal" sysTranslate="snpApp.inventoryItem.quantityOnHandTotal"
+            >Quantity On Hand Total</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="quantityOnHandTotal"
+            id="field_quantityOnHandTotal"
+            data-cy="quantityOnHandTotal"
+            formControlName="quantityOnHandTotal"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_availableToPromiseTotal" sysTranslate="snpApp.inventoryItem.availableToPromiseTotal"
+            >Available To Promise Total</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="availableToPromiseTotal"
+            id="field_availableToPromiseTotal"
+            data-cy="availableToPromiseTotal"
+            formControlName="availableToPromiseTotal"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_accountingQuantityTotal" sysTranslate="snpApp.inventoryItem.accountingQuantityTotal"
+            >Accounting Quantity Total</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="accountingQuantityTotal"
+            id="field_accountingQuantityTotal"
+            data-cy="accountingQuantityTotal"
+            formControlName="accountingQuantityTotal"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_oldQuantityOnHand" sysTranslate="snpApp.inventoryItem.oldQuantityOnHand"
+            >Old Quantity On Hand</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="oldQuantityOnHand"
+            id="field_oldQuantityOnHand"
+            data-cy="oldQuantityOnHand"
+            formControlName="oldQuantityOnHand"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_oldAvailableToPromise" sysTranslate="snpApp.inventoryItem.oldAvailableToPromise"
+            >Old Available To Promise</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="oldAvailableToPromise"
+            id="field_oldAvailableToPromise"
+            data-cy="oldAvailableToPromise"
+            formControlName="oldAvailableToPromise"
+          />
+        </div>
+
+        @let serialNumberRef = editForm.get('serialNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_serialNumber" sysTranslate="snpApp.inventoryItem.serialNumber">Serial Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="serialNumber"
+            id="field_serialNumber"
+            data-cy="serialNumber"
+            formControlName="serialNumber"
+          />
+          @if (serialNumberRef.invalid && (serialNumberRef.dirty || serialNumberRef.touched)) {
+            <div>
+              @if (serialNumberRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let softIdentifierRef = editForm.get('softIdentifier')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_softIdentifier" sysTranslate="snpApp.inventoryItem.softIdentifier">Soft Identifier</label>
+          <input
+            type="text"
+            class="form-control"
+            name="softIdentifier"
+            id="field_softIdentifier"
+            data-cy="softIdentifier"
+            formControlName="softIdentifier"
+          />
+          @if (softIdentifierRef.invalid && (softIdentifierRef.dirty || softIdentifierRef.touched)) {
+            <div>
+              @if (softIdentifierRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let activationNumberRef = editForm.get('activationNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_activationNumber" sysTranslate="snpApp.inventoryItem.activationNumber"
+            >Activation Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="activationNumber"
+            id="field_activationNumber"
+            data-cy="activationNumber"
+            formControlName="activationNumber"
+          />
+          @if (activationNumberRef.invalid && (activationNumberRef.dirty || activationNumberRef.touched)) {
+            <div>
+              @if (activationNumberRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_activationValidThru" sysTranslate="snpApp.inventoryItem.activationValidThru"
+            >Activation Valid Thru</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_activationValidThru"
+              data-cy="activationValidThru"
+              type="datetime-local"
+              class="form-control"
+              name="activationValidThru"
+              formControlName="activationValidThru"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_unitCost" sysTranslate="snpApp.inventoryItem.unitCost">Unit Cost</label>
+          <input type="number" class="form-control" name="unitCost" id="field_unitCost" data-cy="unitCost" formControlName="unitCost" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItemType" sysTranslate="snpApp.inventoryItem.inventoryItemType"
+            >Inventory Item Type</label
+          >
+          <select
+            class="form-select"
+            id="field_inventoryItemType"
+            data-cy="inventoryItemType"
+            name="inventoryItemType"
+            formControlName="inventoryItemType"
+            [compareWith]="compareInventoryItemType"
+          >
+            <option [ngValue]="null"></option>
+            @for (inventoryItemTypeOption of inventoryItemTypesSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemTypeOption">{{ inventoryItemTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.inventoryItem.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_supplier" sysTranslate="snpApp.inventoryItem.supplier">Supplier</label>
+          <select
+            class="form-select"
+            id="field_supplier"
+            data-cy="supplier"
+            name="supplier"
+            formControlName="supplier"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.organisationName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ownerParty" sysTranslate="snpApp.inventoryItem.ownerParty">Owner Party</label>
+          <select
+            class="form-select"
+            id="field_ownerParty"
+            data-cy="ownerParty"
+            name="ownerParty"
+            formControlName="ownerParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.inventoryItem.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facility" sysTranslate="snpApp.inventoryItem.facility">Facility</label>
+          <select
+            class="form-select"
+            id="field_facility"
+            data-cy="facility"
+            name="facility"
+            formControlName="facility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityLocation" sysTranslate="snpApp.inventoryItem.facilityLocation"
+            >Facility Location</label
+          >
+          <select
+            class="form-select"
+            id="field_facilityLocation"
+            data-cy="facilityLocation"
+            name="facilityLocation"
+            formControlName="facilityLocation"
+            [compareWith]="compareFacilityLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityLocationOption of facilityLocationsSharedCollection(); track $index) {
+              <option [ngValue]="facilityLocationOption">{{ facilityLocationOption.locationSeqId }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_uom" sysTranslate="snpApp.inventoryItem.uom">Uom</label>
+          <select class="form-select" id="field_uom" data-cy="uom" name="uom" formControlName="uom" [compareWith]="compareUom">
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyUom" sysTranslate="snpApp.inventoryItem.currencyUom">Currency Uom</label>
+          <select
+            class="form-select"
+            id="field_currencyUom"
+            data-cy="currencyUom"
+            name="currencyUom"
+            formControlName="currencyUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lot" sysTranslate="snpApp.inventoryItem.lot">Lot</label>
+          <select class="form-select" id="field_lot" data-cy="lot" name="lot" formControlName="lot" [compareWith]="compareLot">
+            <option [ngValue]="null"></option>
+            @for (lotOption of lotsSharedCollection(); track $index) {
+              <option [ngValue]="lotOption">{{ lotOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

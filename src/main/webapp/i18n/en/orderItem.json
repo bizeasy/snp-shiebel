@@ -1,0 +1,51 @@
+{
+  "snpApp": {
+    "orderItem": {
+      "home": {
+        "title": "Order Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order Item",
+        "createOrEditLabel": "Create or edit a Order Item",
+        "notFound": "No Order Items found"
+      },
+      "created": "A new Order Item is created with identifier {{ param }}",
+      "updated": "A Order Item is updated with identifier {{ param }}",
+      "deleted": "A Order Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Order Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "cancelQuantity": "Cancel Quantity",
+      "selectedAmount": "Selected Amount",
+      "unitPrice": "Unit Price",
+      "unitListPrice": "Unit List Price",
+      "isModifiedPrice": "Is Modified Price",
+      "estimatedShipDate": "Estimated Ship Date",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "shipBeforeDate": "Ship Before Date",
+      "shipAfterDate": "Ship After Date",
+      "entryDate": "Entry Date",
+      "attr1": "Attr 1",
+      "attr2": "Attr 2",
+      "attr3": "Attr 3",
+      "order": "Order",
+      "orderItemType": "Order Item Type",
+      "product": "Product",
+      "uom": "Uom",
+      "supplierProduct": "Supplier Product",
+      "supplier": "Supplier",
+      "productFeature": "Product Feature",
+      "productFacility": "Product Facility",
+      "fromInventoryItem": "From Inventory Item",
+      "shoppingListItem": "Shopping List Item",
+      "quoteItem": "Quote Item",
+      "status": "Status",
+      "taxAuthRate": "Tax Auth Rate"
+    }
+  }
+}

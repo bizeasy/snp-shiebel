@@ -1,0 +1,135 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductRoleHeading">
+    <span sysTranslate="snpApp.productRole.home.title">Product Roles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.productRole.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-role"
+        [routerLink]="['/product-role/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.productRole.home.createLabel">Create a new Product Role</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (productRoles().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.productRole.home.notFound">No Product Roles found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productRole.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productRole.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="roleType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productRole.roleType">Role Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (productRole of productRoles(); track trackId(productRole)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product-role', productRole.id, 'view']">{{ productRole.id }}</a>
+              </td>
+              <td>
+                @if (productRole.product) {
+                  <div>
+                    <a [routerLink]="['/product', productRole.product.id, 'view']">{{ productRole.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productRole.party) {
+                  <div>
+                    <a [routerLink]="['/party', productRole.party.id, 'view']">{{ productRole.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productRole.roleType) {
+                  <div>
+                    <a [routerLink]="['/role-type', productRole.roleType.id, 'view']">{{ productRole.roleType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/product-role', productRole.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/product-role', productRole.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(productRole)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (productRoles().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

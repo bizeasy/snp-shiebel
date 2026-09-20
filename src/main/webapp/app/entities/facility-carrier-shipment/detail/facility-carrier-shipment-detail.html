@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facilityCarrierShipment(); as facilityCarrierShipmentRef) {
+      <div>
+        <h2 data-cy="facilityCarrierShipmentDetailsHeading">
+          <span sysTranslate="snpApp.facilityCarrierShipment.detail.title">Facility Carrier Shipment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityCarrierShipmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityCarrierShipment.facility">Facility</span></dt>
+          <dd>
+            @if (facilityCarrierShipment()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', facilityCarrierShipment()!.facility?.id, 'view']">{{
+                  facilityCarrierShipmentRef.facility?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityCarrierShipment.party">Party</span></dt>
+          <dd>
+            @if (facilityCarrierShipment()!.party) {
+              <div>
+                <a [routerLink]="['/party', facilityCarrierShipment()!.party?.id, 'view']">{{ facilityCarrierShipmentRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityCarrierShipment.roleType">Role Type</span></dt>
+          <dd>
+            @if (facilityCarrierShipment()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', facilityCarrierShipment()!.roleType?.id, 'view']">{{
+                  facilityCarrierShipmentRef.roleType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityCarrierShipment.shipmentMethodType">Shipment Method Type</span></dt>
+          <dd>
+            @if (facilityCarrierShipment()!.shipmentMethodType) {
+              <div>
+                <a [routerLink]="['/shipment-method-type', facilityCarrierShipment()!.shipmentMethodType?.id, 'view']">{{
+                  facilityCarrierShipmentRef.shipmentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility-carrier-shipment', facilityCarrierShipmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

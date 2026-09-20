@@ -1,0 +1,49 @@
+{
+  "snpApp": {
+    "invoiceItem": {
+      "home": {
+        "title": "Invoice Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Invoice Item",
+        "createOrEditLabel": "Create or edit a Invoice Item",
+        "notFound": "No Invoice Items found"
+      },
+      "created": "A new Invoice Item is created with identifier {{ param }}",
+      "updated": "A Invoice Item is updated with identifier {{ param }}",
+      "deleted": "A Invoice Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Invoice Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Invoice Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "cancelQuantity": "Cancel Quantity",
+      "selectedAmount": "Selected Amount",
+      "unitPrice": "Unit Price",
+      "unitListPrice": "Unit List Price",
+      "isModifiedPrice": "Is Modified Price",
+      "estimatedShipDate": "Estimated Ship Date",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "shipBeforeDate": "Ship Before Date",
+      "shipAfterDate": "Ship After Date",
+      "entryDate": "Entry Date",
+      "attr1": "Attr 1",
+      "attr2": "Attr 2",
+      "attr3": "Attr 3",
+      "invoice": "Invoice",
+      "invoiceItemType": "Invoice Item Type",
+      "product": "Product",
+      "uom": "Uom",
+      "productFeature": "Product Feature",
+      "productFacility": "Product Facility",
+      "fromInventoryItem": "From Inventory Item",
+      "taxAuthRate": "Tax Auth Rate",
+      "parentInvoice": "Parent Invoice",
+      "parentInvoiceItem": "Parent Invoice Item"
+    }
+  }
+}

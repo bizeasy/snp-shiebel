@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (returnItem(); as returnItemRef) {
+      <div>
+        <h2 data-cy="returnItemDetailsHeading"><span sysTranslate="snpApp.returnItem.detail.title">Return Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ returnItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ returnItemRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.description">Description</span></dt>
+          <dd>
+            <span>{{ returnItemRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.returnQuantity">Return Quantity</span></dt>
+          <dd>
+            <span>{{ returnItemRef.returnQuantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.receivedQuantity">Received Quantity</span></dt>
+          <dd>
+            <span>{{ returnItemRef.receivedQuantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.returnPrice">Return Price</span></dt>
+          <dd>
+            <span>{{ returnItemRef.returnPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.returnItemPurpose">Return Item Purpose</span></dt>
+          <dd>
+            <span>{{ returnItemRef.returnItemPurpose }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.returnHeader">Return Header</span></dt>
+          <dd>
+            @if (returnItem()!.returnHeader) {
+              <div>
+                <a [routerLink]="['/return-header', returnItem()!.returnHeader?.id, 'view']">{{ returnItemRef.returnHeader?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.returnType">Return Type</span></dt>
+          <dd>
+            @if (returnItem()!.returnType) {
+              <div>
+                <a [routerLink]="['/return-header-type', returnItem()!.returnType?.id, 'view']">{{ returnItemRef.returnType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.product">Product</span></dt>
+          <dd>
+            @if (returnItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', returnItem()!.product?.id, 'view']">{{ returnItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.orderItem">Order Item</span></dt>
+          <dd>
+            @if (returnItem()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', returnItem()!.orderItem?.id, 'view']">{{ returnItemRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItem.status">Status</span></dt>
+          <dd>
+            @if (returnItem()!.status) {
+              <div>
+                <a [routerLink]="['/status', returnItem()!.status?.id, 'view']">{{ returnItemRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/return-item', returnItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

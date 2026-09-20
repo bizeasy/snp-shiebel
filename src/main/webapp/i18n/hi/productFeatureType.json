@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "productFeatureType": {
+      "home": {
+        "title": "ProductFeatureTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Feature Type बनाएँ",
+        "createOrEditLabel": "Product Feature Type बनाएँ या संपादित करें",
+        "notFound": "No Product Feature Types found"
+      },
+      "created": "एक नया Product Feature Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Feature Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Feature Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Feature Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Feature Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "partyContactMech": {
+      "home": {
+        "title": "PartyContactMeches",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Party Contact Mech बनाएँ",
+        "createOrEditLabel": "Party Contact Mech बनाएँ या संपादित करें",
+        "notFound": "No Party Contact Meches found"
+      },
+      "created": "एक नया Party Contact Mech [identifier: {{ param }}] तैयार है",
+      "updated": "एक Party Contact Mech [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Party Contact Mech [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Party Contact Mech [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Party Contact Mech"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "party": "Party",
+      "contactMech": "Contact Mech",
+      "contactMechPurpose": "Contact Mech Purpose"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderItemBilling(); as orderItemBillingRef) {
+      <div>
+        <h2 data-cy="orderItemBillingDetailsHeading">
+          <span sysTranslate="snpApp.orderItemBilling.detail.title">Order Item Billing</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderItemBillingRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ orderItemBillingRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.amount">Amount</span></dt>
+          <dd>
+            <span>{{ orderItemBillingRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.orderItem">Order Item</span></dt>
+          <dd>
+            @if (orderItemBilling()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', orderItemBilling()!.orderItem?.id, 'view']">{{ orderItemBillingRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.invoiceItem">Invoice Item</span></dt>
+          <dd>
+            @if (orderItemBilling()!.invoiceItem) {
+              <div>
+                <a [routerLink]="['/invoice-item', orderItemBilling()!.invoiceItem?.id, 'view']">{{
+                  orderItemBillingRef.invoiceItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.shipmentReceipt">Shipment Receipt</span></dt>
+          <dd>
+            @if (orderItemBilling()!.shipmentReceipt) {
+              <div>
+                <a [routerLink]="['/shipment-receipt', orderItemBilling()!.shipmentReceipt?.id, 'view']">{{
+                  orderItemBillingRef.shipmentReceipt?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemBilling.itemIssuance">Item Issuance</span></dt>
+          <dd>
+            @if (orderItemBilling()!.itemIssuance) {
+              <div>
+                <a [routerLink]="['/item-issuance', orderItemBilling()!.itemIssuance?.id, 'view']">{{
+                  orderItemBillingRef.itemIssuance?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-item-billing', orderItemBillingRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

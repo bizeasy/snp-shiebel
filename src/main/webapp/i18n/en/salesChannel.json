@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "salesChannel": {
+      "home": {
+        "title": "Sales Channels",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sales Channel",
+        "createOrEditLabel": "Create or edit a Sales Channel",
+        "notFound": "No Sales Channels found"
+      },
+      "created": "A new Sales Channel is created with identifier {{ param }}",
+      "updated": "A Sales Channel is updated with identifier {{ param }}",
+      "deleted": "A Sales Channel is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sales Channel {{ id }}?"
+      },
+      "detail": {
+        "title": "Sales Channel"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "sequenceNo": "Sequence No"
+    }
+  }
+}

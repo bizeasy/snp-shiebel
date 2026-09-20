@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-payment-gateway-config-heading"
+        data-cy="PaymentGatewayConfigCreateUpdateHeading"
+        sysTranslate="snpApp.paymentGatewayConfig.home.createOrEditLabel"
+      >
+        Create or edit a Payment Gateway Config
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.paymentGatewayConfig.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '25' }"
+                  >This field cannot be longer than 25 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let authUrlRef = editForm.get('authUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_authUrl" sysTranslate="snpApp.paymentGatewayConfig.authUrl">Auth Url</label>
+          <input type="text" class="form-control" name="authUrl" id="field_authUrl" data-cy="authUrl" formControlName="authUrl" />
+          @if (authUrlRef.invalid && (authUrlRef.dirty || authUrlRef.touched)) {
+            <div>
+              @if (authUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let releaseUrlRef = editForm.get('releaseUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_releaseUrl" sysTranslate="snpApp.paymentGatewayConfig.releaseUrl">Release Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="releaseUrl"
+            id="field_releaseUrl"
+            data-cy="releaseUrl"
+            formControlName="releaseUrl"
+          />
+          @if (releaseUrlRef.invalid && (releaseUrlRef.dirty || releaseUrlRef.touched)) {
+            <div>
+              @if (releaseUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let refundUrlRef = editForm.get('refundUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_refundUrl" sysTranslate="snpApp.paymentGatewayConfig.refundUrl">Refund Url</label>
+          <input type="text" class="form-control" name="refundUrl" id="field_refundUrl" data-cy="refundUrl" formControlName="refundUrl" />
+          @if (refundUrlRef.invalid && (refundUrlRef.dirty || refundUrlRef.touched)) {
+            <div>
+              @if (refundUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

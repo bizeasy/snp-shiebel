@@ -1,0 +1,314 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-quote-heading" data-cy="QuoteCreateUpdateHeading" sysTranslate="snpApp.quote.home.createOrEditLabel">
+        Create or edit a Quote
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.quote.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let offerNoRef = editForm.get('offerNo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_offerNo" sysTranslate="snpApp.quote.offerNo">Offer No</label>
+          <input type="text" class="form-control" name="offerNo" id="field_offerNo" data-cy="offerNo" formControlName="offerNo" />
+          @if (offerNoRef.invalid && (offerNoRef.dirty || offerNoRef.touched)) {
+            <div>
+              @if (offerNoRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let issueDateRef = editForm.get('issueDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_issueDate" sysTranslate="snpApp.quote.issueDate">Issue Date</label>
+          <div class="d-flex">
+            <input
+              id="field_issueDate"
+              data-cy="issueDate"
+              type="datetime-local"
+              class="form-control"
+              name="issueDate"
+              formControlName="issueDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (issueDateRef.invalid && (issueDateRef.dirty || issueDateRef.touched)) {
+            <div>
+              @if (issueDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!issueDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_validFromDate" sysTranslate="snpApp.quote.validFromDate">Valid From Date</label>
+          <div class="d-flex">
+            <input
+              id="field_validFromDate"
+              data-cy="validFromDate"
+              type="datetime-local"
+              class="form-control"
+              name="validFromDate"
+              formControlName="validFromDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_validThruDate" sysTranslate="snpApp.quote.validThruDate">Valid Thru Date</label>
+          <div class="d-flex">
+            <input
+              id="field_validThruDate"
+              data-cy="validThruDate"
+              type="datetime-local"
+              class="form-control"
+              name="validThruDate"
+              formControlName="validThruDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.quote.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_offerValue" sysTranslate="snpApp.quote.offerValue">Offer Value</label>
+          <input
+            type="number"
+            class="form-control"
+            name="offerValue"
+            id="field_offerValue"
+            data-cy="offerValue"
+            formControlName="offerValue"
+          />
+        </div>
+
+        @let remarksRef = editForm.get('remarks')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_remarks" sysTranslate="snpApp.quote.remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+          @if (remarksRef.invalid && (remarksRef.dirty || remarksRef.touched)) {
+            <div>
+              @if (remarksRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quoteType" sysTranslate="snpApp.quote.quoteType">Quote Type</label>
+          <select
+            class="form-select"
+            id="field_quoteType"
+            data-cy="quoteType"
+            name="quoteType"
+            formControlName="quoteType"
+            [compareWith]="compareQuoteType"
+          >
+            <option [ngValue]="null"></option>
+            @for (quoteTypeOption of quoteTypesSharedCollection(); track $index) {
+              <option [ngValue]="quoteTypeOption">{{ quoteTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_custRequest" sysTranslate="snpApp.quote.custRequest">Cust Request</label>
+          <select
+            class="form-select"
+            id="field_custRequest"
+            data-cy="custRequest"
+            name="custRequest"
+            formControlName="custRequest"
+            [compareWith]="compareCustRequest"
+          >
+            <option [ngValue]="null"></option>
+            @for (custRequestOption of custRequestsSharedCollection(); track $index) {
+              <option [ngValue]="custRequestOption">{{ custRequestOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.quote.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            @if (!editForm.get('party')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['party'])!.invalid && (editForm.get(['party'])!.dirty || editForm.get(['party'])!.touched)) {
+          <div>
+            @if (editForm.get(['party'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.quote.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productStore" sysTranslate="snpApp.quote.productStore">Product Store</label>
+          <select
+            class="form-select"
+            id="field_productStore"
+            data-cy="productStore"
+            name="productStore"
+            formControlName="productStore"
+            [compareWith]="compareProductStore"
+          >
+            <option [ngValue]="null"></option>
+            @for (productStoreOption of productStoresSharedCollection(); track $index) {
+              <option [ngValue]="productStoreOption">{{ productStoreOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_salesChannel" sysTranslate="snpApp.quote.salesChannel">Sales Channel</label>
+          <select
+            class="form-select"
+            id="field_salesChannel"
+            data-cy="salesChannel"
+            name="salesChannel"
+            formControlName="salesChannel"
+            [compareWith]="compareSalesChannel"
+          >
+            <option [ngValue]="null"></option>
+            @for (salesChannelOption of salesChannelsSharedCollection(); track $index) {
+              <option [ngValue]="salesChannelOption">{{ salesChannelOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyUom" sysTranslate="snpApp.quote.currencyUom">Currency Uom</label>
+          <select
+            class="form-select"
+            id="field_currencyUom"
+            data-cy="currencyUom"
+            name="currencyUom"
+            formControlName="currencyUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyConversion" sysTranslate="snpApp.quote.currencyConversion"
+            >Currency Conversion</label
+          >
+          <select
+            class="form-select"
+            id="field_currencyConversion"
+            data-cy="currencyConversion"
+            name="currencyConversion"
+            formControlName="currencyConversion"
+            [compareWith]="compareUomConversion"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomConversionOption of uomConversionsSharedCollection(); track $index) {
+              <option [ngValue]="uomConversionOption">{{ uomConversionOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

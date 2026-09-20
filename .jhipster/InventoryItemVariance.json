@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20231214221305"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "varianceReason",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "atpVar",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "qohVar",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "comments",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "InventoryItemVariance",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inventoryItem",
+      "relationshipName": "inventoryItem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

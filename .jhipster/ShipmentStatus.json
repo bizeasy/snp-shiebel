@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20231214230705"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "statusDateTime",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sequenceNo",
+      "fieldType": "Integer"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ShipmentStatus",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "shipment",
+      "relationshipName": "shipment",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "status",
+      "relationshipName": "status",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

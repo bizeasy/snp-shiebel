@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20231214220605"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "minimumStock",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "reorderQty",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "daysToShip",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "lastInventoryCount",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ProductFacility",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "product",
+      "relationshipName": "product",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facility",
+      "relationshipName": "facility",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "returnHeader": {
+      "home": {
+        "title": "ReturnHeaders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Return Header बनाएँ",
+        "createOrEditLabel": "Return Header बनाएँ या संपादित करें",
+        "notFound": "No Return Headers found"
+      },
+      "created": "एक नया Return Header [identifier: {{ param }}] तैयार है",
+      "updated": "एक Return Header [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Return Header [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Return Header [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Return Header"
+      },
+      "id": "ID",
+      "needsInventoryReceive": "Needs Inventory Receive",
+      "supplierRmaId": "Supplier Rma Id",
+      "returnType": "Return Type",
+      "status": "Status",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "paymentMethod": "Payment Method",
+      "originContactMech": "Origin Contact Mech",
+      "destinationFacility": "Destination Facility",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

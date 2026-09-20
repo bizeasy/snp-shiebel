@@ -1,0 +1,157 @@
+<div>
+  <h2 id="page-heading" data-cy="FileFolderHeading">
+    <span sysTranslate="snpApp.fileFolder.home.title">File Folders</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.fileFolder.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-file-folder"
+        [routerLink]="['/file-folder/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.fileFolder.home.createLabel">Create a new File Folder</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (fileFolders().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.fileFolder.home.notFound">No File Folders found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="path">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.path">Path</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isSystemFolder">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.isSystemFolder">Is System Folder</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isTrashed">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.isTrashed">Is Trashed</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="createdDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.createdDate">Created Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="parent.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.parent">Parent</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="owner.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.fileFolder.owner">Owner</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (fileFolder of fileFolders(); track trackId(fileFolder)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/file-folder', fileFolder.id, 'view']">{{ fileFolder.id }}</a>
+              </td>
+              <td>{{ fileFolder.name }}</td>
+              <td>{{ fileFolder.path }}</td>
+              <td>{{ fileFolder.isSystemFolder }}</td>
+              <td>{{ fileFolder.isTrashed }}</td>
+              <td>{{ fileFolder.createdDate | formatMediumDatetime }}</td>
+              <td>
+                @if (fileFolder.parent) {
+                  <div>
+                    <a [routerLink]="['/file-folder', fileFolder.parent.id, 'view']">{{ fileFolder.parent.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (fileFolder.owner) {
+                  <div>
+                    <a [routerLink]="['/party', fileFolder.owner.id, 'view']">{{ fileFolder.owner.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/file-folder', fileFolder.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/file-folder', fileFolder.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(fileFolder)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (fileFolders().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

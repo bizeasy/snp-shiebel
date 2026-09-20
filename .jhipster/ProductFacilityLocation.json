@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20231214220805"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "minimumStock",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "moveQuantity",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ProductFacilityLocation",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "product",
+      "relationshipName": "product",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facility",
+      "relationshipName": "facility",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "locationSeqId",
+      "otherEntityName": "facilityLocation",
+      "relationshipName": "facilityLocation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

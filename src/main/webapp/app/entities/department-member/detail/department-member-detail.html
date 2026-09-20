@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (departmentMember(); as departmentMemberRef) {
+      <div>
+        <h2 data-cy="departmentMemberDetailsHeading"><span sysTranslate="snpApp.departmentMember.detail.title">Department Member</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ departmentMemberRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ departmentMemberRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ departmentMemberRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.isPrimary">Is Primary</span></dt>
+          <dd>
+            <span>{{ departmentMemberRef.isPrimary }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.department">Department</span></dt>
+          <dd>
+            @if (departmentMember()!.department) {
+              <div>
+                <a [routerLink]="['/department', departmentMember()!.department?.id, 'view']">{{ departmentMemberRef.department?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.party">Party</span></dt>
+          <dd>
+            @if (departmentMember()!.party) {
+              <div>
+                <a [routerLink]="['/party', departmentMember()!.party?.id, 'view']">{{ departmentMemberRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.departmentMember.roleType">Role Type</span></dt>
+          <dd>
+            @if (departmentMember()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', departmentMember()!.roleType?.id, 'view']">{{ departmentMemberRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/department-member', departmentMemberRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

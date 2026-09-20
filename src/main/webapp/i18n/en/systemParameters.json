@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "systemParameters": {
+      "home": {
+        "title": "System Parameters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new System Parameters",
+        "createOrEditLabel": "Create or edit a System Parameters",
+        "notFound": "No System Parameters found"
+      },
+      "created": "A new System Parameters is created with identifier {{ param }}",
+      "updated": "A System Parameters is updated with identifier {{ param }}",
+      "deleted": "A System Parameters is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete System Parameters {{ id }}?"
+      },
+      "detail": {
+        "title": "System Parameters"
+      },
+      "id": "ID",
+      "key": "Key",
+      "value": "Value",
+      "description": "Description",
+      "environment": "Environment"
+    }
+  }
+}

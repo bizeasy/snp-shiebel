@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-quote-role-heading" data-cy="QuoteRoleCreateUpdateHeading" sysTranslate="snpApp.quoteRole.home.createOrEditLabel">
+        Create or edit a Quote Role
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quote" sysTranslate="snpApp.quoteRole.quote">Quote</label>
+          <select class="form-select" id="field_quote" data-cy="quote" name="quote" formControlName="quote" [compareWith]="compareQuote">
+            <option [ngValue]="null"></option>
+            @for (quoteOption of quotesSharedCollection(); track $index) {
+              <option [ngValue]="quoteOption">{{ quoteOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quoteItem" sysTranslate="snpApp.quoteRole.quoteItem">Quote Item</label>
+          <select
+            class="form-select"
+            id="field_quoteItem"
+            data-cy="quoteItem"
+            name="quoteItem"
+            formControlName="quoteItem"
+            [compareWith]="compareQuoteItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (quoteItemOption of quoteItemsSharedCollection(); track $index) {
+              <option [ngValue]="quoteItemOption">{{ quoteItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.quoteRole.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            @if (!editForm.get('party')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['party'])!.invalid && (editForm.get(['party'])!.dirty || editForm.get(['party'])!.touched)) {
+          <div>
+            @if (editForm.get(['party'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_roleType" sysTranslate="snpApp.quoteRole.roleType">Role Type</label>
+          <select
+            class="form-select"
+            id="field_roleType"
+            data-cy="roleType"
+            name="roleType"
+            formControlName="roleType"
+            [compareWith]="compareRoleType"
+          >
+            <option [ngValue]="null"></option>
+            @for (roleTypeOption of roleTypesSharedCollection(); track $index) {
+              <option [ngValue]="roleTypeOption">{{ roleTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

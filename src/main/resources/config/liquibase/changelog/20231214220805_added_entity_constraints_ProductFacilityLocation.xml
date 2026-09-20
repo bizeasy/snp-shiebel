@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ProductFacilityLocation.
+    -->
+    <changeSet id="20231214220805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_facility_location"
+                                 constraintName="fk_product_facility_location__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_id"
+                                 baseTableName="product_facility_location"
+                                 constraintName="fk_product_facility_location__facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_location_id"
+                                 baseTableName="product_facility_location"
+                                 constraintName="fk_product_facility_location__facility_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility_location"
+                                 />
+    </changeSet>
+</databaseChangeLog>

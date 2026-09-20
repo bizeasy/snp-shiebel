@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFacilityLocation(); as productFacilityLocationRef) {
+      <div>
+        <h2 data-cy="productFacilityLocationDetailsHeading">
+          <span sysTranslate="snpApp.productFacilityLocation.detail.title">Product Facility Location</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFacilityLocationRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityLocation.minimumStock">Minimum Stock</span></dt>
+          <dd>
+            <span>{{ productFacilityLocationRef.minimumStock }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityLocation.moveQuantity">Move Quantity</span></dt>
+          <dd>
+            <span>{{ productFacilityLocationRef.moveQuantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityLocation.product">Product</span></dt>
+          <dd>
+            @if (productFacilityLocation()!.product) {
+              <div>
+                <a [routerLink]="['/product', productFacilityLocation()!.product?.id, 'view']">{{
+                  productFacilityLocationRef.product?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityLocation.facility">Facility</span></dt>
+          <dd>
+            @if (productFacilityLocation()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', productFacilityLocation()!.facility?.id, 'view']">{{
+                  productFacilityLocationRef.facility?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityLocation.facilityLocation">Facility Location</span></dt>
+          <dd>
+            @if (productFacilityLocation()!.facilityLocation) {
+              <div>
+                <a [routerLink]="['/facility-location', productFacilityLocation()!.facilityLocation?.id, 'view']">{{
+                  productFacilityLocationRef.facilityLocation?.locationSeqId
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-facility-location', productFacilityLocationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderShipment(); as orderShipmentRef) {
+      <div>
+        <h2 data-cy="orderShipmentDetailsHeading"><span sysTranslate="snpApp.orderShipment.detail.title">Order Shipment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderShipmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderShipment.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ orderShipmentRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderShipment.order">Order</span></dt>
+          <dd>
+            @if (orderShipment()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderShipment()!.order?.id, 'view']">{{ orderShipmentRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderShipment.orderItem">Order Item</span></dt>
+          <dd>
+            @if (orderShipment()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', orderShipment()!.orderItem?.id, 'view']">{{ orderShipmentRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderShipment.shipment">Shipment</span></dt>
+          <dd>
+            @if (orderShipment()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', orderShipment()!.shipment?.id, 'view']">{{ orderShipmentRef.shipment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderShipment.shipmentItem">Shipment Item</span></dt>
+          <dd>
+            @if (orderShipment()!.shipmentItem) {
+              <div>
+                <a [routerLink]="['/shipment-item', orderShipment()!.shipmentItem?.id, 'view']">{{ orderShipmentRef.shipmentItem?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-shipment', orderShipmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

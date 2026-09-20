@@ -1,0 +1,39 @@
+{
+  "snpApp": {
+    "quoteAdjustment": {
+      "home": {
+        "title": "Quote Adjustments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Quote Adjustment",
+        "createOrEditLabel": "Create or edit a Quote Adjustment",
+        "notFound": "No Quote Adjustments found"
+      },
+      "created": "A new Quote Adjustment is created with identifier {{ param }}",
+      "updated": "A Quote Adjustment is updated with identifier {{ param }}",
+      "deleted": "A Quote Adjustment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Quote Adjustment {{ id }}?"
+      },
+      "detail": {
+        "title": "Quote Adjustment"
+      },
+      "id": "ID",
+      "description": "Description",
+      "comments": "Comments",
+      "amount": "Amount",
+      "sourcePercentage": "Source Percentage",
+      "sourceRefId": "Source Ref Id",
+      "exemptAmount": "Exempt Amount",
+      "includeInTax": "Include In Tax",
+      "includeInShipping": "Include In Shipping",
+      "includedInPrice": "Included In Price",
+      "entryDate": "Entry Date",
+      "quote": "Quote",
+      "quoteItem": "Quote Item",
+      "adjustmentType": "Adjustment Type",
+      "product": "Product",
+      "productFeature": "Product Feature",
+      "taxAuthority": "Tax Authority"
+    }
+  }
+}

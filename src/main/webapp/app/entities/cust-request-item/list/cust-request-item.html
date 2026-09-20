@@ -1,0 +1,227 @@
+<div>
+  <h2 id="page-heading" data-cy="CustRequestItemHeading">
+    <span sysTranslate="snpApp.custRequestItem.home.title">Cust Request Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.custRequestItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cust-request-item"
+        [routerLink]="['/cust-request-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.custRequestItem.home.createLabel">Create a new Cust Request Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (custRequestItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.custRequestItem.home.notFound">No Cust Request Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="priority">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.priority">Priority</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="requiredByDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.requiredByDate">Required By Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="selectedAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.selectedAmount">Selected Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="maxAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.maxAmount">Max Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="story">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.story">Story</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="custRequest.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.custRequest">Cust Request</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="uom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.uom">Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shoppingListItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestItem.shoppingListItem">Shopping List Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (custRequestItem of custRequestItems(); track trackId(custRequestItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cust-request-item', custRequestItem.id, 'view']">{{ custRequestItem.id }}</a>
+              </td>
+              <td>{{ custRequestItem.sequenceNo }}</td>
+              <td>{{ custRequestItem.priority }}</td>
+              <td>{{ custRequestItem.requiredByDate | formatMediumDatetime }}</td>
+              <td>{{ custRequestItem.quantity }}</td>
+              <td>{{ custRequestItem.selectedAmount }}</td>
+              <td>{{ custRequestItem.maxAmount }}</td>
+              <td>{{ custRequestItem.description }}</td>
+              <td>{{ custRequestItem.story }}</td>
+              <td>
+                @if (custRequestItem.custRequest) {
+                  <div>
+                    <a [routerLink]="['/cust-request', custRequestItem.custRequest.id, 'view']">{{ custRequestItem.custRequest.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (custRequestItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', custRequestItem.status.id, 'view']">{{ custRequestItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (custRequestItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', custRequestItem.product.id, 'view']">{{ custRequestItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (custRequestItem.uom) {
+                  <div>
+                    <a [routerLink]="['/uom', custRequestItem.uom.id, 'view']">{{ custRequestItem.uom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (custRequestItem.shoppingListItem) {
+                  <div>
+                    <a [routerLink]="['/shopping-list-item', custRequestItem.shoppingListItem.id, 'view']">{{
+                      custRequestItem.shoppingListItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/cust-request-item', custRequestItem.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/cust-request-item', custRequestItem.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(custRequestItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (custRequestItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

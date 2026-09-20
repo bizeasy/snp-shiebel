@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "changelogDate": "20231214212205"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "otp",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "otpSent",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "verificationSuccess",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "otpExpired",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "otpSentTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "sentCounter",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "failCounter",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "otpResetCounter",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "maxResend",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "maxReset",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "maxFailures",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "otpActiveTime",
+      "fieldType": "Integer"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "OtpAuth",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

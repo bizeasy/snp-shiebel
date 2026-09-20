@@ -1,0 +1,222 @@
+<div>
+  <h2 id="page-heading" data-cy="InventoryTransferHeading">
+    <span sysTranslate="snpApp.inventoryTransfer.home.title">Inventory Transfers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.inventoryTransfer.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inventory-transfer"
+        [routerLink]="['/inventory-transfer/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.inventoryTransfer.home.createLabel">Create a new Inventory Transfer</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (inventoryTransfers().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.inventoryTransfer.home.notFound">No Inventory Transfers found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sentDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.sentDate">Sent Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="receivedDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.receivedDate">Received Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="comments">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.comments">Comments</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.inventoryItem">Inventory Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.facility">Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityLocation.locationSeqId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.facilityLocation">Facility Location</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityTo.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.facilityTo">Facility To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityLocationTo.locationSeqId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.facilityLocationTo">Facility Location To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="issuance.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryTransfer.issuance">Issuance</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inventoryTransfer of inventoryTransfers(); track trackId(inventoryTransfer)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inventory-transfer', inventoryTransfer.id, 'view']">{{ inventoryTransfer.id }}</a>
+              </td>
+              <td>{{ inventoryTransfer.sentDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryTransfer.receivedDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryTransfer.comments }}</td>
+              <td>
+                @if (inventoryTransfer.inventoryItem) {
+                  <div>
+                    <a [routerLink]="['/inventory-item', inventoryTransfer.inventoryItem.id, 'view']">{{
+                      inventoryTransfer.inventoryItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.status) {
+                  <div>
+                    <a [routerLink]="['/status', inventoryTransfer.status.id, 'view']">{{ inventoryTransfer.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.facility) {
+                  <div>
+                    <a [routerLink]="['/facility', inventoryTransfer.facility.id, 'view']">{{ inventoryTransfer.facility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.facilityLocation) {
+                  <div>
+                    <a [routerLink]="['/facility-location', inventoryTransfer.facilityLocation.id, 'view']">{{
+                      inventoryTransfer.facilityLocation.locationSeqId
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.facilityTo) {
+                  <div>
+                    <a [routerLink]="['/facility', inventoryTransfer.facilityTo.id, 'view']">{{ inventoryTransfer.facilityTo.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.facilityLocationTo) {
+                  <div>
+                    <a [routerLink]="['/facility-location', inventoryTransfer.facilityLocationTo.id, 'view']">{{
+                      inventoryTransfer.facilityLocationTo.locationSeqId
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryTransfer.issuance) {
+                  <div>
+                    <a [routerLink]="['/item-issuance', inventoryTransfer.issuance.id, 'view']">{{ inventoryTransfer.issuance.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/inventory-transfer', inventoryTransfer.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/inventory-transfer', inventoryTransfer.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(inventoryTransfer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inventoryTransfers().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

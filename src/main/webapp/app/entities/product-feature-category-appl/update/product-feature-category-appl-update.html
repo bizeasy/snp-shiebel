@@ -1,0 +1,149 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-product-feature-category-appl-heading"
+        data-cy="ProductFeatureCategoryApplCreateUpdateHeading"
+        sysTranslate="snpApp.productFeatureCategoryAppl.home.createOrEditLabel"
+      >
+        Create or edit a Product Feature Category Appl
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let fromDateRef = editForm.get('fromDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fromDate" sysTranslate="snpApp.productFeatureCategoryAppl.fromDate">From Date</label>
+          <div class="d-flex">
+            <input
+              id="field_fromDate"
+              data-cy="fromDate"
+              type="datetime-local"
+              class="form-control"
+              name="fromDate"
+              formControlName="fromDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (fromDateRef.invalid && (fromDateRef.dirty || fromDateRef.touched)) {
+            <div>
+              @if (fromDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!fromDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_thruDate" sysTranslate="snpApp.productFeatureCategoryAppl.thruDate">Thru Date</label>
+          <div class="d-flex">
+            <input
+              id="field_thruDate"
+              data-cy="thruDate"
+              type="datetime-local"
+              class="form-control"
+              name="thruDate"
+              formControlName="thruDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productCategory" sysTranslate="snpApp.productFeatureCategoryAppl.productCategory"
+            >Product Category</label
+          >
+          <select
+            class="form-select"
+            id="field_productCategory"
+            data-cy="productCategory"
+            name="productCategory"
+            formControlName="productCategory"
+            [compareWith]="compareProductCategory"
+          >
+            @if (!editForm.get('productCategory')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productCategoryOption of productCategoriesSharedCollection(); track $index) {
+              <option [ngValue]="productCategoryOption">{{ productCategoryOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['productCategory'])!.invalid &&
+          (editForm.get(['productCategory'])!.dirty || editForm.get(['productCategory'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['productCategory'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label
+            class="form-label"
+            for="field_productFeatureCategory"
+            sysTranslate="snpApp.productFeatureCategoryAppl.productFeatureCategory"
+            >Product Feature Category</label
+          >
+          <select
+            class="form-select"
+            id="field_productFeatureCategory"
+            data-cy="productFeatureCategory"
+            name="productFeatureCategory"
+            formControlName="productFeatureCategory"
+            [compareWith]="compareProductFeatureCategory"
+          >
+            @if (!editForm.get('productFeatureCategory')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productFeatureCategoryOption of productFeatureCategoriesSharedCollection(); track $index) {
+              <option [ngValue]="productFeatureCategoryOption">{{ productFeatureCategoryOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['productFeatureCategory'])!.invalid &&
+          (editForm.get(['productFeatureCategory'])!.dirty || editForm.get(['productFeatureCategory'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['productFeatureCategory'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

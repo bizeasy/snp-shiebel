@@ -1,0 +1,137 @@
+<div>
+  <h2 id="page-heading" data-cy="QuoteAttachmentHeading">
+    <span sysTranslate="snpApp.quoteAttachment.home.title">Quote Attachments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.quoteAttachment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-quote-attachment"
+        [routerLink]="['/quote-attachment/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.quoteAttachment.home.createLabel">Create a new Quote Attachment</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (quoteAttachments().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.quoteAttachment.home.notFound">No Quote Attachments found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteAttachment.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quote.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteAttachment.quote">Quote</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="attachment.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteAttachment.attachment">Attachment</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (quoteAttachment of quoteAttachments(); track trackId(quoteAttachment)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/quote-attachment', quoteAttachment.id, 'view']">{{ quoteAttachment.id }}</a>
+              </td>
+              <td>{{ quoteAttachment.name }}</td>
+              <td>
+                @if (quoteAttachment.quote) {
+                  <div>
+                    <a [routerLink]="['/quote', quoteAttachment.quote.id, 'view']">{{ quoteAttachment.quote.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteAttachment.attachment) {
+                  <div>
+                    <a [routerLink]="['/attachment', quoteAttachment.attachment.id, 'view']">{{ quoteAttachment.attachment.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/quote-attachment', quoteAttachment.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/quote-attachment', quoteAttachment.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(quoteAttachment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (quoteAttachments().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

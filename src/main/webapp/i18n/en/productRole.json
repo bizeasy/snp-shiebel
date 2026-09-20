@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "productRole": {
+      "home": {
+        "title": "Product Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Role",
+        "createOrEditLabel": "Create or edit a Product Role",
+        "notFound": "No Product Roles found"
+      },
+      "created": "A new Product Role is created with identifier {{ param }}",
+      "updated": "A Product Role is updated with identifier {{ param }}",
+      "deleted": "A Product Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Role"
+      },
+      "id": "ID",
+      "product": "Product",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

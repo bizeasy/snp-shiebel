@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFeatureCategoryAppl(); as productFeatureCategoryApplRef) {
+      <div>
+        <h2 data-cy="productFeatureCategoryApplDetailsHeading">
+          <span sysTranslate="snpApp.productFeatureCategoryAppl.detail.title">Product Feature Category Appl</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFeatureCategoryApplRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureCategoryAppl.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productFeatureCategoryApplRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureCategoryAppl.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productFeatureCategoryApplRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureCategoryAppl.productCategory">Product Category</span></dt>
+          <dd>
+            @if (productFeatureCategoryAppl()!.productCategory) {
+              <div>
+                <a [routerLink]="['/product-category', productFeatureCategoryAppl()!.productCategory?.id, 'view']">{{
+                  productFeatureCategoryApplRef.productCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureCategoryAppl.productFeatureCategory">Product Feature Category</span></dt>
+          <dd>
+            @if (productFeatureCategoryAppl()!.productFeatureCategory) {
+              <div>
+                <a [routerLink]="['/product-feature-category', productFeatureCategoryAppl()!.productFeatureCategory?.id, 'view']">{{
+                  productFeatureCategoryApplRef.productFeatureCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/product-feature-category-appl', productFeatureCategoryApplRef.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "fileShare": {
+      "home": {
+        "title": "FileShares",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया File Share बनाएँ",
+        "createOrEditLabel": "File Share बनाएँ या संपादित करें",
+        "notFound": "No File Shares found"
+      },
+      "created": "एक नया File Share [identifier: {{ param }}] तैयार है",
+      "updated": "एक File Share [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "File Share [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "File Share [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "File Share"
+      },
+      "id": "ID",
+      "permission": "Permission",
+      "sharedWithEmail": "Shared With Email",
+      "sharedDate": "Shared Date",
+      "expiryDate": "Expiry Date",
+      "accessToken": "Access Token",
+      "isRevoked": "Is Revoked",
+      "folder": "Folder",
+      "attachment": "Attachment",
+      "sharedWith": "Shared With",
+      "sharedBy": "Shared By"
+    }
+  }
+}

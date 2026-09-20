@@ -1,0 +1,60 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { provideTranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+
+import { ContentTypeDetail } from './content-type-detail';
+
+describe('ContentType Management Detail Component', () => {
+  let comp: ContentTypeDetail;
+  let fixture: ComponentFixture<ContentTypeDetail>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideTranslateService(),
+        provideRouter(
+          [
+            {
+              path: '**',
+              loadComponent: () => import('./content-type-detail').then(m => m.ContentTypeDetail),
+              resolve: { contentType: () => of({ id: 8896 }) },
+            },
+          ],
+          withComponentInputBinding(),
+        ),
+      ],
+    });
+    const library = TestBed.inject(FaIconLibrary);
+    library.addIcons(faArrowLeft);
+    library.addIcons(faPencilAlt);
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ContentTypeDetail);
+    comp = fixture.componentInstance;
+  });
+
+  describe('OnInit', () => {
+    it('should load contentType on init', async () => {
+      const harness = await RouterTestingHarness.create();
+      const instance = await harness.navigateByUrl('/', ContentTypeDetail);
+
+      // THEN
+      expect(instance.contentType()).toEqual(expect.objectContaining({ id: 8896 }));
+    });
+  });
+
+  describe('PreviousState', () => {
+    it('should navigate to previous state', () => {
+      vi.spyOn(globalThis.history, 'back');
+      comp.previousState();
+      expect(globalThis.history.back).toHaveBeenCalled();
+    });
+  });
+});

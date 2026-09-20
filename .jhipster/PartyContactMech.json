@@ -1,0 +1,45 @@
+{
+  "annotations": {
+    "changelogDate": "20231214212005"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "fromDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "thruDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PartyContactMech",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "contactMech",
+      "relationshipName": "contactMech",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "contactMechPurpose",
+      "relationshipName": "contactMechPurpose",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

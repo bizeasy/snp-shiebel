@@ -1,0 +1,131 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-payment-gateway-response-heading"
+        data-cy="PaymentGatewayResponseCreateUpdateHeading"
+        sysTranslate="snpApp.paymentGatewayResponse.home.createOrEditLabel"
+      >
+        Create or edit a Payment Gateway Response
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let referenceNumberRef = editForm.get('referenceNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_referenceNumber" sysTranslate="snpApp.paymentGatewayResponse.referenceNumber"
+            >Reference Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="referenceNumber"
+            id="field_referenceNumber"
+            data-cy="referenceNumber"
+            formControlName="referenceNumber"
+          />
+          @if (referenceNumberRef.invalid && (referenceNumberRef.dirty || referenceNumberRef.touched)) {
+            <div>
+              @if (referenceNumberRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '25' }"
+                  >This field cannot be longer than 25 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" sysTranslate="snpApp.paymentGatewayResponse.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        @let gatewayMessageRef = editForm.get('gatewayMessage')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_gatewayMessage" sysTranslate="snpApp.paymentGatewayResponse.gatewayMessage"
+            >Gateway Message</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="gatewayMessage"
+            id="field_gatewayMessage"
+            data-cy="gatewayMessage"
+            formControlName="gatewayMessage"
+          />
+          @if (gatewayMessageRef.invalid && (gatewayMessageRef.dirty || gatewayMessageRef.touched)) {
+            <div>
+              @if (gatewayMessageRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentGatewayConfig" sysTranslate="snpApp.paymentGatewayResponse.paymentGatewayConfig"
+            >Payment Gateway Config</label
+          >
+          <select
+            class="form-select"
+            id="field_paymentGatewayConfig"
+            data-cy="paymentGatewayConfig"
+            name="paymentGatewayConfig"
+            formControlName="paymentGatewayConfig"
+            [compareWith]="comparePaymentGatewayConfig"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentGatewayConfigOption of paymentGatewayConfigsSharedCollection(); track $index) {
+              <option [ngValue]="paymentGatewayConfigOption">{{ paymentGatewayConfigOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentMethodType" sysTranslate="snpApp.paymentGatewayResponse.paymentMethodType"
+            >Payment Method Type</label
+          >
+          <select
+            class="form-select"
+            id="field_paymentMethodType"
+            data-cy="paymentMethodType"
+            name="paymentMethodType"
+            formControlName="paymentMethodType"
+            [compareWith]="comparePaymentMethodType"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentMethodTypeOption of paymentMethodTypesSharedCollection(); track $index) {
+              <option [ngValue]="paymentMethodTypeOption">{{ paymentMethodTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

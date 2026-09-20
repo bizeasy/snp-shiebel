@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity QuoteItem.
+    -->
+    <changeSet id="20231214222805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="quote_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__quote_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quote"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_feature_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__product_feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_feature"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="uom_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="cust_request_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__cust_request_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cust_request"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="cust_request_item_id"
+                                 baseTableName="quote_item"
+                                 constraintName="fk_quote_item__cust_request_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cust_request_item"
+                                 />
+    </changeSet>
+</databaseChangeLog>

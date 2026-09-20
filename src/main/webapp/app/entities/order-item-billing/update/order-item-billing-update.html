@@ -1,0 +1,149 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-order-item-billing-heading"
+        data-cy="OrderItemBillingCreateUpdateHeading"
+        sysTranslate="snpApp.orderItemBilling.home.createOrEditLabel"
+      >
+        Create or edit a Order Item Billing
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.orderItemBilling.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" sysTranslate="snpApp.orderItemBilling.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_orderItem" sysTranslate="snpApp.orderItemBilling.orderItem">Order Item</label>
+          <select
+            class="form-select"
+            id="field_orderItem"
+            data-cy="orderItem"
+            name="orderItem"
+            formControlName="orderItem"
+            [compareWith]="compareOrderItem"
+          >
+            @if (!editForm.get('orderItem')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (orderItemOption of orderItemsSharedCollection(); track $index) {
+              <option [ngValue]="orderItemOption">{{ orderItemOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['orderItem'])!.invalid && (editForm.get(['orderItem'])!.dirty || editForm.get(['orderItem'])!.touched)) {
+          <div>
+            @if (editForm.get(['orderItem'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceItem" sysTranslate="snpApp.orderItemBilling.invoiceItem">Invoice Item</label>
+          <select
+            class="form-select"
+            id="field_invoiceItem"
+            data-cy="invoiceItem"
+            name="invoiceItem"
+            formControlName="invoiceItem"
+            [compareWith]="compareInvoiceItem"
+          >
+            @if (!editForm.get('invoiceItem')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (invoiceItemOption of invoiceItemsSharedCollection(); track $index) {
+              <option [ngValue]="invoiceItemOption">{{ invoiceItemOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['invoiceItem'])!.invalid && (editForm.get(['invoiceItem'])!.dirty || editForm.get(['invoiceItem'])!.touched)) {
+          <div>
+            @if (editForm.get(['invoiceItem'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipmentReceipt" sysTranslate="snpApp.orderItemBilling.shipmentReceipt"
+            >Shipment Receipt</label
+          >
+          <select
+            class="form-select"
+            id="field_shipmentReceipt"
+            data-cy="shipmentReceipt"
+            name="shipmentReceipt"
+            formControlName="shipmentReceipt"
+            [compareWith]="compareShipmentReceipt"
+          >
+            <option [ngValue]="null"></option>
+            @for (shipmentReceiptOption of shipmentReceiptsSharedCollection(); track $index) {
+              <option [ngValue]="shipmentReceiptOption">{{ shipmentReceiptOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_itemIssuance" sysTranslate="snpApp.orderItemBilling.itemIssuance">Item Issuance</label>
+          <select
+            class="form-select"
+            id="field_itemIssuance"
+            data-cy="itemIssuance"
+            name="itemIssuance"
+            formControlName="itemIssuance"
+            [compareWith]="compareItemIssuance"
+          >
+            <option [ngValue]="null"></option>
+            @for (itemIssuanceOption of itemIssuancesSharedCollection(); track $index) {
+              <option [ngValue]="itemIssuanceOption">{{ itemIssuanceOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

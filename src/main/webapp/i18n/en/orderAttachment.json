@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "orderAttachment": {
+      "home": {
+        "title": "Order Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order Attachment",
+        "createOrEditLabel": "Create or edit a Order Attachment",
+        "notFound": "No Order Attachments found"
+      },
+      "created": "A new Order Attachment is created with identifier {{ param }}",
+      "updated": "A Order Attachment is updated with identifier {{ param }}",
+      "deleted": "A Order Attachment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order Attachment {{ id }}?"
+      },
+      "detail": {
+        "title": "Order Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "order": "Order",
+      "attachment": "Attachment"
+    }
+  }
+}

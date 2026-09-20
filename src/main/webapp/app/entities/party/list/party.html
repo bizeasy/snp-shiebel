@@ -1,0 +1,258 @@
+<div>
+  <h2 id="page-heading" data-cy="PartyHeading">
+    <span sysTranslate="snpApp.party.home.title">Parties</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.party.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-party"
+        [routerLink]="['/party/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.party.home.createLabel">Create a new Party</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (parties().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.party.home.notFound">No Parties found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isOrganisation">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.isOrganisation">Is Organisation</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="organisationName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.organisationName">Organisation Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="organisationShortName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.organisationShortName">Organisation Short Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="salutation">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.salutation">Salutation</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="firstName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.firstName">First Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="middleName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.middleName">Middle Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="lastName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.lastName">Last Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="gender">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.gender">Gender</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="birthDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.birthDate">Birth Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="primaryPhone">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.primaryPhone">Primary Phone</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="primaryEmail">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.primaryEmail">Primary Email</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isTemporaryPassword">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.isTemporaryPassword">Is Temporary Password</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="logoImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.logoImageUrl">Logo Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="profileImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.profileImageUrl">Profile Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="notes">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.notes">Notes</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="postalAddress">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.postalAddress">Postal Address</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="user.login">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.user">User</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="partyType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.partyType">Party Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="address.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.party.address">Address</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (party of parties(); track trackId(party)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/party', party.id, 'view']">{{ party.id }}</a>
+              </td>
+              <td>{{ party.isOrganisation }}</td>
+              <td>{{ party.organisationName }}</td>
+              <td>{{ party.organisationShortName }}</td>
+              <td>{{ party.salutation }}</td>
+              <td>{{ party.firstName }}</td>
+              <td>{{ party.middleName }}</td>
+              <td>{{ party.lastName }}</td>
+              <td [sysTranslate]="'snpApp.Gender.' + (party.gender ?? 'null')">
+                {{ { null: '', MALE: 'MALE', FEMALE: 'FEMALE', OTHER: 'OTHER' }[party.gender ?? 'null'] }}
+              </td>
+              <td>{{ party.birthDate | formatMediumDate }}</td>
+              <td>{{ party.primaryPhone }}</td>
+              <td>{{ party.primaryEmail }}</td>
+              <td>{{ party.isTemporaryPassword }}</td>
+              <td>{{ party.logoImageUrl }}</td>
+              <td>{{ party.profileImageUrl }}</td>
+              <td>{{ party.notes }}</td>
+              <td>{{ party.postalAddress }}</td>
+              <td>
+                {{ party.user?.login }}
+              </td>
+              <td>
+                @if (party.partyType) {
+                  <div>
+                    <a [routerLink]="['/party-type', party.partyType.id, 'view']">{{ party.partyType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (party.status) {
+                  <div>
+                    <a [routerLink]="['/status', party.status.id, 'view']">{{ party.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (party.address) {
+                  <div>
+                    <a [routerLink]="['/postal-address', party.address.id, 'view']">{{ party.address.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/party', party.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/party', party.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(party)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (parties().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

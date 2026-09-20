@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "fileFolder": {
+      "home": {
+        "title": "File Folders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new File Folder",
+        "createOrEditLabel": "Create or edit a File Folder",
+        "notFound": "No File Folders found"
+      },
+      "created": "A new File Folder is created with identifier {{ param }}",
+      "updated": "A File Folder is updated with identifier {{ param }}",
+      "deleted": "A File Folder is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete File Folder {{ id }}?"
+      },
+      "detail": {
+        "title": "File Folder"
+      },
+      "id": "ID",
+      "name": "Name",
+      "path": "Path",
+      "isSystemFolder": "Is System Folder",
+      "isTrashed": "Is Trashed",
+      "createdDate": "Created Date",
+      "parent": "Parent",
+      "owner": "Owner"
+    }
+  }
+}

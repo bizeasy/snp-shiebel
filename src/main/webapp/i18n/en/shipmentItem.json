@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "shipmentItem": {
+      "home": {
+        "title": "Shipment Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shipment Item",
+        "createOrEditLabel": "Create or edit a Shipment Item",
+        "notFound": "No Shipment Items found"
+      },
+      "created": "A new Shipment Item is created with identifier {{ param }}",
+      "updated": "A Shipment Item is updated with identifier {{ param }}",
+      "deleted": "A Shipment Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shipment Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Shipment Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "message": "Message",
+      "shipment": "Shipment",
+      "product": "Product"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (status(); as statusRef) {
+      <div>
+        <h2 data-cy="statusDetailsHeading"><span sysTranslate="snpApp.status.detail.title">Status</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ statusRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.status.name">Name</span></dt>
+          <dd>
+            <span>{{ statusRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.status.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ statusRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.status.description">Description</span></dt>
+          <dd>
+            <span>{{ statusRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.status.category">Category</span></dt>
+          <dd>
+            @if (status()!.category) {
+              <div>
+                <a [routerLink]="['/status-category', status()!.category?.id, 'view']">{{ statusRef.category?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/status', statusRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

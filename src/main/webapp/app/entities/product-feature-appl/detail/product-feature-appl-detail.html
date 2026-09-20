@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFeatureAppl(); as productFeatureApplRef) {
+      <div>
+        <h2 data-cy="productFeatureApplDetailsHeading">
+          <span sysTranslate="snpApp.productFeatureAppl.detail.title">Product Feature Appl</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFeatureApplRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productFeatureApplRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productFeatureApplRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ productFeatureApplRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.amount">Amount</span></dt>
+          <dd>
+            <span>{{ productFeatureApplRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.product">Product</span></dt>
+          <dd>
+            @if (productFeatureAppl()!.product) {
+              <div>
+                <a [routerLink]="['/product', productFeatureAppl()!.product?.id, 'view']">{{ productFeatureApplRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.productFeature">Product Feature</span></dt>
+          <dd>
+            @if (productFeatureAppl()!.productFeature) {
+              <div>
+                <a [routerLink]="['/product-feature', productFeatureAppl()!.productFeature?.id, 'view']">{{
+                  productFeatureApplRef.productFeature?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureAppl.featureApplType">Feature Appl Type</span></dt>
+          <dd>
+            @if (productFeatureAppl()!.featureApplType) {
+              <div>
+                <a [routerLink]="['/product-feature-appl-type', productFeatureAppl()!.featureApplType?.id, 'view']">{{
+                  productFeatureApplRef.featureApplType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-feature-appl', productFeatureApplRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

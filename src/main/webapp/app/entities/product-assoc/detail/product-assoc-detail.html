@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productAssoc(); as productAssocRef) {
+      <div>
+        <h2 data-cy="productAssocDetailsHeading"><span sysTranslate="snpApp.productAssoc.detail.title">Product Assoc</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productAssocRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productAssocRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productAssocRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ productAssocRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ productAssocRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.product">Product</span></dt>
+          <dd>
+            @if (productAssoc()!.product) {
+              <div>
+                <a [routerLink]="['/product', productAssoc()!.product?.id, 'view']">{{ productAssocRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.productTo">Product To</span></dt>
+          <dd>
+            @if (productAssoc()!.productTo) {
+              <div>
+                <a [routerLink]="['/product', productAssoc()!.productTo?.id, 'view']">{{ productAssocRef.productTo?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productAssoc.productAssocType">Product Assoc Type</span></dt>
+          <dd>
+            @if (productAssoc()!.productAssocType) {
+              <div>
+                <a [routerLink]="['/product-assoc-type', productAssoc()!.productAssocType?.id, 'view']">{{
+                  productAssocRef.productAssocType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-assoc', productAssocRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

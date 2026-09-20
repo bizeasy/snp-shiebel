@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "pickList": {
+      "home": {
+        "title": "PickLists",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Pick List बनाएँ",
+        "createOrEditLabel": "Pick List बनाएँ या संपादित करें",
+        "notFound": "No Pick Lists found"
+      },
+      "created": "एक नया Pick List [identifier: {{ param }}] तैयार है",
+      "updated": "एक Pick List [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Pick List [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Pick List [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Pick List"
+      },
+      "id": "ID",
+      "description": "Description",
+      "pickListDate": "Pick List Date",
+      "facility": "Facility",
+      "status": "Status",
+      "party": "Party"
+    }
+  }
+}

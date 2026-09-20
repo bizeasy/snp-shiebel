@@ -1,0 +1,29 @@
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/en';
+import { Component, inject } from '@angular/core';
+
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap/datepicker';
+import dayjs from 'dayjs/esm';
+
+import { fontAwesomeIcons } from './config/font-awesome-icons';
+import { TrackerService } from './core/tracker/tracker.service';
+import Main from './layouts/main/main';
+
+@Component({
+  selector: 'sys-app',
+  template: '<sys-main />',
+  imports: [Main],
+})
+export default class App {
+  private readonly iconLibrary = inject(FaIconLibrary);
+  private readonly trackerService = inject(TrackerService);
+  private readonly dpConfig = inject(NgbDatepickerConfig);
+
+  constructor() {
+    this.trackerService.setup();
+    registerLocaleData(locale);
+    this.iconLibrary.addIcons(...fontAwesomeIcons);
+    this.dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
+  }
+}

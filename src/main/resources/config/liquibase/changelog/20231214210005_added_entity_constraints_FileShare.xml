@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity FileShare.
+    -->
+    <changeSet id="20231214210005-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="folder_id"
+                                 baseTableName="file_share"
+                                 constraintName="fk_file_share__folder_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="file_folder"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="attachment_id"
+                                 baseTableName="file_share"
+                                 constraintName="fk_file_share__attachment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="attachment"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="shared_with_id"
+                                 baseTableName="file_share"
+                                 constraintName="fk_file_share__shared_with_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="shared_by_id"
+                                 baseTableName="file_share"
+                                 constraintName="fk_file_share__shared_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+    </changeSet>
+</databaseChangeLog>

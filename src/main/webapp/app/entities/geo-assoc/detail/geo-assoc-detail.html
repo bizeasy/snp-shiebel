@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (geoAssoc(); as geoAssocRef) {
+      <div>
+        <h2 data-cy="geoAssocDetailsHeading"><span sysTranslate="snpApp.geoAssoc.detail.title">Geo Assoc</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ geoAssocRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.geoAssoc.geo">Geo</span></dt>
+          <dd>
+            @if (geoAssoc()!.geo) {
+              <div>
+                <a [routerLink]="['/geo', geoAssoc()!.geo?.id, 'view']">{{ geoAssocRef.geo?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.geoAssoc.geoTo">Geo To</span></dt>
+          <dd>
+            @if (geoAssoc()!.geoTo) {
+              <div>
+                <a [routerLink]="['/geo', geoAssoc()!.geoTo?.id, 'view']">{{ geoAssocRef.geoTo?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.geoAssoc.geoAssocType">Geo Assoc Type</span></dt>
+          <dd>
+            @if (geoAssoc()!.geoAssocType) {
+              <div>
+                <a [routerLink]="['/geo-assoc-type', geoAssoc()!.geoAssocType?.id, 'view']">{{ geoAssocRef.geoAssocType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/geo-assoc', geoAssocRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

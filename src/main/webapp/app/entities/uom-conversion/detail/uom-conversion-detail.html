@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (uomConversion(); as uomConversionRef) {
+      <div>
+        <h2 data-cy="uomConversionDetailsHeading"><span sysTranslate="snpApp.uomConversion.detail.title">Uom Conversion</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ uomConversionRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.name">Name</span></dt>
+          <dd>
+            <span>{{ uomConversionRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.conversionFactor">Conversion Factor</span></dt>
+          <dd>
+            <span>{{ uomConversionRef.conversionFactor }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ uomConversionRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.toDate">To Date</span></dt>
+          <dd>
+            <span>{{ uomConversionRef.toDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.fromUom">From Uom</span></dt>
+          <dd>
+            @if (uomConversion()!.fromUom) {
+              <div>
+                <a [routerLink]="['/uom', uomConversion()!.fromUom?.id, 'view']">{{ uomConversionRef.fromUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.uomConversion.toUom">To Uom</span></dt>
+          <dd>
+            @if (uomConversion()!.toUom) {
+              <div>
+                <a [routerLink]="['/uom', uomConversion()!.toUom?.id, 'view']">{{ uomConversionRef.toUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/uom-conversion', uomConversionRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

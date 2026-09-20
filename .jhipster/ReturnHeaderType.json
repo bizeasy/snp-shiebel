@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "changelogDate": "20231214231405"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ReturnHeaderType",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

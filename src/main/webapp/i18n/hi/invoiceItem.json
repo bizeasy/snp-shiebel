@@ -1,0 +1,49 @@
+{
+  "snpApp": {
+    "invoiceItem": {
+      "home": {
+        "title": "InvoiceItems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Invoice Item बनाएँ",
+        "createOrEditLabel": "Invoice Item बनाएँ या संपादित करें",
+        "notFound": "No Invoice Items found"
+      },
+      "created": "एक नया Invoice Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Invoice Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Invoice Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Invoice Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Invoice Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "cancelQuantity": "Cancel Quantity",
+      "selectedAmount": "Selected Amount",
+      "unitPrice": "Unit Price",
+      "unitListPrice": "Unit List Price",
+      "isModifiedPrice": "Is Modified Price",
+      "estimatedShipDate": "Estimated Ship Date",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "shipBeforeDate": "Ship Before Date",
+      "shipAfterDate": "Ship After Date",
+      "entryDate": "Entry Date",
+      "attr1": "Attr 1",
+      "attr2": "Attr 2",
+      "attr3": "Attr 3",
+      "invoice": "Invoice",
+      "invoiceItemType": "Invoice Item Type",
+      "product": "Product",
+      "uom": "Uom",
+      "productFeature": "Product Feature",
+      "productFacility": "Product Facility",
+      "fromInventoryItem": "From Inventory Item",
+      "taxAuthRate": "Tax Auth Rate",
+      "parentInvoice": "Parent Invoice",
+      "parentInvoiceItem": "Parent Invoice Item"
+    }
+  }
+}

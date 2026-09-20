@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20231214231705"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ReturnItemBilling",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "returnItem",
+      "relationshipName": "returnItem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "orderItem",
+      "relationshipName": "orderItem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "invoiceItem",
+      "relationshipName": "invoiceItem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "shipmentReceipt",
+      "relationshipName": "shipmentReceipt",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

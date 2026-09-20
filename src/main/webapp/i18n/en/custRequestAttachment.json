@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "custRequestAttachment": {
+      "home": {
+        "title": "Cust Request Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cust Request Attachment",
+        "createOrEditLabel": "Create or edit a Cust Request Attachment",
+        "notFound": "No Cust Request Attachments found"
+      },
+      "created": "A new Cust Request Attachment is created with identifier {{ param }}",
+      "updated": "A Cust Request Attachment is updated with identifier {{ param }}",
+      "deleted": "A Cust Request Attachment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cust Request Attachment {{ id }}?"
+      },
+      "detail": {
+        "title": "Cust Request Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "custRequest": "Cust Request",
+      "attachment": "Attachment"
+    }
+  }
+}

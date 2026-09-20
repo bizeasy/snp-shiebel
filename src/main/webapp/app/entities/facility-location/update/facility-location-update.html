@@ -1,0 +1,190 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-facility-location-heading"
+        data-cy="FacilityLocationCreateUpdateHeading"
+        sysTranslate="snpApp.facilityLocation.home.createOrEditLabel"
+      >
+        Create or edit a Facility Location
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let locationSeqIdRef = editForm.get('locationSeqId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_locationSeqId" sysTranslate="snpApp.facilityLocation.locationSeqId">Location Seq Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="locationSeqId"
+            id="field_locationSeqId"
+            data-cy="locationSeqId"
+            formControlName="locationSeqId"
+          />
+          @if (locationSeqIdRef.invalid && (locationSeqIdRef.dirty || locationSeqIdRef.touched)) {
+            <div>
+              @if (locationSeqIdRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (locationSeqIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let areaIdRef = editForm.get('areaId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_areaId" sysTranslate="snpApp.facilityLocation.areaId">Area Id</label>
+          <input type="text" class="form-control" name="areaId" id="field_areaId" data-cy="areaId" formControlName="areaId" />
+          @if (areaIdRef.invalid && (areaIdRef.dirty || areaIdRef.touched)) {
+            <div>
+              @if (areaIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let aisleIdRef = editForm.get('aisleId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_aisleId" sysTranslate="snpApp.facilityLocation.aisleId">Aisle Id</label>
+          <input type="text" class="form-control" name="aisleId" id="field_aisleId" data-cy="aisleId" formControlName="aisleId" />
+          @if (aisleIdRef.invalid && (aisleIdRef.dirty || aisleIdRef.touched)) {
+            <div>
+              @if (aisleIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let sectionIdRef = editForm.get('sectionId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sectionId" sysTranslate="snpApp.facilityLocation.sectionId">Section Id</label>
+          <input type="text" class="form-control" name="sectionId" id="field_sectionId" data-cy="sectionId" formControlName="sectionId" />
+          @if (sectionIdRef.invalid && (sectionIdRef.dirty || sectionIdRef.touched)) {
+            <div>
+              @if (sectionIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let levelIdRef = editForm.get('levelId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_levelId" sysTranslate="snpApp.facilityLocation.levelId">Level Id</label>
+          <input type="text" class="form-control" name="levelId" id="field_levelId" data-cy="levelId" formControlName="levelId" />
+          @if (levelIdRef.invalid && (levelIdRef.dirty || levelIdRef.touched)) {
+            <div>
+              @if (levelIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let positionIdRef = editForm.get('positionId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_positionId" sysTranslate="snpApp.facilityLocation.positionId">Position Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="positionId"
+            id="field_positionId"
+            data-cy="positionId"
+            formControlName="positionId"
+          />
+          @if (positionIdRef.invalid && (positionIdRef.dirty || positionIdRef.touched)) {
+            <div>
+              @if (positionIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facility" sysTranslate="snpApp.facilityLocation.facility">Facility</label>
+          <select
+            class="form-select"
+            id="field_facility"
+            data-cy="facility"
+            name="facility"
+            formControlName="facility"
+            [compareWith]="compareFacility"
+          >
+            @if (!editForm.get('facility')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['facility'])!.invalid && (editForm.get(['facility'])!.dirty || editForm.get(['facility'])!.touched)) {
+          <div>
+            @if (editForm.get(['facility'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_locationType" sysTranslate="snpApp.facilityLocation.locationType">Location Type</label>
+          <select
+            class="form-select"
+            id="field_locationType"
+            data-cy="locationType"
+            name="locationType"
+            formControlName="locationType"
+            [compareWith]="compareLocationType"
+          >
+            <option [ngValue]="null"></option>
+            @for (locationTypeOption of locationTypesSharedCollection(); track $index) {
+              <option [ngValue]="locationTypeOption">{{ locationTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ProductRole.
+    -->
+    <changeSet id="20231214215405-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="product_role"
+                                 constraintName="fk_product_role__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="party_id"
+                                 baseTableName="product_role"
+                                 constraintName="fk_product_role__party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="role_type_id"
+                                 baseTableName="product_role"
+                                 constraintName="fk_product_role__role_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role_type"
+                                 />
+    </changeSet>
+</databaseChangeLog>

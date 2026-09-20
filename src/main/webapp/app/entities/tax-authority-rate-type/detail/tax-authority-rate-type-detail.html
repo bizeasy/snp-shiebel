@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (taxAuthorityRateType(); as taxAuthorityRateTypeRef) {
+      <div>
+        <h2 data-cy="taxAuthorityRateTypeDetailsHeading">
+          <span sysTranslate="snpApp.taxAuthorityRateType.detail.title">Tax Authority Rate Type</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ taxAuthorityRateTypeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.taxAuthorityRateType.name">Name</span></dt>
+          <dd>
+            <span>{{ taxAuthorityRateTypeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.taxAuthorityRateType.description">Description</span></dt>
+          <dd>
+            <span>{{ taxAuthorityRateTypeRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.taxAuthorityRateType.taxAuthority">Tax Authority</span></dt>
+          <dd>
+            @if (taxAuthorityRateType()!.taxAuthority) {
+              <div>
+                <a [routerLink]="['/tax-authority', taxAuthorityRateType()!.taxAuthority?.id, 'view']">{{
+                  taxAuthorityRateTypeRef.taxAuthority?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.taxAuthorityRateType.taxSlab">Tax Slab</span></dt>
+          <dd>
+            @if (taxAuthorityRateType()!.taxSlab) {
+              <div>
+                <a [routerLink]="['/tax-slab', taxAuthorityRateType()!.taxSlab?.id, 'view']">{{ taxAuthorityRateTypeRef.taxSlab?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/tax-authority-rate-type', taxAuthorityRateTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

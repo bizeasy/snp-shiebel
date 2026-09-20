@@ -1,0 +1,98 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (itemIssuance(); as itemIssuanceRef) {
+      <div>
+        <h2 data-cy="itemIssuanceDetailsHeading"><span sysTranslate="snpApp.itemIssuance.detail.title">Item Issuance</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.message">Message</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.message }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.issuedDate">Issued Date</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.issuedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.issuedBy">Issued By</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.issuedBy }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.cancelQuantity">Cancel Quantity</span></dt>
+          <dd>
+            <span>{{ itemIssuanceRef.cancelQuantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (itemIssuance()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', itemIssuance()!.inventoryItem?.id, 'view']">{{ itemIssuanceRef.inventoryItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.order">Order</span></dt>
+          <dd>
+            @if (itemIssuance()!.order) {
+              <div>
+                <a [routerLink]="['/order', itemIssuance()!.order?.id, 'view']">{{ itemIssuanceRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.orderItem">Order Item</span></dt>
+          <dd>
+            @if (itemIssuance()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', itemIssuance()!.orderItem?.id, 'view']">{{ itemIssuanceRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.shipment">Shipment</span></dt>
+          <dd>
+            @if (itemIssuance()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', itemIssuance()!.shipment?.id, 'view']">{{ itemIssuanceRef.shipment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.shipmentItem">Shipment Item</span></dt>
+          <dd>
+            @if (itemIssuance()!.shipmentItem) {
+              <div>
+                <a [routerLink]="['/shipment-item', itemIssuance()!.shipmentItem?.id, 'view']">{{ itemIssuanceRef.shipmentItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.itemIssuance.issuedByParty">Issued By Party</span></dt>
+          <dd>
+            @if (itemIssuance()!.issuedByParty) {
+              <div>
+                <a [routerLink]="['/party', itemIssuance()!.issuedByParty?.id, 'view']">{{ itemIssuanceRef.issuedByParty?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/item-issuance', itemIssuanceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

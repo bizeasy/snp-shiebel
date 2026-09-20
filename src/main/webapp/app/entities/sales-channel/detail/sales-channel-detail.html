@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (salesChannel(); as salesChannelRef) {
+      <div>
+        <h2 data-cy="salesChannelDetailsHeading"><span sysTranslate="snpApp.salesChannel.detail.title">Sales Channel</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ salesChannelRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.salesChannel.name">Name</span></dt>
+          <dd>
+            <span>{{ salesChannelRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.salesChannel.description">Description</span></dt>
+          <dd>
+            <span>{{ salesChannelRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.salesChannel.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ salesChannelRef.sequenceNo }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/sales-channel', salesChannelRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,29 @@
+{
+  "snpApp": {
+    "returnItemBilling": {
+      "home": {
+        "title": "Return Item Billings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Return Item Billing సృష్టించండి",
+        "createOrEditLabel": "Return Item Billing సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Return Item Billings found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Return Item Billing సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Return Item Billing సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Return Item Billing తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Return Item Billing {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Return Item Billing"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "returnItem": "Return Item",
+      "orderItem": "Order Item",
+      "invoiceItem": "Invoice Item",
+      "shipmentReceipt": "Shipment Receipt"
+    }
+  }
+}

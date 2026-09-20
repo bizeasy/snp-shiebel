@@ -1,0 +1,46 @@
+<div>
+  <h2>
+    <span id="metrics-page-heading" data-cy="metricsPageHeading" sysTranslate="metrics.title">Application Metrics</span>
+
+    <button class="btn btn-primary float-end" (click)="refresh()">
+      <fa-icon icon="sync" /> <span sysTranslate="metrics.refresh.button">Refresh</span>
+    </button>
+  </h2>
+
+  <h3 sysTranslate="metrics.jvm.title">JVM Metrics</h3>
+
+  @let metricsRef = metrics();
+  @if (metricsRef && !updatingMetrics()) {
+    <div class="row">
+      <sys-jvm-memory class="col-md-4" [updating]="updatingMetrics()" [jvmMemoryMetrics]="metricsRef.jvm" />
+
+      <sys-jvm-threads class="col-md-4" [threads]="threads()" />
+
+      <sys-metrics-system class="col-md-4" [updating]="updatingMetrics()" [systemMetrics]="metricsRef.processMetrics" />
+    </div>
+  }
+
+  @if (metricsRef?.garbageCollector; as metricsRefGarbageCollector) {
+    <sys-metrics-garbagecollector [updating]="updatingMetrics()" [garbageCollectorMetrics]="metricsRefGarbageCollector" />
+  }
+
+  @if (updatingMetrics()) {
+    <div class="alert alert-info" sysTranslate="metrics.updating">Updating...</div>
+  }
+
+  @if (metricsRef?.['http.server.requests']; as metricsRefHttpServerRequests) {
+    <sys-metrics-request [updating]="updatingMetrics()" [requestMetrics]="metricsRefHttpServerRequests" />
+  }
+
+  @if (metricsRef?.services; as metricsRefServices) {
+    <sys-metrics-endpoints-requests [updating]="updatingMetrics()" [endpointsRequestsMetrics]="metricsRefServices" />
+  }
+
+  @if (metricsRef?.cache; as metricsRefCache) {
+    <sys-metrics-cache [updating]="updatingMetrics()" [cacheMetrics]="metricsRefCache" />
+  }
+
+  @if (metricsRef && metricsKeyExistsAndObjectNotEmpty('databases')) {
+    <sys-metrics-datasource [updating]="updatingMetrics()" [datasourceMetrics]="metricsRef.databases" />
+  }
+</div>

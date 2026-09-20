@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "returnHeaderType": {
+      "home": {
+        "title": "Return Header Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Return Header Type",
+        "createOrEditLabel": "Create or edit a Return Header Type",
+        "notFound": "No Return Header Types found"
+      },
+      "created": "A new Return Header Type is created with identifier {{ param }}",
+      "updated": "A Return Header Type is updated with identifier {{ param }}",
+      "deleted": "A Return Header Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Return Header Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Return Header Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

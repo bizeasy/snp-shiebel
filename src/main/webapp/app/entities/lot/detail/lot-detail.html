@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (lot(); as lotRef) {
+      <div>
+        <h2 data-cy="lotDetailsHeading"><span sysTranslate="snpApp.lot.detail.title">Lot</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ lotRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.lot.creationDate">Creation Date</span></dt>
+          <dd>
+            <span>{{ lotRef.creationDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.lot.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ lotRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.lot.expirationDate">Expiration Date</span></dt>
+          <dd>
+            <span>{{ lotRef.expirationDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.lot.retestDate">Retest Date</span></dt>
+          <dd>
+            <span>{{ lotRef.retestDate | formatMediumDatetime }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/lot', lotRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

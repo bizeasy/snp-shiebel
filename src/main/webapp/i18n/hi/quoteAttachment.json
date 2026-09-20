@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "quoteAttachment": {
+      "home": {
+        "title": "QuoteAttachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Quote Attachment बनाएँ",
+        "createOrEditLabel": "Quote Attachment बनाएँ या संपादित करें",
+        "notFound": "No Quote Attachments found"
+      },
+      "created": "एक नया Quote Attachment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Quote Attachment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Quote Attachment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Quote Attachment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Quote Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "quote": "Quote",
+      "attachment": "Attachment"
+    }
+  }
+}

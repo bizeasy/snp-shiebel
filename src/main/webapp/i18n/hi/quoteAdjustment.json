@@ -1,0 +1,39 @@
+{
+  "snpApp": {
+    "quoteAdjustment": {
+      "home": {
+        "title": "QuoteAdjustments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Quote Adjustment बनाएँ",
+        "createOrEditLabel": "Quote Adjustment बनाएँ या संपादित करें",
+        "notFound": "No Quote Adjustments found"
+      },
+      "created": "एक नया Quote Adjustment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Quote Adjustment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Quote Adjustment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Quote Adjustment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Quote Adjustment"
+      },
+      "id": "ID",
+      "description": "Description",
+      "comments": "Comments",
+      "amount": "Amount",
+      "sourcePercentage": "Source Percentage",
+      "sourceRefId": "Source Ref Id",
+      "exemptAmount": "Exempt Amount",
+      "includeInTax": "Include In Tax",
+      "includeInShipping": "Include In Shipping",
+      "includedInPrice": "Included In Price",
+      "entryDate": "Entry Date",
+      "quote": "Quote",
+      "quoteItem": "Quote Item",
+      "adjustmentType": "Adjustment Type",
+      "product": "Product",
+      "productFeature": "Product Feature",
+      "taxAuthority": "Tax Authority"
+    }
+  }
+}

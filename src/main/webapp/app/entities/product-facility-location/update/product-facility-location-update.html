@@ -1,0 +1,151 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-product-facility-location-heading"
+        data-cy="ProductFacilityLocationCreateUpdateHeading"
+        sysTranslate="snpApp.productFacilityLocation.home.createOrEditLabel"
+      >
+        Create or edit a Product Facility Location
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_minimumStock" sysTranslate="snpApp.productFacilityLocation.minimumStock"
+            >Minimum Stock</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="minimumStock"
+            id="field_minimumStock"
+            data-cy="minimumStock"
+            formControlName="minimumStock"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_moveQuantity" sysTranslate="snpApp.productFacilityLocation.moveQuantity"
+            >Move Quantity</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="moveQuantity"
+            id="field_moveQuantity"
+            data-cy="moveQuantity"
+            formControlName="moveQuantity"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.productFacilityLocation.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facility" sysTranslate="snpApp.productFacilityLocation.facility">Facility</label>
+          <select
+            class="form-select"
+            id="field_facility"
+            data-cy="facility"
+            name="facility"
+            formControlName="facility"
+            [compareWith]="compareFacility"
+          >
+            @if (!editForm.get('facility')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['facility'])!.invalid && (editForm.get(['facility'])!.dirty || editForm.get(['facility'])!.touched)) {
+          <div>
+            @if (editForm.get(['facility'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityLocation" sysTranslate="snpApp.productFacilityLocation.facilityLocation"
+            >Facility Location</label
+          >
+          <select
+            class="form-select"
+            id="field_facilityLocation"
+            data-cy="facilityLocation"
+            name="facilityLocation"
+            formControlName="facilityLocation"
+            [compareWith]="compareFacilityLocation"
+          >
+            @if (!editForm.get('facilityLocation')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (facilityLocationOption of facilityLocationsSharedCollection(); track $index) {
+              <option [ngValue]="facilityLocationOption">{{ facilityLocationOption.locationSeqId }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['facilityLocation'])!.invalid &&
+          (editForm.get(['facilityLocation'])!.dirty || editForm.get(['facilityLocation'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['facilityLocation'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

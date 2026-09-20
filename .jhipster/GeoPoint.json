@@ -1,0 +1,21 @@
+{
+  "annotations": {
+    "changelogDate": "20231214210505"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "latitude",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "GeoPoint",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

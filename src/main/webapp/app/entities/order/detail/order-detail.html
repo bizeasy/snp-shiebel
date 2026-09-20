@@ -1,0 +1,214 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (order(); as orderRef) {
+      <div>
+        <h2 data-cy="orderDetailsHeading"><span sysTranslate="snpApp.order.detail.title">Order</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.name">Name</span></dt>
+          <dd>
+            <span>{{ orderRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.orderRefNo">Order Ref No</span></dt>
+          <dd>
+            <span>{{ orderRef.orderRefNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ orderRef.externalId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.orderDate">Order Date</span></dt>
+          <dd>
+            <span>{{ orderRef.orderDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.entryDate">Entry Date</span></dt>
+          <dd>
+            <span>{{ orderRef.entryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.deliveryDate">Delivery Date</span></dt>
+          <dd>
+            <span>{{ orderRef.deliveryDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.priority">Priority</span></dt>
+          <dd>
+            <span>{{ orderRef.priority }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.isRushOrder">Is Rush Order</span></dt>
+          <dd>
+            <span>{{ orderRef.isRushOrder }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.needsInventoryIssuance">Needs Inventory Issuance</span></dt>
+          <dd>
+            <span>{{ orderRef.needsInventoryIssuance }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.remainingSubTotal">Remaining Sub Total</span></dt>
+          <dd>
+            <span>{{ orderRef.remainingSubTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.grandTotal">Grand Total</span></dt>
+          <dd>
+            <span>{{ orderRef.grandTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.projectName">Project Name</span></dt>
+          <dd>
+            <span>{{ orderRef.projectName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.version">Version</span></dt>
+          <dd>
+            <span>{{ orderRef.version }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.versionRef">Version Ref</span></dt>
+          <dd>
+            <span>{{ orderRef.versionRef }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.description">Description</span></dt>
+          <dd>
+            <span>{{ orderRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ orderRef.remarks }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.paymentTerms">Payment Terms</span></dt>
+          <dd>
+            <span>{{ orderRef.paymentTerms }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.deliveryTerms">Delivery Terms</span></dt>
+          <dd>
+            <span>{{ orderRef.deliveryTerms }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.info">Info</span></dt>
+          <dd>
+            <span>{{ orderRef.info }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.attr1">Attr 1</span></dt>
+          <dd>
+            <span>{{ orderRef.attr1 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.attr2">Attr 2</span></dt>
+          <dd>
+            <span>{{ orderRef.attr2 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.attr3">Attr 3</span></dt>
+          <dd>
+            <span>{{ orderRef.attr3 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.order.orderType">Order Type</span></dt>
+          <dd>
+            @if (order()!.orderType) {
+              <div>
+                <a [routerLink]="['/order-type', order()!.orderType?.id, 'view']">{{ orderRef.orderType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.salesChannel">Sales Channel</span></dt>
+          <dd>
+            @if (order()!.salesChannel) {
+              <div>
+                <a [routerLink]="['/sales-channel', order()!.salesChannel?.id, 'view']">{{ orderRef.salesChannel?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.party">Party</span></dt>
+          <dd>
+            @if (order()!.party) {
+              <div>
+                <a [routerLink]="['/party', order()!.party?.id, 'view']">{{ orderRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.supplier">Supplier</span></dt>
+          <dd>
+            @if (order()!.supplier) {
+              <div>
+                <a [routerLink]="['/party', order()!.supplier?.id, 'view']">{{ orderRef.supplier?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.status">Status</span></dt>
+          <dd>
+            @if (order()!.status) {
+              <div>
+                <a [routerLink]="['/status', order()!.status?.id, 'view']">{{ orderRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (order()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', order()!.currencyUom?.id, 'view']">{{ orderRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.currencyConversion">Currency Conversion</span></dt>
+          <dd>
+            @if (order()!.currencyConversion) {
+              <div>
+                <a [routerLink]="['/uom-conversion', order()!.currencyConversion?.id, 'view']">{{ orderRef.currencyConversion?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.quote">Quote</span></dt>
+          <dd>
+            @if (order()!.quote) {
+              <div>
+                <a [routerLink]="['/quote', order()!.quote?.id, 'view']">{{ orderRef.quote?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.facility">Facility</span></dt>
+          <dd>
+            @if (order()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', order()!.facility?.id, 'view']">{{ orderRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.productStore">Product Store</span></dt>
+          <dd>
+            @if (order()!.productStore) {
+              <div>
+                <a [routerLink]="['/product-store', order()!.productStore?.id, 'view']">{{ orderRef.productStore?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.department">Department</span></dt>
+          <dd>
+            @if (order()!.department) {
+              <div>
+                <a [routerLink]="['/department', order()!.department?.id, 'view']">{{ orderRef.department?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.order.customTimePeriod">Custom Time Period</span></dt>
+          <dd>
+            @if (order()!.customTimePeriod) {
+              <div>
+                <a [routerLink]="['/custom-time-period', order()!.customTimePeriod?.id, 'view']">{{ orderRef.customTimePeriod?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order', orderRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

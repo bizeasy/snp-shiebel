@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "picklistRole": {
+      "home": {
+        "title": "Picklist Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Picklist Role",
+        "createOrEditLabel": "Create or edit a Picklist Role",
+        "notFound": "No Picklist Roles found"
+      },
+      "created": "A new Picklist Role is created with identifier {{ param }}",
+      "updated": "A Picklist Role is updated with identifier {{ param }}",
+      "deleted": "A Picklist Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Picklist Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Picklist Role"
+      },
+      "id": "ID",
+      "pickList": "Pick List",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

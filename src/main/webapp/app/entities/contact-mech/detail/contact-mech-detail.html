@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (contactMech(); as contactMechRef) {
+      <div>
+        <h2 data-cy="contactMechDetailsHeading"><span sysTranslate="snpApp.contactMech.detail.title">Contact Mech</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ contactMechRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.contactMech.infoString">Info String</span></dt>
+          <dd>
+            <span>{{ contactMechRef.infoString }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.contactMech.contactMechType">Contact Mech Type</span></dt>
+          <dd>
+            @if (contactMech()!.contactMechType) {
+              <div>
+                <a [routerLink]="['/contact-mech-type', contactMech()!.contactMechType?.id, 'view']">{{
+                  contactMechRef.contactMechType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/contact-mech', contactMechRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

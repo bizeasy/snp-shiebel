@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="CustRequestCategoryHeading">
+    <span sysTranslate="snpApp.custRequestCategory.home.title">Cust Request Categories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.custRequestCategory.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cust-request-category"
+        [routerLink]="['/cust-request-category/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.custRequestCategory.home.createLabel">Create a new Cust Request Category</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (custRequestCategories().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.custRequestCategory.home.notFound">No Cust Request Categories found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestCategory.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestCategory.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="custRequestType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestCategory.custRequestType">Cust Request Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (custRequestCategory of custRequestCategories(); track trackId(custRequestCategory)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cust-request-category', custRequestCategory.id, 'view']">{{ custRequestCategory.id }}</a>
+              </td>
+              <td>{{ custRequestCategory.name }}</td>
+              <td>{{ custRequestCategory.description }}</td>
+              <td>
+                @if (custRequestCategory.custRequestType) {
+                  <div>
+                    <a [routerLink]="['/cust-request-type', custRequestCategory.custRequestType.id, 'view']">{{
+                      custRequestCategory.custRequestType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/cust-request-category', custRequestCategory.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/cust-request-category', custRequestCategory.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(custRequestCategory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

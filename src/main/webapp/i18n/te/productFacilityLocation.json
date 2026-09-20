@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "productFacilityLocation": {
+      "home": {
+        "title": "Product Facility Locations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Product Facility Location సృష్టించండి",
+        "createOrEditLabel": "Product Facility Location సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Product Facility Locations found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Product Facility Location సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Product Facility Location సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Product Facility Location తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Product Facility Location {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Product Facility Location"
+      },
+      "id": "ID",
+      "minimumStock": "Minimum Stock",
+      "moveQuantity": "Move Quantity",
+      "product": "Product",
+      "facility": "Facility",
+      "facilityLocation": "Facility Location"
+    }
+  }
+}

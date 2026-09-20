@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "shipmentType": {
+      "home": {
+        "title": "ShipmentTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shipment Type बनाएँ",
+        "createOrEditLabel": "Shipment Type बनाएँ या संपादित करें",
+        "notFound": "No Shipment Types found"
+      },
+      "created": "एक नया Shipment Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shipment Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shipment Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shipment Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shipment Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+<div>
+  <h2 id="page-heading" data-cy="CustRequestTypeHeading">
+    <span sysTranslate="snpApp.custRequestType.home.title">Cust Request Types</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.custRequestType.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cust-request-type"
+        [routerLink]="['/cust-request-type/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.custRequestType.home.createLabel">Create a new Cust Request Type</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (custRequestTypes().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.custRequestType.home.notFound">No Cust Request Types found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestType.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestType.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="parent.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestType.parent">Parent</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.custRequestType.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (custRequestType of custRequestTypes(); track trackId(custRequestType)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cust-request-type', custRequestType.id, 'view']">{{ custRequestType.id }}</a>
+              </td>
+              <td>{{ custRequestType.name }}</td>
+              <td>{{ custRequestType.description }}</td>
+              <td>
+                @if (custRequestType.parent) {
+                  <div>
+                    <a [routerLink]="['/cust-request-type', custRequestType.parent.id, 'view']">{{ custRequestType.parent.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (custRequestType.party) {
+                  <div>
+                    <a [routerLink]="['/party', custRequestType.party.id, 'view']">{{ custRequestType.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/cust-request-type', custRequestType.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/cust-request-type', custRequestType.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(custRequestType)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

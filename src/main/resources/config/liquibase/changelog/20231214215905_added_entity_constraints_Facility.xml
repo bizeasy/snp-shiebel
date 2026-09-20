@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Facility.
+    -->
+    <changeSet id="20231214215905-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="facility_type_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__facility_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="parent_facility_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__parent_facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="owner_party_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__owner_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_group_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__facility_group_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility_group"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="size_uom_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__size_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="geo_point_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__geo_point_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="geo_point"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="inventory_item_type_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__inventory_item_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_item_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_store_id"
+                                 baseTableName="facility"
+                                 constraintName="fk_facility__product_store_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_store"
+                                 />
+    </changeSet>
+</databaseChangeLog>

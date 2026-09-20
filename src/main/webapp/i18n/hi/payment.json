@@ -1,0 +1,43 @@
+{
+  "snpApp": {
+    "payment": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Payment बनाएँ",
+        "createOrEditLabel": "Payment बनाएँ या संपादित करें",
+        "notFound": "No Payments found"
+      },
+      "created": "एक नया Payment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Payment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Payment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Payment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Payment"
+      },
+      "id": "ID",
+      "paymentRefNumber": "Payment Ref Number",
+      "effectiveDate": "Effective Date",
+      "paymentDate": "Payment Date",
+      "amount": "Amount",
+      "actualAmount": "Actual Amount",
+      "paymentStatus": "Payment Status",
+      "mihpayId": "Mihpay Id",
+      "txnId": "Txn Id",
+      "email": "Email",
+      "phone": "Phone",
+      "productInfo": "Product Info",
+      "paymentType": "Payment Type",
+      "paymentMethodType": "Payment Method Type",
+      "paymentMethod": "Payment Method",
+      "paymentGatewayResponse": "Payment Gateway Response",
+      "status": "Status",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "roleType": "Role Type",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

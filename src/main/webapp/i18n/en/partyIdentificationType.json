@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "partyIdentificationType": {
+      "home": {
+        "title": "Party Identification Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Party Identification Type",
+        "createOrEditLabel": "Create or edit a Party Identification Type",
+        "notFound": "No Party Identification Types found"
+      },
+      "created": "A new Party Identification Type is created with identifier {{ param }}",
+      "updated": "A Party Identification Type is updated with identifier {{ param }}",
+      "deleted": "A Party Identification Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Party Identification Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Party Identification Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

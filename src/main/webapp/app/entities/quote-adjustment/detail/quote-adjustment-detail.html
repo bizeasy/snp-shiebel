@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quoteAdjustment(); as quoteAdjustmentRef) {
+      <div>
+        <h2 data-cy="quoteAdjustmentDetailsHeading"><span sysTranslate="snpApp.quoteAdjustment.detail.title">Quote Adjustment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.description">Description</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.comments">Comments</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.amount">Amount</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.sourcePercentage">Source Percentage</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.sourcePercentage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.sourceRefId">Source Ref Id</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.sourceRefId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.exemptAmount">Exempt Amount</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.exemptAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.includeInTax">Include In Tax</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.includeInTax }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.includeInShipping">Include In Shipping</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.includeInShipping }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.includedInPrice">Included In Price</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.includedInPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.entryDate">Entry Date</span></dt>
+          <dd>
+            <span>{{ quoteAdjustmentRef.entryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.quote">Quote</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.quote) {
+              <div>
+                <a [routerLink]="['/quote', quoteAdjustment()!.quote?.id, 'view']">{{ quoteAdjustmentRef.quote?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.quoteItem">Quote Item</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.quoteItem) {
+              <div>
+                <a [routerLink]="['/quote-item', quoteAdjustment()!.quoteItem?.id, 'view']">{{ quoteAdjustmentRef.quoteItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.adjustmentType">Adjustment Type</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.adjustmentType) {
+              <div>
+                <a [routerLink]="['/order-adjustment-type', quoteAdjustment()!.adjustmentType?.id, 'view']">{{
+                  quoteAdjustmentRef.adjustmentType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.product">Product</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.product) {
+              <div>
+                <a [routerLink]="['/product', quoteAdjustment()!.product?.id, 'view']">{{ quoteAdjustmentRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.productFeature">Product Feature</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.productFeature) {
+              <div>
+                <a [routerLink]="['/product-feature', quoteAdjustment()!.productFeature?.id, 'view']">{{
+                  quoteAdjustmentRef.productFeature?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAdjustment.taxAuthority">Tax Authority</span></dt>
+          <dd>
+            @if (quoteAdjustment()!.taxAuthority) {
+              <div>
+                <a [routerLink]="['/tax-authority', quoteAdjustment()!.taxAuthority?.id, 'view']">{{
+                  quoteAdjustmentRef.taxAuthority?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quote-adjustment', quoteAdjustmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

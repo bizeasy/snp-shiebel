@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facility(); as facilityRef) {
+      <div>
+        <h2 data-cy="facilityDetailsHeading"><span sysTranslate="snpApp.facility.detail.title">Facility</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.name">Name</span></dt>
+          <dd>
+            <span>{{ facilityRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.description">Description</span></dt>
+          <dd>
+            <span>{{ facilityRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.facilitySize">Facility Size</span></dt>
+          <dd>
+            <span>{{ facilityRef.facilitySize }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.facilityType">Facility Type</span></dt>
+          <dd>
+            @if (facility()!.facilityType) {
+              <div>
+                <a [routerLink]="['/facility-type', facility()!.facilityType?.id, 'view']">{{ facilityRef.facilityType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.parentFacility">Parent Facility</span></dt>
+          <dd>
+            @if (facility()!.parentFacility) {
+              <div>
+                <a [routerLink]="['/facility', facility()!.parentFacility?.id, 'view']">{{ facilityRef.parentFacility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.ownerParty">Owner Party</span></dt>
+          <dd>
+            @if (facility()!.ownerParty) {
+              <div>
+                <a [routerLink]="['/party', facility()!.ownerParty?.id, 'view']">{{ facilityRef.ownerParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.facilityGroup">Facility Group</span></dt>
+          <dd>
+            @if (facility()!.facilityGroup) {
+              <div>
+                <a [routerLink]="['/facility-group', facility()!.facilityGroup?.id, 'view']">{{ facilityRef.facilityGroup?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.sizeUom">Size Uom</span></dt>
+          <dd>
+            @if (facility()!.sizeUom) {
+              <div>
+                <a [routerLink]="['/uom', facility()!.sizeUom?.id, 'view']">{{ facilityRef.sizeUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.geoPoint">Geo Point</span></dt>
+          <dd>
+            @if (facility()!.geoPoint) {
+              <div>
+                <a [routerLink]="['/geo-point', facility()!.geoPoint?.id, 'view']">{{ facilityRef.geoPoint?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.inventoryItemType">Inventory Item Type</span></dt>
+          <dd>
+            @if (facility()!.inventoryItemType) {
+              <div>
+                <a [routerLink]="['/inventory-item-type', facility()!.inventoryItemType?.id, 'view']">{{
+                  facilityRef.inventoryItemType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facility.productStore">Product Store</span></dt>
+          <dd>
+            @if (facility()!.productStore) {
+              <div>
+                <a [routerLink]="['/product-store', facility()!.productStore?.id, 'view']">{{ facilityRef.productStore?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility', facilityRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

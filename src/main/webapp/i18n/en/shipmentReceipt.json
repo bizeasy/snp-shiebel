@@ -1,0 +1,36 @@
+{
+  "snpApp": {
+    "shipmentReceipt": {
+      "home": {
+        "title": "Shipment Receipts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shipment Receipt",
+        "createOrEditLabel": "Create or edit a Shipment Receipt",
+        "notFound": "No Shipment Receipts found"
+      },
+      "created": "A new Shipment Receipt is created with identifier {{ param }}",
+      "updated": "A Shipment Receipt is updated with identifier {{ param }}",
+      "deleted": "A Shipment Receipt is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shipment Receipt {{ id }}?"
+      },
+      "detail": {
+        "title": "Shipment Receipt"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "quantityAccepted": "Quantity Accepted",
+      "quantityRejected": "Quantity Rejected",
+      "receivedDate": "Received Date",
+      "message": "Message",
+      "shipment": "Shipment",
+      "shipmentItem": "Shipment Item",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "inventoryItem": "Inventory Item",
+      "product": "Product",
+      "receivedBy": "Received By"
+    }
+  }
+}

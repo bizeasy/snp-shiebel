@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "productKeyword": {
+      "home": {
+        "title": "ProductKeywords",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Keyword बनाएँ",
+        "createOrEditLabel": "Product Keyword बनाएँ या संपादित करें",
+        "notFound": "No Product Keywords found"
+      },
+      "created": "एक नया Product Keyword [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Keyword [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Keyword [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Keyword [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Keyword"
+      },
+      "id": "ID",
+      "keyword": "Keyword",
+      "relevancyWeight": "Relevancy Weight",
+      "product": "Product",
+      "keywordType": "Keyword Type"
+    }
+  }
+}

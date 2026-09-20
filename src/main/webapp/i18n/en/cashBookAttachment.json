@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "cashBookAttachment": {
+      "home": {
+        "title": "Cash Book Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cash Book Attachment",
+        "createOrEditLabel": "Create or edit a Cash Book Attachment",
+        "notFound": "No Cash Book Attachments found"
+      },
+      "created": "A new Cash Book Attachment is created with identifier {{ param }}",
+      "updated": "A Cash Book Attachment is updated with identifier {{ param }}",
+      "deleted": "A Cash Book Attachment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cash Book Attachment {{ id }}?"
+      },
+      "detail": {
+        "title": "Cash Book Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "cashBook": "Cash Book",
+      "attachment": "Attachment"
+    }
+  }
+}

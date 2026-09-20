@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (partyIdentification(); as partyIdentificationRef) {
+      <div>
+        <h2 data-cy="partyIdentificationDetailsHeading">
+          <span sysTranslate="snpApp.partyIdentification.detail.title">Party Identification</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyIdentificationRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyIdentification.idValue">Id Value</span></dt>
+          <dd>
+            <span>{{ partyIdentificationRef.idValue }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyIdentification.party">Party</span></dt>
+          <dd>
+            @if (partyIdentification()!.party) {
+              <div>
+                <a [routerLink]="['/party', partyIdentification()!.party?.id, 'view']">{{ partyIdentificationRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyIdentification.type">Type</span></dt>
+          <dd>
+            @if (partyIdentification()!.type) {
+              <div>
+                <a [routerLink]="['/party-identification-type', partyIdentification()!.type?.id, 'view']">{{
+                  partyIdentificationRef.type?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party-identification', partyIdentificationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,41 @@
+{
+  "snpApp": {
+    "supplierProduct": {
+      "home": {
+        "title": "Supplier Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Supplier Product సృష్టించండి",
+        "createOrEditLabel": "Supplier Product సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Supplier Products found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Supplier Product సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Supplier Product సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Supplier Product తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Supplier Product {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Supplier Product"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "supplierProductId": "Supplier Product Id",
+      "minOrderQty": "Min Order Qty",
+      "lastPrice": "Last Price",
+      "shippingPrice": "Shipping Price",
+      "cgst": "Cgst",
+      "igst": "Igst",
+      "sgst": "Sgst",
+      "totalPrice": "Total Price",
+      "comments": "Comments",
+      "leadTimeDays": "Lead Time Days",
+      "unitsIncluded": "Units Included",
+      "canDropShip": "Can Drop Ship",
+      "product": "Product",
+      "party": "Party",
+      "quantityUom": "Quantity Uom",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inventoryItem(); as inventoryItemRef) {
+      <div>
+        <h2 data-cy="inventoryItemDetailsHeading"><span sysTranslate="snpApp.inventoryItem.detail.title">Inventory Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.receivedDate">Received Date</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.receivedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.manufacturedDate">Manufactured Date</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.manufacturedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.expiryDate">Expiry Date</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.expiryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.retestDate">Retest Date</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.retestDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.containerId">Container Id</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.containerId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.batchNo">Batch No</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.batchNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.mfgBatchNo">Mfg Batch No</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.mfgBatchNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.lotNoStr">Lot No Str</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.lotNoStr }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.binNumber">Bin Number</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.binNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.comments">Comments</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.quantityOnHandTotal">Quantity On Hand Total</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.quantityOnHandTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.availableToPromiseTotal">Available To Promise Total</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.availableToPromiseTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.accountingQuantityTotal">Accounting Quantity Total</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.accountingQuantityTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.oldQuantityOnHand">Old Quantity On Hand</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.oldQuantityOnHand }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.oldAvailableToPromise">Old Available To Promise</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.oldAvailableToPromise }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.serialNumber">Serial Number</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.serialNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.softIdentifier">Soft Identifier</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.softIdentifier }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.activationNumber">Activation Number</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.activationNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.activationValidThru">Activation Valid Thru</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.activationValidThru | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.unitCost">Unit Cost</span></dt>
+          <dd>
+            <span>{{ inventoryItemRef.unitCost }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.inventoryItemType">Inventory Item Type</span></dt>
+          <dd>
+            @if (inventoryItem()!.inventoryItemType) {
+              <div>
+                <a [routerLink]="['/inventory-item-type', inventoryItem()!.inventoryItemType?.id, 'view']">{{
+                  inventoryItemRef.inventoryItemType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.product">Product</span></dt>
+          <dd>
+            @if (inventoryItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', inventoryItem()!.product?.id, 'view']">{{ inventoryItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.supplier">Supplier</span></dt>
+          <dd>
+            @if (inventoryItem()!.supplier) {
+              <div>
+                <a [routerLink]="['/party', inventoryItem()!.supplier?.id, 'view']">{{ inventoryItemRef.supplier?.organisationName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.ownerParty">Owner Party</span></dt>
+          <dd>
+            @if (inventoryItem()!.ownerParty) {
+              <div>
+                <a [routerLink]="['/party', inventoryItem()!.ownerParty?.id, 'view']">{{ inventoryItemRef.ownerParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.status">Status</span></dt>
+          <dd>
+            @if (inventoryItem()!.status) {
+              <div>
+                <a [routerLink]="['/status', inventoryItem()!.status?.id, 'view']">{{ inventoryItemRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.facility">Facility</span></dt>
+          <dd>
+            @if (inventoryItem()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', inventoryItem()!.facility?.id, 'view']">{{ inventoryItemRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.facilityLocation">Facility Location</span></dt>
+          <dd>
+            @if (inventoryItem()!.facilityLocation) {
+              <div>
+                <a [routerLink]="['/facility-location', inventoryItem()!.facilityLocation?.id, 'view']">{{
+                  inventoryItemRef.facilityLocation?.locationSeqId
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.uom">Uom</span></dt>
+          <dd>
+            @if (inventoryItem()!.uom) {
+              <div>
+                <a [routerLink]="['/uom', inventoryItem()!.uom?.id, 'view']">{{ inventoryItemRef.uom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (inventoryItem()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', inventoryItem()!.currencyUom?.id, 'view']">{{ inventoryItemRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItem.lot">Lot</span></dt>
+          <dd>
+            @if (inventoryItem()!.lot) {
+              <div>
+                <a [routerLink]="['/lot', inventoryItem()!.lot?.id, 'view']">{{ inventoryItemRef.lot?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inventory-item', inventoryItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

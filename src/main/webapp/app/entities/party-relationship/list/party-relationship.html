@@ -1,0 +1,194 @@
+<div>
+  <h2 id="page-heading" data-cy="PartyRelationshipHeading">
+    <span sysTranslate="snpApp.partyRelationship.home.title">Party Relationships</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.partyRelationship.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-party-relationship"
+        [routerLink]="['/party-relationship/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.partyRelationship.home.createLabel">Create a new Party Relationship</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (partyRelationships().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.partyRelationship.home.notFound">No Party Relationships found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="relationshipName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.relationshipName">Relationship Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="partyFrom.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.partyFrom">Party From</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="partyTo.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.partyTo">Party To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="roleTypeFrom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.roleTypeFrom">Role Type From</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="roleTypeTo.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.roleTypeTo">Role Type To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="relationshipType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.partyRelationship.relationshipType">Relationship Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (partyRelationship of partyRelationships(); track trackId(partyRelationship)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/party-relationship', partyRelationship.id, 'view']">{{ partyRelationship.id }}</a>
+              </td>
+              <td>{{ partyRelationship.fromDate | formatMediumDatetime }}</td>
+              <td>{{ partyRelationship.thruDate | formatMediumDatetime }}</td>
+              <td>{{ partyRelationship.relationshipName }}</td>
+              <td>
+                @if (partyRelationship.partyFrom) {
+                  <div>
+                    <a [routerLink]="['/party', partyRelationship.partyFrom.id, 'view']">{{ partyRelationship.partyFrom.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (partyRelationship.partyTo) {
+                  <div>
+                    <a [routerLink]="['/party', partyRelationship.partyTo.id, 'view']">{{ partyRelationship.partyTo.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (partyRelationship.roleTypeFrom) {
+                  <div>
+                    <a [routerLink]="['/role-type', partyRelationship.roleTypeFrom.id, 'view']">{{
+                      partyRelationship.roleTypeFrom.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (partyRelationship.roleTypeTo) {
+                  <div>
+                    <a [routerLink]="['/role-type', partyRelationship.roleTypeTo.id, 'view']">{{ partyRelationship.roleTypeTo.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (partyRelationship.relationshipType) {
+                  <div>
+                    <a [routerLink]="['/party-relationship-type', partyRelationship.relationshipType.id, 'view']">{{
+                      partyRelationship.relationshipType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/party-relationship', partyRelationship.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/party-relationship', partyRelationship.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(partyRelationship)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (partyRelationships().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

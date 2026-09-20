@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-product-assoc-heading"
+        data-cy="ProductAssocCreateUpdateHeading"
+        sysTranslate="snpApp.productAssoc.home.createOrEditLabel"
+      >
+        Create or edit a Product Assoc
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let fromDateRef = editForm.get('fromDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fromDate" sysTranslate="snpApp.productAssoc.fromDate">From Date</label>
+          <div class="d-flex">
+            <input
+              id="field_fromDate"
+              data-cy="fromDate"
+              type="datetime-local"
+              class="form-control"
+              name="fromDate"
+              formControlName="fromDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (fromDateRef.invalid && (fromDateRef.dirty || fromDateRef.touched)) {
+            <div>
+              @if (fromDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!fromDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_thruDate" sysTranslate="snpApp.productAssoc.thruDate">Thru Date</label>
+          <div class="d-flex">
+            <input
+              id="field_thruDate"
+              data-cy="thruDate"
+              type="datetime-local"
+              class="form-control"
+              name="thruDate"
+              formControlName="thruDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.productAssoc.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.productAssoc.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.productAssoc.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productTo" sysTranslate="snpApp.productAssoc.productTo">Product To</label>
+          <select
+            class="form-select"
+            id="field_productTo"
+            data-cy="productTo"
+            name="productTo"
+            formControlName="productTo"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('productTo')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['productTo'])!.invalid && (editForm.get(['productTo'])!.dirty || editForm.get(['productTo'])!.touched)) {
+          <div>
+            @if (editForm.get(['productTo'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productAssocType" sysTranslate="snpApp.productAssoc.productAssocType"
+            >Product Assoc Type</label
+          >
+          <select
+            class="form-select"
+            id="field_productAssocType"
+            data-cy="productAssocType"
+            name="productAssocType"
+            formControlName="productAssocType"
+            [compareWith]="compareProductAssocType"
+          >
+            <option [ngValue]="null"></option>
+            @for (productAssocTypeOption of productAssocTypesSharedCollection(); track $index) {
+              <option [ngValue]="productAssocTypeOption">{{ productAssocTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

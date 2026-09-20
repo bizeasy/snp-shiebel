@@ -1,0 +1,38 @@
+{
+  "snpApp": {
+    "shipment": {
+      "home": {
+        "title": "Shipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shipment",
+        "createOrEditLabel": "Create or edit a Shipment",
+        "notFound": "No Shipments found"
+      },
+      "created": "A new Shipment is created with identifier {{ param }}",
+      "updated": "A Shipment is updated with identifier {{ param }}",
+      "deleted": "A Shipment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Shipment"
+      },
+      "id": "ID",
+      "estimatedShipDate": "Estimated Ship Date",
+      "estimatedReadyDate": "Estimated Ready Date",
+      "estimatedArrivalDate": "Estimated Arrival Date",
+      "estimatedShipCost": "Estimated Ship Cost",
+      "shipmentType": "Shipment Type",
+      "shipmentMethodType": "Shipment Method Type",
+      "status": "Status",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "originFacility": "Origin Facility",
+      "destinationFacility": "Destination Facility",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "carrierParty": "Carrier Party",
+      "contactMech": "Contact Mech"
+    }
+  }
+}

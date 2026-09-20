@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "shoppingListItem": {
+      "home": {
+        "title": "Shopping List Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Shopping List Item సృష్టించండి",
+        "createOrEditLabel": "Shopping List Item సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Shopping List Items found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Shopping List Item సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Shopping List Item సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Shopping List Item తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Shopping List Item {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Shopping List Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "requiredByDate": "Required By Date",
+      "selectedAmount": "Selected Amount",
+      "maxAmount": "Max Amount",
+      "description": "Description",
+      "story": "Story",
+      "shoppingList": "Shopping List",
+      "product": "Product",
+      "status": "Status"
+    }
+  }
+}

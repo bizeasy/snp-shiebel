@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "productFacilityLocation": {
+      "home": {
+        "title": "ProductFacilityLocations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Facility Location बनाएँ",
+        "createOrEditLabel": "Product Facility Location बनाएँ या संपादित करें",
+        "notFound": "No Product Facility Locations found"
+      },
+      "created": "एक नया Product Facility Location [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Facility Location [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Facility Location [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Facility Location [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Facility Location"
+      },
+      "id": "ID",
+      "minimumStock": "Minimum Stock",
+      "moveQuantity": "Move Quantity",
+      "product": "Product",
+      "facility": "Facility",
+      "facilityLocation": "Facility Location"
+    }
+  }
+}

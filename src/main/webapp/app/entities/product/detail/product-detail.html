@@ -1,0 +1,282 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (product(); as productRef) {
+      <div>
+        <h2 data-cy="productDetailsHeading"><span sysTranslate="snpApp.product.detail.title">Product</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.name">Name</span></dt>
+          <dd>
+            <span>{{ productRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.internalName">Internal Name</span></dt>
+          <dd>
+            <span>{{ productRef.internalName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.brandName">Brand Name</span></dt>
+          <dd>
+            <span>{{ productRef.brandName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.variant">Variant</span></dt>
+          <dd>
+            <span>{{ productRef.variant }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.sku">Sku</span></dt>
+          <dd>
+            <span>{{ productRef.sku }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.introductionDate">Introduction Date</span></dt>
+          <dd>
+            <span>{{ productRef.introductionDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.releaseDate">Release Date</span></dt>
+          <dd>
+            <span>{{ productRef.releaseDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.quantityIncluded">Quantity Included</span></dt>
+          <dd>
+            <span>{{ productRef.quantityIncluded }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.piecesIncluded">Pieces Included</span></dt>
+          <dd>
+            <span>{{ productRef.piecesIncluded }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.weight">Weight</span></dt>
+          <dd>
+            <span>{{ productRef.weight }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.height">Height</span></dt>
+          <dd>
+            <span>{{ productRef.height }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.width">Width</span></dt>
+          <dd>
+            <span>{{ productRef.width }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.depth">Depth</span></dt>
+          <dd>
+            <span>{{ productRef.depth }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.smallImageUrl">Small Image Url</span></dt>
+          <dd>
+            <span>{{ productRef.smallImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.mediumImageUrl">Medium Image Url</span></dt>
+          <dd>
+            <span>{{ productRef.mediumImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.largeImageUrl">Large Image Url</span></dt>
+          <dd>
+            <span>{{ productRef.largeImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.detailImageUrl">Detail Image Url</span></dt>
+          <dd>
+            <span>{{ productRef.detailImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.originalImageUrl">Original Image Url</span></dt>
+          <dd>
+            <span>{{ productRef.originalImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl1">Alt Image Url 1</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl1 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl2">Alt Image Url 2</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl2 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl3">Alt Image Url 3</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl3 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl4">Alt Image Url 4</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl4 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl5">Alt Image Url 5</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl5 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.altImageUrl6">Alt Image Url 6</span></dt>
+          <dd>
+            <span>{{ productRef.altImageUrl6 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.videoUrl">Video Url</span></dt>
+          <dd>
+            <span>{{ productRef.videoUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ productRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.price">Price</span></dt>
+          <dd>
+            <span>{{ productRef.price }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.cgst">Cgst</span></dt>
+          <dd>
+            <span>{{ productRef.cgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.igst">Igst</span></dt>
+          <dd>
+            <span>{{ productRef.igst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.sgst">Sgst</span></dt>
+          <dd>
+            <span>{{ productRef.sgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.cgstPercentage">Cgst Percentage</span></dt>
+          <dd>
+            <span>{{ productRef.cgstPercentage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.igstPercentage">Igst Percentage</span></dt>
+          <dd>
+            <span>{{ productRef.igstPercentage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.sgstPercentage">Sgst Percentage</span></dt>
+          <dd>
+            <span>{{ productRef.sgstPercentage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.totalPrice">Total Price</span></dt>
+          <dd>
+            <span>{{ productRef.totalPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.description">Description</span></dt>
+          <dd>
+            <span>{{ productRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.longDescription">Long Description</span></dt>
+          <dd>
+            <span>{{ productRef.longDescription }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.info">Info</span></dt>
+          <dd>
+            <span>{{ productRef.info }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.isVirtual">Is Virtual</span></dt>
+          <dd>
+            <span>{{ productRef.isVirtual }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.isVariant">Is Variant</span></dt>
+          <dd>
+            <span>{{ productRef.isVariant }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.requireInventory">Require Inventory</span></dt>
+          <dd>
+            <span>{{ productRef.requireInventory }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.returnable">Returnable</span></dt>
+          <dd>
+            <span>{{ productRef.returnable }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.isPopular">Is Popular</span></dt>
+          <dd>
+            <span>{{ productRef.isPopular }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.isBanner">Is Banner</span></dt>
+          <dd>
+            <span>{{ productRef.isBanner }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.bannerUrl">Banner Url</span></dt>
+          <dd>
+            <span>{{ productRef.bannerUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.product.productType">Product Type</span></dt>
+          <dd>
+            @if (product()!.productType) {
+              <div>
+                <a [routerLink]="['/product-type', product()!.productType?.id, 'view']">{{ productRef.productType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.primaryProductCategory">Primary Product Category</span></dt>
+          <dd>
+            @if (product()!.primaryProductCategory) {
+              <div>
+                <a [routerLink]="['/product-category', product()!.primaryProductCategory?.id, 'view']">{{
+                  productRef.primaryProductCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.virtualProduct">Virtual Product</span></dt>
+          <dd>
+            @if (product()!.virtualProduct) {
+              <div>
+                <a [routerLink]="['/product', product()!.virtualProduct?.id, 'view']">{{ productRef.virtualProduct?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.inventoryItemType">Inventory Item Type</span></dt>
+          <dd>
+            @if (product()!.inventoryItemType) {
+              <div>
+                <a [routerLink]="['/inventory-item-type', product()!.inventoryItemType?.id, 'view']">{{
+                  productRef.inventoryItemType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.taxSlab">Tax Slab</span></dt>
+          <dd>
+            @if (product()!.taxSlab) {
+              <div>
+                <a [routerLink]="['/tax-slab', product()!.taxSlab?.id, 'view']">{{ productRef.taxSlab?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.uom">Uom</span></dt>
+          <dd>
+            @if (product()!.uom) {
+              <div>
+                <a [routerLink]="['/uom', product()!.uom?.id, 'view']">{{ productRef.uom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.quantityUom">Quantity Uom</span></dt>
+          <dd>
+            @if (product()!.quantityUom) {
+              <div>
+                <a [routerLink]="['/uom', product()!.quantityUom?.id, 'view']">{{ productRef.quantityUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.weightUom">Weight Uom</span></dt>
+          <dd>
+            @if (product()!.weightUom) {
+              <div>
+                <a [routerLink]="['/uom', product()!.weightUom?.id, 'view']">{{ productRef.weightUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.product.sizeUom">Size Uom</span></dt>
+          <dd>
+            @if (product()!.sizeUom) {
+              <div>
+                <a [routerLink]="['/uom', product()!.sizeUom?.id, 'view']">{{ productRef.sizeUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product', productRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "pickListItem": {
+      "home": {
+        "title": "Pick List Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pick List Item",
+        "createOrEditLabel": "Create or edit a Pick List Item",
+        "notFound": "No Pick List Items found"
+      },
+      "created": "A new Pick List Item is created with identifier {{ param }}",
+      "updated": "A Pick List Item is updated with identifier {{ param }}",
+      "deleted": "A Pick List Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pick List Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Pick List Item"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "pickList": "Pick List",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "inventoryItem": "Inventory Item",
+      "product": "Product",
+      "facilityLocation": "Facility Location",
+      "status": "Status"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (cashBookAttachment(); as cashBookAttachmentRef) {
+      <div>
+        <h2 data-cy="cashBookAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.cashBookAttachment.detail.title">Cash Book Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ cashBookAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBookAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ cashBookAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBookAttachment.cashBook">Cash Book</span></dt>
+          <dd>
+            @if (cashBookAttachment()!.cashBook) {
+              <div>
+                <a [routerLink]="['/cash-book', cashBookAttachment()!.cashBook?.id, 'view']">{{ cashBookAttachmentRef.cashBook?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBookAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (cashBookAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', cashBookAttachment()!.attachment?.id, 'view']">{{
+                  cashBookAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cash-book-attachment', cashBookAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

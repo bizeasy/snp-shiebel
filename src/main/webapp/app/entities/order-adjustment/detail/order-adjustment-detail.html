@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderAdjustment(); as orderAdjustmentRef) {
+      <div>
+        <h2 data-cy="orderAdjustmentDetailsHeading"><span sysTranslate="snpApp.orderAdjustment.detail.title">Order Adjustment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.description">Description</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.comments">Comments</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.amount">Amount</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.sourcePercentage">Source Percentage</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.sourcePercentage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.sourceRefId">Source Ref Id</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.sourceRefId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.exemptAmount">Exempt Amount</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.exemptAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.includeInTax">Include In Tax</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.includeInTax }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.includeInShipping">Include In Shipping</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.includeInShipping }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.includedInPrice">Included In Price</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.includedInPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.entryDate">Entry Date</span></dt>
+          <dd>
+            <span>{{ orderAdjustmentRef.entryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.order">Order</span></dt>
+          <dd>
+            @if (orderAdjustment()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderAdjustment()!.order?.id, 'view']">{{ orderAdjustmentRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.orderItem">Order Item</span></dt>
+          <dd>
+            @if (orderAdjustment()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', orderAdjustment()!.orderItem?.id, 'view']">{{ orderAdjustmentRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.adjustmentType">Adjustment Type</span></dt>
+          <dd>
+            @if (orderAdjustment()!.adjustmentType) {
+              <div>
+                <a [routerLink]="['/order-adjustment-type', orderAdjustment()!.adjustmentType?.id, 'view']">{{
+                  orderAdjustmentRef.adjustmentType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.product">Product</span></dt>
+          <dd>
+            @if (orderAdjustment()!.product) {
+              <div>
+                <a [routerLink]="['/product', orderAdjustment()!.product?.id, 'view']">{{ orderAdjustmentRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.productFeature">Product Feature</span></dt>
+          <dd>
+            @if (orderAdjustment()!.productFeature) {
+              <div>
+                <a [routerLink]="['/product-feature', orderAdjustment()!.productFeature?.id, 'view']">{{
+                  orderAdjustmentRef.productFeature?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAdjustment.taxAuthority">Tax Authority</span></dt>
+          <dd>
+            @if (orderAdjustment()!.taxAuthority) {
+              <div>
+                <a [routerLink]="['/tax-authority', orderAdjustment()!.taxAuthority?.id, 'view']">{{
+                  orderAdjustmentRef.taxAuthority?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-adjustment', orderAdjustmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

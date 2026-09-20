@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderItemAttachment(); as orderItemAttachmentRef) {
+      <div>
+        <h2 data-cy="orderItemAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.orderItemAttachment.detail.title">Order Item Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderItemAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ orderItemAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemAttachment.orderItem">Order Item</span></dt>
+          <dd>
+            @if (orderItemAttachment()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', orderItemAttachment()!.orderItem?.id, 'view']">{{
+                  orderItemAttachmentRef.orderItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderItemAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (orderItemAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', orderItemAttachment()!.attachment?.id, 'view']">{{
+                  orderItemAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-item-attachment', orderItemAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

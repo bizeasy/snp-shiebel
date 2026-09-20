@@ -1,0 +1,39 @@
+{
+  "snpApp": {
+    "inventoryItemDelegate": {
+      "home": {
+        "title": "InventoryItemDelegates",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Inventory Item Delegate बनाएँ",
+        "createOrEditLabel": "Inventory Item Delegate बनाएँ या संपादित करें",
+        "notFound": "No Inventory Item Delegates found"
+      },
+      "created": "एक नया Inventory Item Delegate [identifier: {{ param }}] तैयार है",
+      "updated": "एक Inventory Item Delegate [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Inventory Item Delegate [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Inventory Item Delegate [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Inventory Item Delegate"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "effectiveDate": "Effective Date",
+      "quantityOnHandDiff": "Quantity On Hand Diff",
+      "availableToPromiseDiff": "Available To Promise Diff",
+      "accountingQuantityDiff": "Accounting Quantity Diff",
+      "unitCost": "Unit Cost",
+      "remarks": "Remarks",
+      "inventoryItem": "Inventory Item",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "invoice": "Invoice",
+      "invoiceItem": "Invoice Item",
+      "shipment": "Shipment",
+      "shipmentItem": "Shipment Item",
+      "itemIssuance": "Item Issuance",
+      "receipt": "Receipt"
+    }
+  }
+}

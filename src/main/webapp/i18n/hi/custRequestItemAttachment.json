@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "custRequestItemAttachment": {
+      "home": {
+        "title": "CustRequestItemAttachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Cust Request Item Attachment बनाएँ",
+        "createOrEditLabel": "Cust Request Item Attachment बनाएँ या संपादित करें",
+        "notFound": "No Cust Request Item Attachments found"
+      },
+      "created": "एक नया Cust Request Item Attachment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Cust Request Item Attachment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Cust Request Item Attachment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Cust Request Item Attachment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Cust Request Item Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "custRequestItem": "Cust Request Item",
+      "attachment": "Attachment"
+    }
+  }
+}

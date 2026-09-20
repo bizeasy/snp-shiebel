@@ -1,0 +1,133 @@
+<div>
+  <h2 id="page-heading" data-cy="CatalogueCategoryHeading">
+    <span sysTranslate="snpApp.catalogueCategory.home.title">Catalogue Categories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.catalogueCategory.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-catalogue-category"
+        [routerLink]="['/catalogue-category/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.catalogueCategory.home.createLabel">Create a new Catalogue Category</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (catalogueCategories().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.catalogueCategory.home.notFound">No Catalogue Categories found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogueCategory.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="catalogue.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogueCategory.catalogue">Catalogue</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productCategory.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogueCategory.productCategory">Product Category</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="catalogueCategoryType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogueCategory.catalogueCategoryType">Catalogue Category Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (catalogueCategory of catalogueCategories(); track trackId(catalogueCategory)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/catalogue-category', catalogueCategory.id, 'view']">{{ catalogueCategory.id }}</a>
+              </td>
+              <td>{{ catalogueCategory.sequenceNo }}</td>
+              <td>
+                @if (catalogueCategory.catalogue) {
+                  <div>
+                    <a [routerLink]="['/catalogue', catalogueCategory.catalogue.id, 'view']">{{ catalogueCategory.catalogue.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (catalogueCategory.productCategory) {
+                  <div>
+                    <a [routerLink]="['/product-category', catalogueCategory.productCategory.id, 'view']">{{
+                      catalogueCategory.productCategory.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (catalogueCategory.catalogueCategoryType) {
+                  <div>
+                    <a [routerLink]="['/catalogue-category-type', catalogueCategory.catalogueCategoryType.id, 'view']">{{
+                      catalogueCategory.catalogueCategoryType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/catalogue-category', catalogueCategory.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/catalogue-category', catalogueCategory.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(catalogueCategory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

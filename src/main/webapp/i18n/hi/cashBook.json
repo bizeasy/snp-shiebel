@@ -1,0 +1,46 @@
+{
+  "snpApp": {
+    "cashBook": {
+      "home": {
+        "title": "CashBooks",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Cash Book बनाएँ",
+        "createOrEditLabel": "Cash Book बनाएँ या संपादित करें",
+        "notFound": "No Cash Books found"
+      },
+      "created": "एक नया Cash Book [identifier: {{ param }}] तैयार है",
+      "updated": "एक Cash Book [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Cash Book [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Cash Book [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Cash Book"
+      },
+      "id": "ID",
+      "transactionDate": "Transaction Date",
+      "dueDate": "Due Date",
+      "amount": "Amount",
+      "description": "Description",
+      "vendorCustomerName": "Vendor Customer Name",
+      "invoiceNo": "Invoice No",
+      "invoiceDate": "Invoice Date",
+      "purpose": "Purpose",
+      "remarks": "Remarks",
+      "project": "Project",
+      "usageUnits": "Usage Units",
+      "recurringTransaction": "Recurring Transaction",
+      "frequency": "Frequency",
+      "transactionType": "Transaction Type",
+      "transactionCategory": "Transaction Category",
+      "paymentMethodType": "Payment Method Type",
+      "department": "Department",
+      "currencyUom": "Currency Uom",
+      "status": "Status",
+      "order": "Order",
+      "invoice": "Invoice",
+      "fromParty": "From Party",
+      "toParty": "To Party"
+    }
+  }
+}

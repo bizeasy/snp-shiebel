@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productPricePurpose(); as productPricePurposeRef) {
+      <div>
+        <h2 data-cy="productPricePurposeDetailsHeading">
+          <span sysTranslate="snpApp.productPricePurpose.detail.title">Product Price Purpose</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productPricePurposeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPricePurpose.name">Name</span></dt>
+          <dd>
+            <span>{{ productPricePurposeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPricePurpose.description">Description</span></dt>
+          <dd>
+            <span>{{ productPricePurposeRef.description }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-price-purpose', productPricePurposeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

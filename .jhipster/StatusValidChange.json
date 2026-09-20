@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20231214205505"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "transitionName",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "StatusValidChange",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "status",
+      "relationshipName": "status",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "status",
+      "relationshipName": "statusTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

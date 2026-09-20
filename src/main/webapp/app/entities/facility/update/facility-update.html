@@ -1,0 +1,226 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-facility-heading" data-cy="FacilityCreateUpdateHeading" sysTranslate="snpApp.facility.home.createOrEditLabel">
+        Create or edit a Facility
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.facility.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.facility.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilitySize" sysTranslate="snpApp.facility.facilitySize">Facility Size</label>
+          <input
+            type="number"
+            class="form-control"
+            name="facilitySize"
+            id="field_facilitySize"
+            data-cy="facilitySize"
+            formControlName="facilitySize"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityType" sysTranslate="snpApp.facility.facilityType">Facility Type</label>
+          <select
+            class="form-select"
+            id="field_facilityType"
+            data-cy="facilityType"
+            name="facilityType"
+            formControlName="facilityType"
+            [compareWith]="compareFacilityType"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityTypeOption of facilityTypesSharedCollection(); track $index) {
+              <option [ngValue]="facilityTypeOption">{{ facilityTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_parentFacility" sysTranslate="snpApp.facility.parentFacility">Parent Facility</label>
+          <select
+            class="form-select"
+            id="field_parentFacility"
+            data-cy="parentFacility"
+            name="parentFacility"
+            formControlName="parentFacility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ownerParty" sysTranslate="snpApp.facility.ownerParty">Owner Party</label>
+          <select
+            class="form-select"
+            id="field_ownerParty"
+            data-cy="ownerParty"
+            name="ownerParty"
+            formControlName="ownerParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityGroup" sysTranslate="snpApp.facility.facilityGroup">Facility Group</label>
+          <select
+            class="form-select"
+            id="field_facilityGroup"
+            data-cy="facilityGroup"
+            name="facilityGroup"
+            formControlName="facilityGroup"
+            [compareWith]="compareFacilityGroup"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityGroupOption of facilityGroupsSharedCollection(); track $index) {
+              <option [ngValue]="facilityGroupOption">{{ facilityGroupOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sizeUom" sysTranslate="snpApp.facility.sizeUom">Size Uom</label>
+          <select
+            class="form-select"
+            id="field_sizeUom"
+            data-cy="sizeUom"
+            name="sizeUom"
+            formControlName="sizeUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_geoPoint" sysTranslate="snpApp.facility.geoPoint">Geo Point</label>
+          <select
+            class="form-select"
+            id="field_geoPoint"
+            data-cy="geoPoint"
+            name="geoPoint"
+            formControlName="geoPoint"
+            [compareWith]="compareGeoPoint"
+          >
+            <option [ngValue]="null"></option>
+            @for (geoPointOption of geoPointsSharedCollection(); track $index) {
+              <option [ngValue]="geoPointOption">{{ geoPointOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItemType" sysTranslate="snpApp.facility.inventoryItemType"
+            >Inventory Item Type</label
+          >
+          <select
+            class="form-select"
+            id="field_inventoryItemType"
+            data-cy="inventoryItemType"
+            name="inventoryItemType"
+            formControlName="inventoryItemType"
+            [compareWith]="compareInventoryItemType"
+          >
+            <option [ngValue]="null"></option>
+            @for (inventoryItemTypeOption of inventoryItemTypesSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemTypeOption">{{ inventoryItemTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productStore" sysTranslate="snpApp.facility.productStore">Product Store</label>
+          <select
+            class="form-select"
+            id="field_productStore"
+            data-cy="productStore"
+            name="productStore"
+            formControlName="productStore"
+            [compareWith]="compareProductStore"
+          >
+            <option [ngValue]="null"></option>
+            @for (productStoreOption of productStoresSharedCollection(); track $index) {
+              <option [ngValue]="productStoreOption">{{ productStoreOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

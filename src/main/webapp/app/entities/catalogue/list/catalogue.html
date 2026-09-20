@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="CatalogueHeading">
+    <span sysTranslate="snpApp.catalogue.home.title">Catalogues</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.catalogue.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-catalogue"
+        [routerLink]="['/catalogue/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.catalogue.home.createLabel">Create a new Catalogue</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (catalogues().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.catalogue.home.notFound">No Catalogues found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="imagePath">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.imagePath">Image Path</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="mobileImagePath">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.mobileImagePath">Mobile Image Path</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImage1">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.altImage1">Alt Image 1</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImage2">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.altImage2">Alt Image 2</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImage3">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.altImage3">Alt Image 3</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="bannerUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.bannerUrl">Banner Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isBanner">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.catalogue.isBanner">Is Banner</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (catalogue of catalogues(); track trackId(catalogue)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/catalogue', catalogue.id, 'view']">{{ catalogue.id }}</a>
+              </td>
+              <td>{{ catalogue.name }}</td>
+              <td>{{ catalogue.description }}</td>
+              <td>{{ catalogue.sequenceNo }}</td>
+              <td>{{ catalogue.imagePath }}</td>
+              <td>{{ catalogue.mobileImagePath }}</td>
+              <td>{{ catalogue.altImage1 }}</td>
+              <td>{{ catalogue.altImage2 }}</td>
+              <td>{{ catalogue.altImage3 }}</td>
+              <td>{{ catalogue.bannerUrl }}</td>
+              <td>{{ catalogue.isBanner }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/catalogue', catalogue.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/catalogue', catalogue.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(catalogue)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

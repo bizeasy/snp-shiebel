@@ -1,0 +1,128 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-catalogue-category-heading"
+        data-cy="CatalogueCategoryCreateUpdateHeading"
+        sysTranslate="snpApp.catalogueCategory.home.createOrEditLabel"
+      >
+        Create or edit a Catalogue Category
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.catalogueCategory.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_catalogue" sysTranslate="snpApp.catalogueCategory.catalogue">Catalogue</label>
+          <select
+            class="form-select"
+            id="field_catalogue"
+            data-cy="catalogue"
+            name="catalogue"
+            formControlName="catalogue"
+            [compareWith]="compareCatalogue"
+          >
+            @if (!editForm.get('catalogue')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (catalogueOption of cataloguesSharedCollection(); track $index) {
+              <option [ngValue]="catalogueOption">{{ catalogueOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['catalogue'])!.invalid && (editForm.get(['catalogue'])!.dirty || editForm.get(['catalogue'])!.touched)) {
+          <div>
+            @if (editForm.get(['catalogue'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productCategory" sysTranslate="snpApp.catalogueCategory.productCategory"
+            >Product Category</label
+          >
+          <select
+            class="form-select"
+            id="field_productCategory"
+            data-cy="productCategory"
+            name="productCategory"
+            formControlName="productCategory"
+            [compareWith]="compareProductCategory"
+          >
+            @if (!editForm.get('productCategory')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productCategoryOption of productCategoriesSharedCollection(); track $index) {
+              <option [ngValue]="productCategoryOption">{{ productCategoryOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['productCategory'])!.invalid &&
+          (editForm.get(['productCategory'])!.dirty || editForm.get(['productCategory'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['productCategory'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_catalogueCategoryType" sysTranslate="snpApp.catalogueCategory.catalogueCategoryType"
+            >Catalogue Category Type</label
+          >
+          <select
+            class="form-select"
+            id="field_catalogueCategoryType"
+            data-cy="catalogueCategoryType"
+            name="catalogueCategoryType"
+            formControlName="catalogueCategoryType"
+            [compareWith]="compareCatalogueCategoryType"
+          >
+            <option [ngValue]="null"></option>
+            @for (catalogueCategoryTypeOption of catalogueCategoryTypesSharedCollection(); track $index) {
+              <option [ngValue]="catalogueCategoryTypeOption">{{ catalogueCategoryTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

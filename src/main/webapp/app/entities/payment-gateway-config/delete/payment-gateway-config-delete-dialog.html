@@ -1,0 +1,30 @@
+@if (paymentGatewayConfig) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(paymentGatewayConfig.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="paymentGatewayConfigDeleteDialogHeading" sysTranslate="entity.delete.title">
+        Confirm delete operation
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p
+        id="sys-delete-paymentGatewayConfig-heading"
+        sysTranslate="snpApp.paymentGatewayConfig.delete.question"
+        [translateValues]="{ id: paymentGatewayConfig.id }"
+      >
+        Are you sure you want to delete Payment Gateway Config {{ paymentGatewayConfig.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-paymentGatewayConfig" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ProductFeatureCategoryAppl.
+    -->
+    <changeSet id="20231214214005-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="product_category_id"
+                                 baseTableName="product_feature_category_appl"
+                                 constraintName="fk_product_feature_category_appl__product_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_category"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_feature_category_id"
+                                 baseTableName="product_feature_category_appl"
+                                 constraintName="fk_product_feature_category_appl__product_feature_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_feature_category"
+                                 />
+    </changeSet>
+</databaseChangeLog>

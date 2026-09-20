@@ -1,0 +1,1869 @@
+// =============================================================================
+// SNP — B2B trading / ERP platform
+// Rewritten JDL for a clean re-generation. Supersedes p2p.jdl.
+//
+// Domain model: OFBiz-style generic Party / Product / Order / Inventory core.
+// Business flow: CustRequest (RFQ) -> Quote -> Order -> Invoice
+//                -> Shipment / ItemIssuance / InventoryItem -> Payment / CashBook
+//
+// Targets JHipster 9.x. Generate with:
+//   jhipster jdl snp.jdl
+//
+// -----------------------------------------------------------------------------
+// WHAT CHANGED VS p2p.jdl  (see also the notes at the bottom of this file)
+// -----------------------------------------------------------------------------
+//  1. Config: dropped `protractor` (removed years ago) in favour of `cypress`,
+//     `angularX` -> `angular`, and dropped `clientPackageManager` (removed in
+//     JHipster 9 — npm is the only client package manager now).
+//  2. Removed silently-ignored duplicate declarations that the JDL parser was
+//     de-duplicating anyway:
+//       - InvoiceItem.sequenceNo declared twice
+//       - PaymentMethod{paymentMethodType} declared three times
+//       - ReturnHeader{paymentMethod}, ReturnItem{returnHeader},
+//         Facility{facilityType} declared twice
+//       - UomConversion had 4 links to Uom (fromUom/toUom + uom/uomTo)
+//       - OrderItem had fromInventoryItem AND fromInventoryItemId
+//  3. Added validation. The old model generated 145 entities with ZERO
+//     `required`/`unique` constraints — every column nullable. Names, codes,
+//     document dates, quantities and parent FKs of child lines are now required.
+//  4. Fixed broken / missing relationships:
+//       - FacilityLocation had no link to Facility (orphan locations)
+//       - InventoryItemDelegate had no link to InventoryItem (the one FK it needs)
+//       - ReturnItemBilling had no link to ReturnItem
+//       - CarrierShipmentMethod had no link to ShipmentMethodType
+//       - PaymentGatewayConfig was unreferenced by anything
+//       - CashBookAttachment{product} -> CashBook  (field was misnamed `product`)
+//       - Quote had no link to the CustRequest it answers
+//       - Invoice/ReturnHeader had no currency
+//       - Order/Quote/Invoice line items had no UoM
+//  5. New entities backing screens that exist in the UI but have no backend:
+//       - Department, DepartmentMember   (user-management/create-department;
+//         the UI currently abuses ProductStore as "department")
+//       - FileFolder, FileShare          (file-manager / dropbox UI, which is
+//         today 100% in-memory client-side mock data)
+//  6. Invoice no longer copy-pastes 12 Order-only fields (isRushOrder,
+//     needsInventoryIssuance, orderRefNo, attr1..3, ...). None were used by the
+//     app; Invoice{order} already carries them.
+//  7. CashBook: free-text `category` / `department` / `paymentMode` / `type`
+//     replaced by real FKs (TransactionCategory / Department / PaymentMethodType /
+//     TransactionType); `invoiceDate String` -> LocalDate.
+//  8. All ZonedDateTime -> Instant (identical ISO-8601 JSON, one time type).
+//     Unused `Duration` fields -> Integer day counts.
+//  9. service + filter now cover ALL entities (was 39 of 145), so every entity
+//     is queryable with criteria. Pagination is applied to transactional
+//     entities only — lookup tables stay unpaginated so dropdowns keep working.
+// =============================================================================
+
+application {
+  config {
+    applicationType monolith
+    baseName snp
+    packageName com.snp
+    serverPort 8080
+
+    authenticationType jwt
+    cacheProvider caffeine
+    enableHibernateCache true
+
+    databaseType sql
+    devDatabaseType postgresql
+    prodDatabaseType postgresql
+
+    buildTool gradle
+    clientFramework angular
+
+    enableTranslation true
+    nativeLanguage en
+    languages [en, hi, te]
+
+    jhiPrefix sys
+    serviceDiscoveryType false
+    skipClient false
+    skipServer false
+    enableSwaggerCodegen false
+    websocket spring-websocket
+    testFrameworks [gatling, cucumber, cypress]
+  }
+  entities *
+}
+
+// =============================================================================
+// 1. ENUMS
+// =============================================================================
+
+enum Gender {
+  MALE,
+  FEMALE,
+  OTHER
+}
+
+enum SharePermission {
+  VIEW,
+  COMMENT,
+  EDIT,
+  OWNER
+}
+
+enum RecurrenceFrequency {
+  NONE,
+  DAILY,
+  WEEKLY,
+  FORTNIGHTLY,
+  MONTHLY,
+  QUARTERLY,
+  HALF_YEARLY,
+  YEARLY
+}
+
+// =============================================================================
+// 2. GENERIC STATUS STATE MACHINE
+//    Every document (Order, Quote, Invoice, Shipment, ...) points at a Status.
+// =============================================================================
+
+entity StatusCategory {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Status {
+  name String required unique maxlength(60)
+  sequenceNo Integer
+  description String maxlength(100)
+}
+
+// Declares "status X may transition to status Y".
+entity StatusValidChange {
+  transitionName String maxlength(60)
+}
+
+// =============================================================================
+// 3. SYSTEM / CONTENT / FILES
+// =============================================================================
+
+entity SystemParameters {
+  key String required unique maxlength(100)
+  value String maxlength(1000)
+  description String maxlength(255)
+  environment String maxlength(25)
+}
+
+entity ContentType {
+  name String required unique maxlength(25)
+}
+
+entity Attachment {
+  name String required maxlength(255)
+  fileAttachment AnyBlob
+  attachmentUrl String maxlength(2000)
+  mimeType String maxlength(100)
+  fileSize Long
+  uploadedDate Instant
+  isTrashed Boolean
+  checksum String maxlength(128)
+}
+
+// NEW — backs the file-manager / dropbox UI, which today keeps folders only in
+// browser memory. Root folders have a null parent.
+entity FileFolder {
+  name String required maxlength(255)
+  path String maxlength(2000)
+  isSystemFolder Boolean
+  isTrashed Boolean
+  createdDate Instant
+}
+
+// NEW — server-side sharing for the dropbox UI. Either a folder or a single
+// attachment is shared, with an internal party or an external email address.
+entity FileShare {
+  permission SharePermission required
+  sharedWithEmail String minlength(5) maxlength(100)
+  sharedDate Instant required
+  expiryDate Instant
+  accessToken String maxlength(100)
+  isRevoked Boolean
+}
+
+// =============================================================================
+// 4. GEO
+// =============================================================================
+
+entity GeoType {
+  name String required unique maxlength(25)
+}
+
+entity GeoAssocType {
+  name String required unique maxlength(25)
+}
+
+entity Geo {
+  name String required maxlength(60)
+  code String required unique maxlength(10)
+  abbreviation String maxlength(10)
+}
+
+entity GeoAssoc {
+  // pure association: geo -> geoTo, typed by geoAssocType
+}
+
+entity GeoPoint {
+  latitude BigDecimal
+  longitude BigDecimal
+}
+
+// =============================================================================
+// 5. PARTY — people and organisations, their roles, ids and contact details
+// =============================================================================
+
+entity PartyType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity Party {
+  isOrganisation Boolean
+  organisationName String maxlength(200)
+  organisationShortName String maxlength(100)
+  salutation String maxlength(20)
+  firstName String maxlength(60)
+  middleName String maxlength(60)
+  lastName String maxlength(60)
+  gender Gender
+  birthDate LocalDate
+  primaryPhone String maxlength(20)
+  primaryEmail String minlength(5) maxlength(75)
+  isTemporaryPassword Boolean
+  logoImageUrl String maxlength(2000)
+  profileImageUrl String maxlength(2000)
+  notes TextBlob
+  postalAddress TextBlob
+}
+
+entity RoleType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+// A party acting in a role (CUSTOMER, SUPPLIER, EMPLOYEE, ...).
+entity PartyRole {
+}
+
+entity PartyClassificationType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity PartyClassificationGroup {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity PartyClassification {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity PartyIdentificationType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+// GSTIN, PAN, passport number, ...
+entity PartyIdentification {
+  idValue String required maxlength(60)
+}
+
+entity PartyRelationshipType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity PartyRelationship {
+  fromDate Instant required
+  thruDate Instant
+  relationshipName String maxlength(100)
+}
+
+entity ContactMechPurpose {
+  name String required unique maxlength(25)
+  description String maxlength(100)
+}
+
+entity ContactMechType {
+  name String required unique maxlength(25)
+  description String maxlength(100)
+}
+
+entity ContactMech {
+  infoString String maxlength(255)
+}
+
+entity PartyContactMech {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity PostalAddress {
+  toName String maxlength(100)
+  address1 String maxlength(200)
+  address2 String maxlength(200)
+  city String maxlength(60)
+  landmark String maxlength(60)
+  postalCode String maxlength(10)
+  isDefault Boolean
+  customAddressType String maxlength(25)
+  stateStr String maxlength(40)
+  countryStr String maxlength(40)
+  isIndianAddress Boolean
+  note String maxlength(255)
+  directions String maxlength(255)
+}
+
+// One-time-password scaffolding. Present but NOT wired into authentication.
+entity OtpAuth {
+  otp String maxlength(10)
+  otpSent Boolean
+  verificationSuccess Boolean
+  otpExpired Boolean
+  otpSentTime Instant
+  sentCounter Integer
+  failCounter Integer
+  otpResetCounter Integer
+  maxResend Integer
+  maxReset Integer
+  maxFailures Integer
+  otpActiveTime Integer
+}
+
+// =============================================================================
+// 6. ORGANISATION — store / department
+//    ProductStore is the selling entity (legal seller, branding, address).
+//    Department is NEW: the user-management UI already has department screens
+//    that currently (incorrectly) write to ProductStore.
+// =============================================================================
+
+entity ProductStore {
+  name String required unique maxlength(100)
+  title String maxlength(100)
+  postalAddress TextBlob
+}
+
+// NEW
+entity Department {
+  name String required unique maxlength(100)
+  code String unique maxlength(20)
+  description String maxlength(255)
+  isActive Boolean
+}
+
+// NEW — which party belongs to which department, effectivity-dated.
+entity DepartmentMember {
+  fromDate Instant required
+  thruDate Instant
+  isPrimary Boolean
+}
+
+// =============================================================================
+// 7. UNITS OF MEASURE
+// =============================================================================
+
+entity UomType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Uom {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  sequenceNo Integer
+  abbreviation String maxlength(10)
+}
+
+entity UomConversion {
+  name String required unique maxlength(60)
+  conversionFactor BigDecimal required
+  fromDate Instant
+  toDate Instant
+}
+
+// =============================================================================
+// 8. CATALOGUE & PRODUCT CATEGORIES
+// =============================================================================
+
+entity Catalogue {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  sequenceNo Integer
+  imagePath String maxlength(2000)
+  mobileImagePath String maxlength(2000)
+  altImage1 String maxlength(2000)
+  altImage2 String maxlength(2000)
+  altImage3 String maxlength(2000)
+  bannerUrl String maxlength(2000)
+  isBanner Boolean
+}
+
+entity CatalogueCategoryType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity CatalogueCategory {
+  sequenceNo Integer
+}
+
+entity ProductCategoryType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductCategory {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  longDescription String maxlength(2000)
+  attribute String maxlength(25)
+  sequenceNo Integer
+  imageUrl String maxlength(2000)
+  altImageUrl String maxlength(2000)
+  bannerUrl String maxlength(2000)
+  largeImageUrl String maxlength(2000)
+  altLargeImageUrl String maxlength(2000)
+  info TextBlob
+  isBanner Boolean
+}
+
+entity ProductCategoryMember {
+  fromDate Instant required
+  thruDate Instant
+  sequenceNo Integer
+}
+
+// =============================================================================
+// 9. PRODUCT
+// =============================================================================
+
+entity ProductType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Product {
+  name String required maxlength(100)
+  internalName String maxlength(60)
+  brandName String maxlength(60)
+  variant String maxlength(60)
+  sku String maxlength(60)
+  introductionDate Instant
+  releaseDate Instant
+  quantityIncluded BigDecimal
+  piecesIncluded Integer
+  weight BigDecimal
+  height BigDecimal
+  width BigDecimal
+  depth BigDecimal
+  smallImageUrl String maxlength(2000)
+  mediumImageUrl String maxlength(2000)
+  largeImageUrl String maxlength(2000)
+  detailImageUrl String maxlength(2000)
+  originalImageUrl String maxlength(2000)
+  altImageUrl1 String maxlength(2000)
+  altImageUrl2 String maxlength(2000)
+  altImageUrl3 String maxlength(2000)
+  altImageUrl4 String maxlength(2000)
+  altImageUrl5 String maxlength(2000)
+  altImageUrl6 String maxlength(2000)
+  videoUrl String maxlength(2000)
+  quantity BigDecimal
+  price BigDecimal
+  cgst BigDecimal
+  igst BigDecimal
+  sgst BigDecimal
+  cgstPercentage BigDecimal
+  igstPercentage BigDecimal
+  sgstPercentage BigDecimal
+  totalPrice BigDecimal
+  description String maxlength(100)
+  longDescription String maxlength(2000)
+  info TextBlob
+  isVirtual Boolean
+  isVariant Boolean
+  requireInventory Boolean
+  returnable Boolean
+  isPopular Boolean
+  isBanner Boolean
+  bannerUrl String maxlength(2000)
+}
+
+entity ProductAssocType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductAssoc {
+  fromDate Instant required
+  thruDate Instant
+  sequenceNo Integer
+  quantity BigDecimal
+}
+
+entity ProductFeatureCategory {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductFeatureCategoryAppl {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity ProductFeatureType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductFeatureGroup {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductFeatureGroupAppl {
+  fromDate Instant required
+  thruDate Instant
+  sequenceNo Integer
+}
+
+entity ProductFeature {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  amount BigDecimal
+  sequenceNo Integer
+  abbrev String maxlength(20)
+}
+
+entity ProductFeatureApplType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductFeatureAppl {
+  fromDate Instant required
+  thruDate Instant
+  sequenceNo Integer
+  amount BigDecimal
+}
+
+entity ProductPriceType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductPricePurpose {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ProductPrice {
+  fromDate Instant required
+  thruDate Instant
+  price BigDecimal required
+  cgst BigDecimal
+  igst BigDecimal
+  sgst BigDecimal
+  totalPrice BigDecimal
+}
+
+entity KeywordType {
+  name String required unique maxlength(60)
+}
+
+entity ProductKeyword {
+  keyword String required maxlength(60)
+  relevancyWeight Integer
+}
+
+entity SupplierProduct {
+  fromDate Instant required
+  thruDate Instant
+  supplierProductId String maxlength(60)
+  minOrderQty BigDecimal
+  lastPrice BigDecimal
+  shippingPrice BigDecimal
+  cgst BigDecimal
+  igst BigDecimal
+  sgst BigDecimal
+  totalPrice BigDecimal
+  comments String maxlength(255)
+  leadTimeDays Integer
+  unitsIncluded BigDecimal
+  canDropShip Boolean
+}
+
+entity ProductReview {
+  rating Integer min(1) max(10)
+  ratingInfo TextBlob
+  message String maxlength(2000)
+  reviewDate Instant
+}
+
+entity ProductRole {
+}
+
+entity ProductAttachment {
+  name String maxlength(255)
+}
+
+// =============================================================================
+// 10. FACILITY (warehouses / sites) & LOCATIONS
+// =============================================================================
+
+entity FacilityType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity FacilityGroupType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity FacilityGroup {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Facility {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  facilitySize BigDecimal
+}
+
+entity LocationType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity FacilityLocation {
+  locationSeqId String required maxlength(20)
+  areaId String maxlength(20)
+  aisleId String maxlength(20)
+  sectionId String maxlength(20)
+  levelId String maxlength(20)
+  positionId String maxlength(20)
+}
+
+entity FacilityParty {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity FacilityGroupMember {
+  fromDate Instant required
+  thruDate Instant
+  sequenceNo Integer
+}
+
+entity FacilityContactMech {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity FacilityCarrierShipment {
+}
+
+entity ProductFacility {
+  minimumStock BigDecimal
+  reorderQty BigDecimal
+  daysToShip Integer
+  lastInventoryCount BigDecimal
+}
+
+entity ProductFacilityUser {
+  fromDate Instant required
+  thruDate Instant
+  costPerDay BigDecimal
+  totalCost BigDecimal
+  discount BigDecimal
+}
+
+entity ProductFacilityLocation {
+  minimumStock BigDecimal
+  moveQuantity BigDecimal
+}
+
+// =============================================================================
+// 11. INVENTORY
+// =============================================================================
+
+entity InventoryItemType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Lot {
+  creationDate Instant
+  quantity BigDecimal
+  expirationDate Instant
+  retestDate Instant
+}
+
+entity InventoryItem {
+  receivedDate Instant
+  manufacturedDate Instant
+  expiryDate Instant
+  retestDate Instant
+  containerId String maxlength(60)
+  batchNo String maxlength(60)
+  mfgBatchNo String maxlength(60)
+  lotNoStr String maxlength(60)
+  binNumber String maxlength(60)
+  comments String maxlength(255)
+  quantityOnHandTotal BigDecimal
+  availableToPromiseTotal BigDecimal
+  accountingQuantityTotal BigDecimal
+  oldQuantityOnHand BigDecimal
+  oldAvailableToPromise BigDecimal
+  serialNumber String maxlength(255)
+  softIdentifier String maxlength(255)
+  activationNumber String maxlength(255)
+  activationValidThru Instant
+  unitCost BigDecimal
+}
+
+// Ledger of quantity deltas against an InventoryItem, traceable to the
+// document that caused them.
+entity InventoryItemDelegate {
+  sequenceNo Integer
+  effectiveDate Instant required
+  quantityOnHandDiff BigDecimal
+  availableToPromiseDiff BigDecimal
+  accountingQuantityDiff BigDecimal
+  unitCost BigDecimal
+  remarks String maxlength(255)
+}
+
+entity InventoryItemVariance {
+  varianceReason String maxlength(255)
+  atpVar BigDecimal
+  qohVar BigDecimal
+  comments String maxlength(255)
+}
+
+entity InventoryTransfer {
+  sentDate Instant
+  receivedDate Instant
+  comments String maxlength(255)
+}
+
+entity ItemIssuance {
+  message String maxlength(255)
+  issuedDate Instant
+  issuedBy String maxlength(60)
+  quantity BigDecimal required
+  cancelQuantity BigDecimal
+}
+
+// =============================================================================
+// 12. SHOPPING LIST
+// =============================================================================
+
+entity ShoppingListType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity ShoppingList {
+  name String required maxlength(60)
+  isActive Boolean
+}
+
+entity ShoppingListItem {
+  sequenceNo Integer
+  quantity BigDecimal required
+  requiredByDate Instant
+  selectedAmount BigDecimal
+  maxAmount BigDecimal
+  description String maxlength(255)
+  story String maxlength(2000)
+}
+
+// =============================================================================
+// 13. CUSTOMER REQUEST / RFQ  (enquiry-entry)
+// =============================================================================
+
+entity CustRequestType {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity CustRequestCategory {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity CustRequest {
+  name String required maxlength(255)
+  description String maxlength(2000)
+  priority Integer min(1) max(20)
+  custRequestDate Instant required
+  responseRequiredDate Instant
+  openDateTime Instant
+  closedDateTime Instant
+  internalComment String maxlength(2000)
+  billed Boolean
+  custEstimatedDurationDays Integer
+}
+
+entity CustRequestItem {
+  sequenceNo Integer
+  priority Integer min(1) max(20)
+  requiredByDate Instant
+  quantity BigDecimal required
+  selectedAmount BigDecimal
+  maxAmount BigDecimal
+  description String maxlength(255)
+  story String maxlength(2000)
+}
+
+entity CustRequestRole {
+}
+
+entity CustRequestAttachment {
+  name String maxlength(255)
+}
+
+entity CustRequestItemAttachment {
+  name String maxlength(255)
+}
+
+// =============================================================================
+// 14. QUOTE  (quote / quote-finalize)
+// =============================================================================
+
+entity QuoteType {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity Quote {
+  name String maxlength(255)
+  offerNo String maxlength(60)
+  issueDate Instant required
+  validFromDate Instant
+  validThruDate Instant
+  description String maxlength(2000)
+  offerValue BigDecimal
+  remarks String maxlength(2000)
+}
+
+entity QuoteItem {
+  sequenceNo Integer
+  quantity BigDecimal required
+  selectedAmount BigDecimal
+  quoteUnitPrice BigDecimal
+  totalAmount BigDecimal
+  estimatedDeliveryDate Instant
+  leadTimeDays Integer
+  comments String maxlength(2000)
+}
+
+entity QuoteRole {
+}
+
+entity QuoteAttachment {
+  name String maxlength(255)
+}
+
+// =============================================================================
+// 15. ORDER  (sales-order / purchase-order — distinguished by OrderType)
+// =============================================================================
+
+entity OrderType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity SalesChannel {
+  name String required unique maxlength(25)
+  description String maxlength(100)
+  sequenceNo Integer
+}
+
+entity CustomTimePeriod {
+  name String maxlength(25)
+  fromDate LocalDate
+  thruDate LocalDate
+}
+
+entity Order {
+  name String maxlength(255)
+  orderRefNo String maxlength(60)
+  externalId String maxlength(25)
+  orderDate Instant required
+  entryDate Instant
+  deliveryDate LocalDate
+  priority Integer min(1) max(10)
+  isRushOrder Boolean
+  needsInventoryIssuance Boolean
+  remainingSubTotal BigDecimal
+  grandTotal BigDecimal
+  projectName String maxlength(255)
+  version Integer
+  versionRef String maxlength(60)
+  description TextBlob
+  remarks String maxlength(2000)
+  paymentTerms TextBlob
+  deliveryTerms TextBlob
+  info TextBlob
+  attr1 String maxlength(255)
+  attr2 String maxlength(255)
+  attr3 String maxlength(255)
+}
+
+entity OrderItemType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity OrderItem {
+  sequenceNo Integer
+  quantity BigDecimal required
+  cancelQuantity BigDecimal
+  selectedAmount BigDecimal
+  unitPrice BigDecimal
+  unitListPrice BigDecimal
+  isModifiedPrice Boolean
+  estimatedShipDate Instant
+  estimatedDeliveryDate Instant
+  shipBeforeDate Instant
+  shipAfterDate Instant
+  entryDate Instant
+  attr1 String maxlength(255)
+  attr2 String maxlength(255)
+  attr3 String maxlength(255)
+}
+
+entity OrderStatus {
+  statusDateTime Instant required
+  sequenceNo Integer
+}
+
+entity OrderContactMech {
+  fromDate Instant required
+  thruDate Instant
+}
+
+entity OrderRole {
+}
+
+entity OrderAttachment {
+  name String maxlength(255)
+}
+
+entity OrderItemAttachment {
+  name String maxlength(255)
+}
+
+// Charges / discounts / taxes applied on top of an order or quote line.
+entity OrderAdjustmentType {
+  name String required unique maxlength(20)
+  description String maxlength(60)
+}
+
+entity OrderAdjustment {
+  description String maxlength(255)
+  comments String maxlength(2000)
+  amount BigDecimal
+  sourcePercentage BigDecimal
+  sourceRefId String maxlength(60)
+  exemptAmount BigDecimal
+  includeInTax Boolean
+  includeInShipping Boolean
+  includedInPrice Boolean
+  entryDate Instant
+}
+
+entity QuoteAdjustment {
+  description String maxlength(255)
+  comments String maxlength(2000)
+  amount BigDecimal
+  sourcePercentage BigDecimal
+  sourceRefId String maxlength(60)
+  exemptAmount BigDecimal
+  includeInTax Boolean
+  includeInShipping Boolean
+  includedInPrice Boolean
+  entryDate Instant
+}
+
+// =============================================================================
+// 16. INVOICE  (sales-invoice)
+//     Order-specific fields removed — reach them through Invoice{order}.
+// =============================================================================
+
+entity InvoiceType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity Invoice {
+  invoiceDate Instant required
+  dueDate Instant
+  paidDate Instant
+  referenceNumber String maxlength(60)
+  invoiceMessage String maxlength(255)
+  externalId String maxlength(25)
+  entryDate Instant
+  grandTotal BigDecimal
+  projectName String maxlength(255)
+  description TextBlob
+  remarks String maxlength(2000)
+  paymentTerms TextBlob
+  deliveryTerms TextBlob
+  info TextBlob
+}
+
+entity InvoiceItemType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+}
+
+entity InvoiceItem {
+  sequenceNo Integer
+  quantity BigDecimal required
+  amount BigDecimal
+  cancelQuantity BigDecimal
+  selectedAmount BigDecimal
+  unitPrice BigDecimal
+  unitListPrice BigDecimal
+  isModifiedPrice Boolean
+  estimatedShipDate Instant
+  estimatedDeliveryDate Instant
+  shipBeforeDate Instant
+  shipAfterDate Instant
+  entryDate Instant
+  attr1 String maxlength(255)
+  attr2 String maxlength(255)
+  attr3 String maxlength(255)
+}
+
+// Default invoice-item type per invoice type.
+entity InvoiceItemTypeMap {
+  invoiceItemMapKey String required unique maxlength(100)
+}
+
+entity InvoiceRole {
+}
+
+// Ties an ordered quantity to the invoice line that billed it.
+entity OrderItemBilling {
+  quantity BigDecimal required
+  amount BigDecimal
+}
+
+// =============================================================================
+// 17. PAYMENT & TAX
+// =============================================================================
+
+entity PaymentType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity PaymentMethodType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity PaymentMethod {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+  fromDate Instant
+  thruDate Instant
+}
+
+entity Payment {
+  paymentRefNumber String maxlength(60)
+  effectiveDate Instant
+  paymentDate Instant
+  amount BigDecimal required
+  actualAmount BigDecimal
+  paymentStatus String maxlength(60)
+  mihpayId String maxlength(60)
+  txnId String maxlength(60)
+  email String minlength(5) maxlength(75)
+  phone String maxlength(20)
+  productInfo String maxlength(255)
+}
+
+entity PaymentApplication {
+  amountApplied BigDecimal required
+}
+
+entity PaymentGatewayConfig {
+  name String required unique maxlength(25)
+  authUrl String maxlength(2000)
+  releaseUrl String maxlength(2000)
+  refundUrl String maxlength(2000)
+}
+
+entity PaymentGatewayResponse {
+  referenceNumber String maxlength(25)
+  amount BigDecimal
+  gatewayMessage String maxlength(2000)
+}
+
+entity TaxAuthority {
+  name String required unique maxlength(25)
+}
+
+entity TaxAuthorityRateType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity TaxSlab {
+  name String required unique maxlength(25)
+  rate BigDecimal required
+}
+
+// =============================================================================
+// 18. SHIPMENT / PICKING / RETURNS
+// =============================================================================
+
+entity ShipmentType {
+  name String required unique maxlength(25)
+  description String maxlength(60)
+}
+
+entity ShipmentMethodType {
+  name String required unique maxlength(60)
+  description String maxlength(100)
+  sequenceNo Integer
+}
+
+entity CarrierShipmentMethod {
+  sequenceNo Integer
+  carrierServiceCode String maxlength(60)
+}
+
+entity Shipment {
+  estimatedShipDate Instant
+  estimatedReadyDate Instant
+  estimatedArrivalDate Instant
+  estimatedShipCost BigDecimal
+}
+
+entity ShipmentItem {
+  sequenceNo Integer
+  quantity BigDecimal required
+  message String maxlength(255)
+}
+
+entity ShipmentStatus {
+  statusDateTime Instant required
+  sequenceNo Integer
+}
+
+entity ShipmentReceipt {
+  sequenceNo Integer
+  quantity BigDecimal required
+  quantityAccepted BigDecimal
+  quantityRejected BigDecimal
+  receivedDate Instant
+  message String maxlength(255)
+}
+
+entity ShipmentAttachment {
+  name String maxlength(255)
+}
+
+// Links order lines to shipment lines (partial shipments).
+entity OrderShipment {
+  quantity BigDecimal required
+}
+
+entity PickList {
+  description String maxlength(255)
+  pickListDate Instant required
+}
+
+entity PickListItem {
+  quantity BigDecimal required
+}
+
+entity PicklistRole {
+}
+
+entity ReturnHeaderType {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity ReturnHeader {
+  needsInventoryReceive Boolean
+  supplierRmaId String maxlength(20)
+}
+
+entity ReturnItem {
+  sequenceNo Integer
+  description String maxlength(255)
+  returnQuantity BigDecimal required
+  receivedQuantity BigDecimal
+  returnPrice BigDecimal
+  returnItemPurpose String maxlength(60)
+}
+
+entity ReturnItemBilling {
+  quantity BigDecimal required
+  amount BigDecimal
+}
+
+// =============================================================================
+// 19. CASH BOOK
+// =============================================================================
+
+entity TransactionCategory {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity TransactionType {
+  name String required unique maxlength(60)
+  description String maxlength(255)
+}
+
+entity CashBook {
+  transactionDate LocalDate required
+  dueDate LocalDate
+  amount BigDecimal required
+  description String maxlength(2000)
+  vendorCustomerName String maxlength(200)
+  invoiceNo String maxlength(60)
+  invoiceDate LocalDate
+  purpose String maxlength(255)
+  remarks String maxlength(2000)
+  project String maxlength(255)
+  usageUnits String maxlength(60)
+  recurringTransaction Boolean
+  frequency RecurrenceFrequency
+}
+
+entity CashBookAttachment {
+  name String maxlength(255)
+}
+
+// =============================================================================
+// 20. RELATIONSHIPS
+// =============================================================================
+
+relationship OneToOne {
+  Party{user(login)} to User with builtInEntity
+}
+
+relationship ManyToOne {
+
+  // --- status machine ------------------------------------------------------
+  Status{category(name)} to StatusCategory
+  StatusValidChange{status(name) required} to Status
+  StatusValidChange{statusTo(name) required} to Status
+
+  // --- content & files -----------------------------------------------------
+  Attachment{contentType(name)} to ContentType
+  Attachment{folder(name)} to FileFolder
+  Attachment{owner} to Party
+
+  FileFolder{parent(name)} to FileFolder
+  FileFolder{owner} to Party
+
+  FileShare{folder(name)} to FileFolder
+  FileShare{attachment(name)} to Attachment
+  FileShare{sharedWith} to Party
+  FileShare{sharedBy} to Party
+
+  // --- geo -----------------------------------------------------------------
+  Geo{geoType(name)} to GeoType
+  GeoAssoc{geo(name) required} to Geo
+  GeoAssoc{geoTo(name) required} to Geo
+  GeoAssoc{geoAssocType(name)} to GeoAssocType
+
+  // --- party ---------------------------------------------------------------
+  Party{partyType(name)} to PartyType
+  Party{status(name)} to Status
+  Party{address} to PostalAddress
+
+  PartyRole{party required} to Party
+  PartyRole{roleType(name) required} to RoleType
+
+  PartyClassificationGroup{classificationType(name)} to PartyClassificationType
+  PartyClassification{party required} to Party
+  PartyClassification{classificationGroup(name) required} to PartyClassificationGroup
+
+  PartyIdentification{party required} to Party
+  PartyIdentification{type(name) required} to PartyIdentificationType
+
+  PartyRelationshipType{roleTypeFrom(name)} to RoleType
+  PartyRelationshipType{roleTypeTo(name)} to RoleType
+
+  PartyRelationship{partyFrom required} to Party
+  PartyRelationship{partyTo required} to Party
+  PartyRelationship{roleTypeFrom(name)} to RoleType
+  PartyRelationship{roleTypeTo(name)} to RoleType
+  PartyRelationship{relationshipType(name)} to PartyRelationshipType
+
+  OtpAuth{party} to Party
+
+  // --- contact mechanisms --------------------------------------------------
+  ContactMech{contactMechType(name)} to ContactMechType
+
+  PartyContactMech{party required} to Party
+  PartyContactMech{contactMech required} to ContactMech
+  PartyContactMech{contactMechPurpose(name)} to ContactMechPurpose
+
+  PostalAddress{contactMech} to ContactMech
+  PostalAddress{state(name)} to Geo
+  PostalAddress{pincode(code)} to Geo
+  PostalAddress{country(name)} to Geo
+  PostalAddress{geoPoint} to GeoPoint
+
+  // --- store & department --------------------------------------------------
+  ProductStore{owner} to Party
+  ProductStore{admin} to Party
+
+  Department{parent(name)} to Department
+  Department{head} to Party
+  Department{productStore(name)} to ProductStore
+
+  DepartmentMember{department(name) required} to Department
+  DepartmentMember{party required} to Party
+  DepartmentMember{roleType(name)} to RoleType
+
+  // --- uom -----------------------------------------------------------------
+  Uom{uomType(name)} to UomType
+  UomConversion{fromUom(name) required} to Uom
+  UomConversion{toUom(name) required} to Uom
+
+  // --- catalogue -----------------------------------------------------------
+  CatalogueCategory{catalogue(name) required} to Catalogue
+  CatalogueCategory{productCategory(name) required} to ProductCategory
+  CatalogueCategory{catalogueCategoryType(name)} to CatalogueCategoryType
+
+  ProductCategory{productCategoryType(name)} to ProductCategoryType
+  ProductCategory{parent(name)} to ProductCategory
+
+  ProductCategoryMember{product(name) required} to Product
+  ProductCategoryMember{productCategory(name) required} to ProductCategory
+
+  // --- product -------------------------------------------------------------
+  Product{productType(name)} to ProductType
+  Product{primaryProductCategory(name)} to ProductCategory
+  Product{virtualProduct(name)} to Product
+  Product{inventoryItemType(name)} to InventoryItemType
+  Product{taxSlab(name)} to TaxSlab
+  Product{uom(name)} to Uom
+  Product{quantityUom(name)} to Uom
+  Product{weightUom(name)} to Uom
+  Product{sizeUom(name)} to Uom
+
+  ProductAssoc{product(name) required} to Product
+  ProductAssoc{productTo(name) required} to Product
+  ProductAssoc{productAssocType(name)} to ProductAssocType
+
+  ProductFeature{productFeatureType(name)} to ProductFeatureType
+  ProductFeature{productFeatureCategory(name)} to ProductFeatureCategory
+
+  ProductFeatureCategoryAppl{productCategory(name) required} to ProductCategory
+  ProductFeatureCategoryAppl{productFeatureCategory(name) required} to ProductFeatureCategory
+
+  ProductFeatureGroupAppl{productFeatureGroup(name) required} to ProductFeatureGroup
+  ProductFeatureGroupAppl{productFeature(name) required} to ProductFeature
+
+  ProductFeatureAppl{product(name) required} to Product
+  ProductFeatureAppl{productFeature(name) required} to ProductFeature
+  ProductFeatureAppl{featureApplType(name)} to ProductFeatureApplType
+
+  ProductPrice{product(name) required} to Product
+  ProductPrice{productPriceType(name)} to ProductPriceType
+  ProductPrice{productPricePurpose(name)} to ProductPricePurpose
+  ProductPrice{currencyUom(name)} to Uom
+
+  ProductKeyword{product(name) required} to Product
+  ProductKeyword{keywordType(name)} to KeywordType
+
+  SupplierProduct{product(name) required} to Product
+  SupplierProduct{party required} to Party
+  SupplierProduct{quantityUom(name)} to Uom
+  SupplierProduct{currencyUom(name)} to Uom
+
+  ProductReview{product(name) required} to Product
+  ProductReview{party} to Party
+  ProductReview{orderItem} to OrderItem
+
+  ProductRole{product(name) required} to Product
+  ProductRole{party required} to Party
+  ProductRole{roleType(name)} to RoleType
+
+  ProductAttachment{product required} to Product
+  ProductAttachment{attachment(name) required} to Attachment
+
+  // --- facility ------------------------------------------------------------
+  Facility{facilityType(name)} to FacilityType
+  Facility{parentFacility(name)} to Facility
+  Facility{ownerParty} to Party
+  Facility{facilityGroup(name)} to FacilityGroup
+  Facility{sizeUom(name)} to Uom
+  Facility{geoPoint} to GeoPoint
+  Facility{inventoryItemType(name)} to InventoryItemType
+  Facility{productStore(name)} to ProductStore
+
+  FacilityGroup{facilityGroupType(name)} to FacilityGroupType
+  FacilityGroup{parentFacilityGroup(name)} to FacilityGroup
+
+  FacilityLocation{facility(name) required} to Facility
+  FacilityLocation{locationType(name)} to LocationType
+
+  FacilityParty{facility(name) required} to Facility
+  FacilityParty{party required} to Party
+  FacilityParty{roleType(name)} to RoleType
+
+  FacilityGroupMember{facility(name) required} to Facility
+  FacilityGroupMember{facilityGroup(name) required} to FacilityGroup
+
+  FacilityContactMech{facility(name) required} to Facility
+  FacilityContactMech{contactMech required} to ContactMech
+  FacilityContactMech{contactMechPurpose(name)} to ContactMechPurpose
+
+  FacilityCarrierShipment{facility(name) required} to Facility
+  FacilityCarrierShipment{party required} to Party
+  FacilityCarrierShipment{roleType(name)} to RoleType
+  FacilityCarrierShipment{shipmentMethodType(name)} to ShipmentMethodType
+
+  ProductFacility{product(name) required} to Product
+  ProductFacility{facility(name) required} to Facility
+
+  ProductFacilityUser{productFacility required} to ProductFacility
+  ProductFacilityUser{party required} to Party
+  ProductFacilityUser{status(name)} to Status
+
+  ProductFacilityLocation{product(name) required} to Product
+  ProductFacilityLocation{facility(name) required} to Facility
+  ProductFacilityLocation{facilityLocation(locationSeqId) required} to FacilityLocation
+
+  // --- inventory -----------------------------------------------------------
+  InventoryItem{inventoryItemType(name)} to InventoryItemType
+  InventoryItem{product(name) required} to Product
+  InventoryItem{supplier(organisationName)} to Party
+  InventoryItem{ownerParty} to Party
+  InventoryItem{status(name)} to Status
+  InventoryItem{facility(name)} to Facility
+  InventoryItem{facilityLocation(locationSeqId)} to FacilityLocation
+  InventoryItem{uom(name)} to Uom
+  InventoryItem{currencyUom(name)} to Uom
+  InventoryItem{lot} to Lot
+
+  InventoryItemDelegate{inventoryItem required} to InventoryItem
+  InventoryItemDelegate{order} to Order
+  InventoryItemDelegate{orderItem} to OrderItem
+  InventoryItemDelegate{invoice} to Invoice
+  InventoryItemDelegate{invoiceItem} to InvoiceItem
+  InventoryItemDelegate{shipment} to Shipment
+  InventoryItemDelegate{shipmentItem} to ShipmentItem
+  InventoryItemDelegate{itemIssuance} to ItemIssuance
+  InventoryItemDelegate{receipt} to ShipmentReceipt
+
+  InventoryItemVariance{inventoryItem required} to InventoryItem
+
+  InventoryTransfer{inventoryItem required} to InventoryItem
+  InventoryTransfer{status(name)} to Status
+  InventoryTransfer{facility(name)} to Facility
+  InventoryTransfer{facilityLocation(locationSeqId)} to FacilityLocation
+  InventoryTransfer{facilityTo(name)} to Facility
+  InventoryTransfer{facilityLocationTo(locationSeqId)} to FacilityLocation
+  InventoryTransfer{issuance} to ItemIssuance
+
+  ItemIssuance{inventoryItem required} to InventoryItem
+  ItemIssuance{order} to Order
+  ItemIssuance{orderItem} to OrderItem
+  ItemIssuance{shipment} to Shipment
+  ItemIssuance{shipmentItem} to ShipmentItem
+  ItemIssuance{issuedByParty} to Party
+
+  // --- shopping list -------------------------------------------------------
+  ShoppingList{shoppingListType(name)} to ShoppingListType
+  ShoppingList{party required} to Party
+  ShoppingList{status(name)} to Status
+
+  ShoppingListItem{shoppingList required} to ShoppingList
+  ShoppingListItem{product(name)} to Product
+  ShoppingListItem{status(name)} to Status
+
+  // --- cust request / RFQ --------------------------------------------------
+  CustRequestType{parent(name)} to CustRequestType
+  CustRequestType{party} to Party
+  CustRequestCategory{custRequestType(name)} to CustRequestType
+
+  CustRequest{custRequestType(name)} to CustRequestType
+  CustRequest{custRequestCategory(name)} to CustRequestCategory
+  CustRequest{status(name)} to Status
+  CustRequest{fromParty required} to Party
+  CustRequest{productStore(name)} to ProductStore
+  CustRequest{salesChannel(name)} to SalesChannel
+  CustRequest{currencyUom(name)} to Uom
+
+  CustRequestItem{custRequest required} to CustRequest
+  CustRequestItem{status(name)} to Status
+  CustRequestItem{product(name)} to Product
+  CustRequestItem{uom(name)} to Uom
+  CustRequestItem{shoppingListItem} to ShoppingListItem
+
+  CustRequestRole{custRequest} to CustRequest
+  CustRequestRole{custRequestItem} to CustRequestItem
+  CustRequestRole{party required} to Party
+  CustRequestRole{roleType(name)} to RoleType
+
+  CustRequestAttachment{custRequest required} to CustRequest
+  CustRequestAttachment{attachment(name) required} to Attachment
+
+  CustRequestItemAttachment{custRequestItem required} to CustRequestItem
+  CustRequestItemAttachment{attachment(name) required} to Attachment
+
+  // --- quote ---------------------------------------------------------------
+  Quote{quoteType(name)} to QuoteType
+  Quote{custRequest(name)} to CustRequest
+  Quote{party required} to Party
+  Quote{status(name)} to Status
+  Quote{productStore(name)} to ProductStore
+  Quote{salesChannel(name)} to SalesChannel
+  Quote{currencyUom(name)} to Uom
+  Quote{currencyConversion(name)} to UomConversion
+
+  QuoteItem{quote required} to Quote
+  QuoteItem{product(name)} to Product
+  QuoteItem{productFeature(name)} to ProductFeature
+  QuoteItem{uom(name)} to Uom
+  QuoteItem{status(name)} to Status
+  QuoteItem{custRequest} to CustRequest
+  QuoteItem{custRequestItem} to CustRequestItem
+
+  QuoteRole{quote} to Quote
+  QuoteRole{quoteItem} to QuoteItem
+  QuoteRole{party required} to Party
+  QuoteRole{roleType(name)} to RoleType
+
+  QuoteAttachment{quote required} to Quote
+  QuoteAttachment{attachment(name) required} to Attachment
+
+  QuoteAdjustment{quote} to Quote
+  QuoteAdjustment{quoteItem} to QuoteItem
+  QuoteAdjustment{adjustmentType(name)} to OrderAdjustmentType
+  QuoteAdjustment{product(name)} to Product
+  QuoteAdjustment{productFeature(name)} to ProductFeature
+  QuoteAdjustment{taxAuthority(name)} to TaxAuthority
+
+  // --- order ---------------------------------------------------------------
+  Order{orderType(name) required} to OrderType
+  Order{salesChannel(name)} to SalesChannel
+  Order{party required} to Party
+  Order{supplier} to Party
+  Order{status(name)} to Status
+  Order{currencyUom(name)} to Uom
+  Order{currencyConversion(name)} to UomConversion
+  Order{quote(name)} to Quote
+  Order{facility(name)} to Facility
+  Order{productStore(name)} to ProductStore
+  Order{department(name)} to Department
+  Order{customTimePeriod} to CustomTimePeriod
+
+  OrderStatus{order required} to Order
+  OrderStatus{status(name) required} to Status
+
+  OrderItem{order required} to Order
+  OrderItem{orderItemType(name)} to OrderItemType
+  OrderItem{product(name)} to Product
+  OrderItem{uom(name)} to Uom
+  OrderItem{supplierProduct} to SupplierProduct
+  OrderItem{supplier} to Party
+  OrderItem{productFeature(name)} to ProductFeature
+  OrderItem{productFacility} to ProductFacility
+  OrderItem{fromInventoryItem} to InventoryItem
+  OrderItem{shoppingListItem} to ShoppingListItem
+  OrderItem{quoteItem} to QuoteItem
+  OrderItem{status(name)} to Status
+  OrderItem{taxAuthRate(name)} to TaxAuthorityRateType
+
+  OrderContactMech{order required} to Order
+  OrderContactMech{contactMech required} to ContactMech
+  OrderContactMech{contactMechPurpose(name)} to ContactMechPurpose
+
+  OrderRole{order} to Order
+  OrderRole{orderItem} to OrderItem
+  OrderRole{party required} to Party
+  OrderRole{roleType(name)} to RoleType
+
+  OrderAttachment{order required} to Order
+  OrderAttachment{attachment(name) required} to Attachment
+
+  OrderItemAttachment{orderItem required} to OrderItem
+  OrderItemAttachment{attachment(name) required} to Attachment
+
+  OrderAdjustmentType{parent(name)} to OrderAdjustmentType
+
+  OrderAdjustment{order} to Order
+  OrderAdjustment{orderItem} to OrderItem
+  OrderAdjustment{adjustmentType(name)} to OrderAdjustmentType
+  OrderAdjustment{product(name)} to Product
+  OrderAdjustment{productFeature(name)} to ProductFeature
+  OrderAdjustment{taxAuthority(name)} to TaxAuthority
+
+  // --- invoice -------------------------------------------------------------
+  Invoice{invoiceType(name) required} to InvoiceType
+  Invoice{order} to Order
+  Invoice{fromParty required} to Party
+  Invoice{toParty required} to Party
+  Invoice{roleType(name)} to RoleType
+  Invoice{status(name)} to Status
+  Invoice{contactMech} to ContactMech
+  Invoice{currencyUom(name)} to Uom
+
+  InvoiceItem{invoice required} to Invoice
+  InvoiceItem{invoiceItemType(name)} to InvoiceItemType
+  InvoiceItem{product(name)} to Product
+  InvoiceItem{uom(name)} to Uom
+  InvoiceItem{productFeature(name)} to ProductFeature
+  InvoiceItem{productFacility} to ProductFacility
+  InvoiceItem{fromInventoryItem} to InventoryItem
+  InvoiceItem{taxAuthRate(name)} to TaxAuthorityRateType
+  InvoiceItem{parentInvoice} to Invoice
+  InvoiceItem{parentInvoiceItem} to InvoiceItem
+
+  InvoiceItemTypeMap{invoiceType(name) required} to InvoiceType
+  InvoiceItemTypeMap{invoiceItemType(name) required} to InvoiceItemType
+
+  InvoiceRole{invoice} to Invoice
+  InvoiceRole{invoiceItem} to InvoiceItem
+  InvoiceRole{party required} to Party
+  InvoiceRole{roleType(name)} to RoleType
+
+  OrderItemBilling{orderItem required} to OrderItem
+  OrderItemBilling{invoiceItem required} to InvoiceItem
+  OrderItemBilling{shipmentReceipt} to ShipmentReceipt
+  OrderItemBilling{itemIssuance} to ItemIssuance
+
+  // --- payment & tax -------------------------------------------------------
+  PaymentMethod{paymentMethodType(name) required} to PaymentMethodType
+  PaymentMethod{party} to Party
+
+  Payment{paymentType(name)} to PaymentType
+  Payment{paymentMethodType(name)} to PaymentMethodType
+  Payment{paymentMethod(name)} to PaymentMethod
+  Payment{paymentGatewayResponse} to PaymentGatewayResponse
+  Payment{status(name)} to Status
+  Payment{fromParty} to Party
+  Payment{toParty} to Party
+  Payment{roleType(name)} to RoleType
+  Payment{currencyUom(name)} to Uom
+
+  PaymentApplication{payment required} to Payment
+  PaymentApplication{toPayment} to Payment
+  PaymentApplication{invoice} to Invoice
+  PaymentApplication{invoiceItem} to InvoiceItem
+  PaymentApplication{order} to Order
+  PaymentApplication{orderItem} to OrderItem
+
+  PaymentGatewayResponse{paymentGatewayConfig(name)} to PaymentGatewayConfig
+  PaymentGatewayResponse{paymentMethodType(name)} to PaymentMethodType
+
+  TaxAuthority{geo(name)} to Geo
+  TaxAuthorityRateType{taxAuthority(name) required} to TaxAuthority
+  TaxAuthorityRateType{taxSlab(name) required} to TaxSlab
+
+  // --- shipment ------------------------------------------------------------
+  CarrierShipmentMethod{shipmentMethodType(name) required} to ShipmentMethodType
+  CarrierShipmentMethod{party required} to Party
+  CarrierShipmentMethod{roleType(name)} to RoleType
+
+  Shipment{shipmentType(name)} to ShipmentType
+  Shipment{shipmentMethodType(name)} to ShipmentMethodType
+  Shipment{status(name)} to Status
+  Shipment{order} to Order
+  Shipment{orderItem} to OrderItem
+  Shipment{originFacility(name)} to Facility
+  Shipment{destinationFacility(name)} to Facility
+  Shipment{fromParty} to Party
+  Shipment{toParty} to Party
+  Shipment{carrierParty} to Party
+  Shipment{contactMech} to ContactMech
+
+  ShipmentItem{shipment required} to Shipment
+  ShipmentItem{product(name)} to Product
+
+  ShipmentStatus{shipment required} to Shipment
+  ShipmentStatus{status(name) required} to Status
+
+  ShipmentReceipt{shipment} to Shipment
+  ShipmentReceipt{shipmentItem} to ShipmentItem
+  ShipmentReceipt{order} to Order
+  ShipmentReceipt{orderItem} to OrderItem
+  ShipmentReceipt{inventoryItem} to InventoryItem
+  ShipmentReceipt{product(name)} to Product
+  ShipmentReceipt{receivedBy} to Party
+
+  ShipmentAttachment{shipment required} to Shipment
+  ShipmentAttachment{attachment(name) required} to Attachment
+
+  OrderShipment{order required} to Order
+  OrderShipment{orderItem required} to OrderItem
+  OrderShipment{shipment required} to Shipment
+  OrderShipment{shipmentItem} to ShipmentItem
+
+  // --- picking -------------------------------------------------------------
+  PickList{facility(name)} to Facility
+  PickList{status(name)} to Status
+  PickList{party} to Party
+
+  PickListItem{pickList required} to PickList
+  PickListItem{order} to Order
+  PickListItem{orderItem} to OrderItem
+  PickListItem{inventoryItem} to InventoryItem
+  PickListItem{product(name)} to Product
+  PickListItem{facilityLocation(locationSeqId)} to FacilityLocation
+  PickListItem{status(name)} to Status
+
+  PicklistRole{pickList required} to PickList
+  PicklistRole{party required} to Party
+  PicklistRole{roleType(name)} to RoleType
+
+  // --- returns -------------------------------------------------------------
+  ReturnHeader{returnType(name)} to ReturnHeaderType
+  ReturnHeader{status(name)} to Status
+  ReturnHeader{fromParty} to Party
+  ReturnHeader{toParty} to Party
+  ReturnHeader{paymentMethod(name)} to PaymentMethod
+  ReturnHeader{originContactMech} to ContactMech
+  ReturnHeader{destinationFacility(name)} to Facility
+  ReturnHeader{currencyUom(name)} to Uom
+
+  ReturnItem{returnHeader required} to ReturnHeader
+  ReturnItem{returnType(name)} to ReturnHeaderType
+  ReturnItem{product(name)} to Product
+  ReturnItem{orderItem} to OrderItem
+  ReturnItem{status(name)} to Status
+
+  ReturnItemBilling{returnItem required} to ReturnItem
+  ReturnItemBilling{orderItem} to OrderItem
+  ReturnItemBilling{invoiceItem} to InvoiceItem
+  ReturnItemBilling{shipmentReceipt} to ShipmentReceipt
+
+  // --- cash book -----------------------------------------------------------
+  TransactionType{category(name)} to TransactionCategory
+
+  CashBook{transactionType(name) required} to TransactionType
+  CashBook{transactionCategory(name)} to TransactionCategory
+  CashBook{paymentMethodType(name)} to PaymentMethodType
+  CashBook{department(name)} to Department
+  CashBook{currencyUom(name)} to Uom
+  CashBook{status(name)} to Status
+  CashBook{order} to Order
+  CashBook{invoice} to Invoice
+  CashBook{fromParty} to Party
+  CashBook{toParty} to Party
+
+  CashBookAttachment{cashBook required} to CashBook
+  CashBookAttachment{attachment(name) required} to Attachment
+}
+
+// =============================================================================
+// 21. ENTITY OPTIONS
+// =============================================================================
+
+// A service layer everywhere — gives every entity a place to put business
+// rules instead of pushing them into the Angular app.
+service * with serviceClass
+
+// Criteria-based querying (?fieldId.equals=, ?fieldId.in=, ...) everywhere.
+// The old JDL enabled it on only 39 of 145 entities, which is why the frontend
+// had to fetch-and-filter in the browser for the rest.
+filter *
+
+// Pagination for transactional / high-volume entities only.
+// Everything in the `except` list is reference data that the UI loads whole
+// into dropdowns — paginating those would silently truncate them to 20 rows.
+//
+// NOTE: both JHipster 8.7 and 9.4 print "the paginate option is deprecated,
+// please use pagination instead" here, but neither actually accepts the
+// `pagination` keyword — the lexer rejects it in both. `paginate` is the only
+// parseable spelling as of 9.4.0. Ignore the warning.
+paginate * with pagination except
+  StatusCategory, Status, StatusValidChange,
+  PartyType, RoleType, PartyClassificationType, PartyClassificationGroup,
+  PartyIdentificationType, PartyRelationshipType,
+  ContactMechPurpose, ContactMechType,
+  GeoType, GeoAssocType, GeoPoint,
+  ContentType,
+  Department, ProductStore, SystemParameters, CustomTimePeriod,
+  UomType, Uom, UomConversion,
+  Catalogue, CatalogueCategoryType, CatalogueCategory,
+  ProductCategoryType, ProductCategory,
+  ProductType, ProductAssocType,
+  ProductFeatureCategory, ProductFeatureType, ProductFeatureGroup,
+  ProductFeatureApplType,
+  ProductPriceType, ProductPricePurpose, KeywordType,
+  FacilityType, FacilityGroupType, FacilityGroup, LocationType,
+  InventoryItemType, Lot,
+  ShoppingListType,
+  OrderType, OrderItemType, SalesChannel, OrderAdjustmentType,
+  InvoiceType, InvoiceItemType, InvoiceItemTypeMap,
+  PaymentType, PaymentMethodType, PaymentGatewayConfig,
+  TaxAuthority, TaxAuthorityRateType, TaxSlab,
+  ShipmentType, ShipmentMethodType, CarrierShipmentMethod,
+  FacilityCarrierShipment,
+  CustRequestType, CustRequestCategory,
+  QuoteType, ReturnHeaderType,
+  TransactionCategory, TransactionType
+
+// =============================================================================
+// NOTES / DELIBERATE DECISIONS
+// =============================================================================
+//
+// * No `dto * with mapstruct`. The current app serves JPA entities directly and
+//   the whole Angular layer is written against that JSON shape. Adding DTOs
+//   would change every payload. Add it later, per entity, if you want to
+//   decouple the API from the schema.
+//
+// * Relationships stay unidirectional ManyToOne (child -> parent), as today.
+//   Adding OneToMany inverse sides would make `GET /api/orders` serialise every
+//   order line (N+1 + huge payloads). Fetch children with the criteria filters
+//   instead: `GET /api/order-items?orderId.equals=42`.
+//
+// * `Order` is a SQL reserved word; JHipster maps it to table `jhi_order`
+//   automatically. Same for `SystemParameters.key`/`value`.
+//
+// * No entity auditing (createdBy/createdDate/lastModifiedBy) — JHipster 8 core
+//   has no JDL option for it. If you want it on every table, extend
+//   `AbstractAuditingEntity` in the generated domain classes (or add a
+//   `.jhipster` blueprint) as a post-generation step.
+//
+// * Renamed since p2p.jdl (none of these are referenced by the existing
+//   Angular code, so the port is unaffected):
+//     Invoice/Shipment: partyIdFrom/partyIdTo   -> fromParty/toParty
+//     Payment:          partyIdFrom/partyIdTo   -> fromParty/toParty
+//     ProductAssoc:     productIdTo             -> productTo
+//     Order:            ctp                     -> customTimePeriod
+//     Quote/CustRequest:ProductStore            -> productStore
+//     FacilityGroup:    facilityGroup (self)    -> parentFacilityGroup
+//     UomConversion:    convertionFactor        -> conversionFactor
+//     InventoryItem:    activationValidTrue     -> activationValidThru
+//     QuoteItem:        leadTime (Duration)     -> leadTimeDays (Integer)
+//     CustRequest:      custEstimatedDuration   -> custEstimatedDurationDays
+//     CashBookAttachment: product               -> cashBook
+//
+// * Dropped from p2p.jdl: Invoice.orderRefNo, orderDate, priority, isRushOrder,
+//   needsInventoryIssuance, remainingSubTotal, deliveryDate, attr1..attr3
+//   (unused Order copy-paste); OrderItem.fromInventoryItemId (duplicate of
+//   fromInventoryItem); UomConversion.uom/uomTo (duplicate of fromUom/toUom);
+//   CashBook.type/category/department/paymentMode (now FKs).
+//
+// * The Angular app calls `/api/users/create`, `/api/users/all`,
+//   `/api/users/profiles`, `/api/tickets`, `/api/ticket-types`,
+//   `/api/experiments` — none of these exist in the backend and none are
+//   modelled here. They are dead references carried over from another codebase;
+//   drop them when porting.
+// =============================================================================

@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "changelogDate": "20231214230105"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "25"
+    },
+    {
+      "fieldName": "rate",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TaxSlab",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

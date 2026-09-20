@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "orderAdjustmentType": {
+      "home": {
+        "title": "OrderAdjustmentTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Order Adjustment Type बनाएँ",
+        "createOrEditLabel": "Order Adjustment Type बनाएँ या संपादित करें",
+        "notFound": "No Order Adjustment Types found"
+      },
+      "created": "एक नया Order Adjustment Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Order Adjustment Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Order Adjustment Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Order Adjustment Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Order Adjustment Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "parent": "Parent"
+    }
+  }
+}

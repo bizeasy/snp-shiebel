@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "returnHeaderType": {
+      "home": {
+        "title": "ReturnHeaderTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Return Header Type बनाएँ",
+        "createOrEditLabel": "Return Header Type बनाएँ या संपादित करें",
+        "notFound": "No Return Header Types found"
+      },
+      "created": "एक नया Return Header Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Return Header Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Return Header Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Return Header Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Return Header Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

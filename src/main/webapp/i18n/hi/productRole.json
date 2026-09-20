@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "productRole": {
+      "home": {
+        "title": "ProductRoles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Role बनाएँ",
+        "createOrEditLabel": "Product Role बनाएँ या संपादित करें",
+        "notFound": "No Product Roles found"
+      },
+      "created": "एक नया Product Role [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Role [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Role [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Role [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Role"
+      },
+      "id": "ID",
+      "product": "Product",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

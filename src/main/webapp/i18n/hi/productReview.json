@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "productReview": {
+      "home": {
+        "title": "ProductReviews",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Review बनाएँ",
+        "createOrEditLabel": "Product Review बनाएँ या संपादित करें",
+        "notFound": "No Product Reviews found"
+      },
+      "created": "एक नया Product Review [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Review [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Review [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Review [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Review"
+      },
+      "id": "ID",
+      "rating": "Rating",
+      "ratingInfo": "Rating Info",
+      "message": "Message",
+      "reviewDate": "Review Date",
+      "product": "Product",
+      "party": "Party",
+      "orderItem": "Order Item"
+    }
+  }
+}

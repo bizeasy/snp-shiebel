@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "invoiceItemTypeMap": {
+      "home": {
+        "title": "InvoiceItemTypeMaps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Invoice Item Type Map बनाएँ",
+        "createOrEditLabel": "Invoice Item Type Map बनाएँ या संपादित करें",
+        "notFound": "No Invoice Item Type Maps found"
+      },
+      "created": "एक नया Invoice Item Type Map [identifier: {{ param }}] तैयार है",
+      "updated": "एक Invoice Item Type Map [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Invoice Item Type Map [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Invoice Item Type Map [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Invoice Item Type Map"
+      },
+      "id": "ID",
+      "invoiceItemMapKey": "Invoice Item Map Key",
+      "invoiceType": "Invoice Type",
+      "invoiceItemType": "Invoice Item Type"
+    }
+  }
+}

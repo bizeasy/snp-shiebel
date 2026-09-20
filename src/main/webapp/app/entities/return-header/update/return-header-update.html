@@ -1,0 +1,216 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-return-header-heading"
+        data-cy="ReturnHeaderCreateUpdateHeading"
+        sysTranslate="snpApp.returnHeader.home.createOrEditLabel"
+      >
+        Create or edit a Return Header
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="needsInventoryReceive"
+            id="field_needsInventoryReceive"
+            data-cy="needsInventoryReceive"
+            formControlName="needsInventoryReceive"
+          />
+          <label class="form-check-label" for="field_needsInventoryReceive" sysTranslate="snpApp.returnHeader.needsInventoryReceive"
+            >Needs Inventory Receive</label
+          >
+        </div>
+
+        @let supplierRmaIdRef = editForm.get('supplierRmaId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_supplierRmaId" sysTranslate="snpApp.returnHeader.supplierRmaId">Supplier Rma Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="supplierRmaId"
+            id="field_supplierRmaId"
+            data-cy="supplierRmaId"
+            formControlName="supplierRmaId"
+          />
+          @if (supplierRmaIdRef.invalid && (supplierRmaIdRef.dirty || supplierRmaIdRef.touched)) {
+            <div>
+              @if (supplierRmaIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_returnType" sysTranslate="snpApp.returnHeader.returnType">Return Type</label>
+          <select
+            class="form-select"
+            id="field_returnType"
+            data-cy="returnType"
+            name="returnType"
+            formControlName="returnType"
+            [compareWith]="compareReturnHeaderType"
+          >
+            <option [ngValue]="null"></option>
+            @for (returnHeaderTypeOption of returnHeaderTypesSharedCollection(); track $index) {
+              <option [ngValue]="returnHeaderTypeOption">{{ returnHeaderTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.returnHeader.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fromParty" sysTranslate="snpApp.returnHeader.fromParty">From Party</label>
+          <select
+            class="form-select"
+            id="field_fromParty"
+            data-cy="fromParty"
+            name="fromParty"
+            formControlName="fromParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_toParty" sysTranslate="snpApp.returnHeader.toParty">To Party</label>
+          <select
+            class="form-select"
+            id="field_toParty"
+            data-cy="toParty"
+            name="toParty"
+            formControlName="toParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentMethod" sysTranslate="snpApp.returnHeader.paymentMethod">Payment Method</label>
+          <select
+            class="form-select"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+            name="paymentMethod"
+            formControlName="paymentMethod"
+            [compareWith]="comparePaymentMethod"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentMethodOption of paymentMethodsSharedCollection(); track $index) {
+              <option [ngValue]="paymentMethodOption">{{ paymentMethodOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_originContactMech" sysTranslate="snpApp.returnHeader.originContactMech"
+            >Origin Contact Mech</label
+          >
+          <select
+            class="form-select"
+            id="field_originContactMech"
+            data-cy="originContactMech"
+            name="originContactMech"
+            formControlName="originContactMech"
+            [compareWith]="compareContactMech"
+          >
+            <option [ngValue]="null"></option>
+            @for (contactMechOption of contactMechesSharedCollection(); track $index) {
+              <option [ngValue]="contactMechOption">{{ contactMechOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_destinationFacility" sysTranslate="snpApp.returnHeader.destinationFacility"
+            >Destination Facility</label
+          >
+          <select
+            class="form-select"
+            id="field_destinationFacility"
+            data-cy="destinationFacility"
+            name="destinationFacility"
+            formControlName="destinationFacility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyUom" sysTranslate="snpApp.returnHeader.currencyUom">Currency Uom</label>
+          <select
+            class="form-select"
+            id="field_currencyUom"
+            data-cy="currencyUom"
+            name="currencyUom"
+            formControlName="currencyUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

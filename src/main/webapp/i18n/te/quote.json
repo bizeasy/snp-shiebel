@@ -1,0 +1,39 @@
+{
+  "snpApp": {
+    "quote": {
+      "home": {
+        "title": "Quotes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Quote సృష్టించండి",
+        "createOrEditLabel": "Quote సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Quotes found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Quote సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Quote సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Quote తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Quote {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Quote"
+      },
+      "id": "ID",
+      "name": "Name",
+      "offerNo": "Offer No",
+      "issueDate": "Issue Date",
+      "validFromDate": "Valid From Date",
+      "validThruDate": "Valid Thru Date",
+      "description": "Description",
+      "offerValue": "Offer Value",
+      "remarks": "Remarks",
+      "quoteType": "Quote Type",
+      "custRequest": "Cust Request",
+      "party": "Party",
+      "status": "Status",
+      "productStore": "Product Store",
+      "salesChannel": "Sales Channel",
+      "currencyUom": "Currency Uom",
+      "currencyConversion": "Currency Conversion"
+    }
+  }
+}

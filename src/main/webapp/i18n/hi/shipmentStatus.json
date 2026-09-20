@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "shipmentStatus": {
+      "home": {
+        "title": "ShipmentStatuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shipment Status बनाएँ",
+        "createOrEditLabel": "Shipment Status बनाएँ या संपादित करें",
+        "notFound": "No Shipment Statuses found"
+      },
+      "created": "एक नया Shipment Status [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shipment Status [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shipment Status [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shipment Status [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shipment Status"
+      },
+      "id": "ID",
+      "statusDateTime": "Status Date Time",
+      "sequenceNo": "Sequence No",
+      "shipment": "Shipment",
+      "status": "Status"
+    }
+  }
+}

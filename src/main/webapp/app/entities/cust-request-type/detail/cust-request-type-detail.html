@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (custRequestType(); as custRequestTypeRef) {
+      <div>
+        <h2 data-cy="custRequestTypeDetailsHeading"><span sysTranslate="snpApp.custRequestType.detail.title">Cust Request Type</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ custRequestTypeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestType.name">Name</span></dt>
+          <dd>
+            <span>{{ custRequestTypeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestType.description">Description</span></dt>
+          <dd>
+            <span>{{ custRequestTypeRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestType.parent">Parent</span></dt>
+          <dd>
+            @if (custRequestType()!.parent) {
+              <div>
+                <a [routerLink]="['/cust-request-type', custRequestType()!.parent?.id, 'view']">{{ custRequestTypeRef.parent?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestType.party">Party</span></dt>
+          <dd>
+            @if (custRequestType()!.party) {
+              <div>
+                <a [routerLink]="['/party', custRequestType()!.party?.id, 'view']">{{ custRequestTypeRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cust-request-type', custRequestTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

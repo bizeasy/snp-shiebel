@@ -1,0 +1,157 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-product-review-heading"
+        data-cy="ProductReviewCreateUpdateHeading"
+        sysTranslate="snpApp.productReview.home.createOrEditLabel"
+      >
+        Create or edit a Product Review
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let ratingRef = editForm.get('rating')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_rating" sysTranslate="snpApp.productReview.rating">Rating</label>
+          <input type="number" class="form-control" name="rating" id="field_rating" data-cy="rating" formControlName="rating" />
+          @if (ratingRef.invalid && (ratingRef.dirty || ratingRef.touched)) {
+            <div>
+              @if (ratingRef.errors?.min) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.min" [translateValues]="{ min: '1' }"
+                  >This field should be at least 1.</small
+                >
+              }
+              @if (ratingRef.errors?.max) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.max" [translateValues]="{ max: '10' }"
+                  >This field cannot be more than 10.</small
+                >
+              }
+              <small class="form-text text-danger" [hidden]="!ratingRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ratingInfo" sysTranslate="snpApp.productReview.ratingInfo">Rating Info</label>
+          <textarea
+            class="form-control"
+            name="ratingInfo"
+            id="field_ratingInfo"
+            data-cy="ratingInfo"
+            formControlName="ratingInfo"
+          ></textarea>
+        </div>
+
+        @let messageRef = editForm.get('message')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_message" sysTranslate="snpApp.productReview.message">Message</label>
+          <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
+          @if (messageRef.invalid && (messageRef.dirty || messageRef.touched)) {
+            <div>
+              @if (messageRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_reviewDate" sysTranslate="snpApp.productReview.reviewDate">Review Date</label>
+          <div class="d-flex">
+            <input
+              id="field_reviewDate"
+              data-cy="reviewDate"
+              type="datetime-local"
+              class="form-control"
+              name="reviewDate"
+              formControlName="reviewDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.productReview.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.productReview.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_orderItem" sysTranslate="snpApp.productReview.orderItem">Order Item</label>
+          <select
+            class="form-select"
+            id="field_orderItem"
+            data-cy="orderItem"
+            name="orderItem"
+            formControlName="orderItem"
+            [compareWith]="compareOrderItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (orderItemOption of orderItemsSharedCollection(); track $index) {
+              <option [ngValue]="orderItemOption">{{ orderItemOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

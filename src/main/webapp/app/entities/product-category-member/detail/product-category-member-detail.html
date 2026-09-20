@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productCategoryMember(); as productCategoryMemberRef) {
+      <div>
+        <h2 data-cy="productCategoryMemberDetailsHeading">
+          <span sysTranslate="snpApp.productCategoryMember.detail.title">Product Category Member</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productCategoryMemberRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategoryMember.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productCategoryMemberRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategoryMember.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productCategoryMemberRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategoryMember.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ productCategoryMemberRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategoryMember.product">Product</span></dt>
+          <dd>
+            @if (productCategoryMember()!.product) {
+              <div>
+                <a [routerLink]="['/product', productCategoryMember()!.product?.id, 'view']">{{
+                  productCategoryMemberRef.product?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategoryMember.productCategory">Product Category</span></dt>
+          <dd>
+            @if (productCategoryMember()!.productCategory) {
+              <div>
+                <a [routerLink]="['/product-category', productCategoryMember()!.productCategory?.id, 'view']">{{
+                  productCategoryMemberRef.productCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-category-member', productCategoryMemberRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,40 @@
+{
+  "snpApp": {
+    "custRequest": {
+      "home": {
+        "title": "Cust Requests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Cust Request సృష్టించండి",
+        "createOrEditLabel": "Cust Request సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Cust Requests found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Cust Request {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Cust Request"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "priority": "Priority",
+      "custRequestDate": "Cust Request Date",
+      "responseRequiredDate": "Response Required Date",
+      "openDateTime": "Open Date Time",
+      "closedDateTime": "Closed Date Time",
+      "internalComment": "Internal Comment",
+      "billed": "Billed",
+      "custEstimatedDurationDays": "Cust Estimated Duration Days",
+      "custRequestType": "Cust Request Type",
+      "custRequestCategory": "Cust Request Category",
+      "status": "Status",
+      "fromParty": "From Party",
+      "productStore": "Product Store",
+      "salesChannel": "Sales Channel",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

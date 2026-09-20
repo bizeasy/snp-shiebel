@@ -1,0 +1,125 @@
+<div>
+  <h2 id="page-heading" data-cy="TaxAuthorityRateTypeHeading">
+    <span sysTranslate="snpApp.taxAuthorityRateType.home.title">Tax Authority Rate Types</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.taxAuthorityRateType.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-tax-authority-rate-type"
+        [routerLink]="['/tax-authority-rate-type/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.taxAuthorityRateType.home.createLabel">Create a new Tax Authority Rate Type</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (taxAuthorityRateTypes().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.taxAuthorityRateType.home.notFound">No Tax Authority Rate Types found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.taxAuthorityRateType.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.taxAuthorityRateType.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="taxAuthority.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.taxAuthorityRateType.taxAuthority">Tax Authority</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="taxSlab.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.taxAuthorityRateType.taxSlab">Tax Slab</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (taxAuthorityRateType of taxAuthorityRateTypes(); track trackId(taxAuthorityRateType)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/tax-authority-rate-type', taxAuthorityRateType.id, 'view']">{{ taxAuthorityRateType.id }}</a>
+              </td>
+              <td>{{ taxAuthorityRateType.name }}</td>
+              <td>{{ taxAuthorityRateType.description }}</td>
+              <td>
+                @if (taxAuthorityRateType.taxAuthority) {
+                  <div>
+                    <a [routerLink]="['/tax-authority', taxAuthorityRateType.taxAuthority.id, 'view']">{{
+                      taxAuthorityRateType.taxAuthority.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (taxAuthorityRateType.taxSlab) {
+                  <div>
+                    <a [routerLink]="['/tax-slab', taxAuthorityRateType.taxSlab.id, 'view']">{{ taxAuthorityRateType.taxSlab.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/tax-authority-rate-type', taxAuthorityRateType.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/tax-authority-rate-type', taxAuthorityRateType.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(taxAuthorityRateType)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

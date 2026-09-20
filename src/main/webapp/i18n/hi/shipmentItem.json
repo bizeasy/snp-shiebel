@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "shipmentItem": {
+      "home": {
+        "title": "ShipmentItems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shipment Item बनाएँ",
+        "createOrEditLabel": "Shipment Item बनाएँ या संपादित करें",
+        "notFound": "No Shipment Items found"
+      },
+      "created": "एक नया Shipment Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shipment Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shipment Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shipment Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shipment Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "message": "Message",
+      "shipment": "Shipment",
+      "product": "Product"
+    }
+  }
+}

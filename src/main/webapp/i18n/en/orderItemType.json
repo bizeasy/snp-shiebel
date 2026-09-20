@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "orderItemType": {
+      "home": {
+        "title": "Order Item Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order Item Type",
+        "createOrEditLabel": "Create or edit a Order Item Type",
+        "notFound": "No Order Item Types found"
+      },
+      "created": "A new Order Item Type is created with identifier {{ param }}",
+      "updated": "A Order Item Type is updated with identifier {{ param }}",
+      "deleted": "A Order Item Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order Item Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Order Item Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

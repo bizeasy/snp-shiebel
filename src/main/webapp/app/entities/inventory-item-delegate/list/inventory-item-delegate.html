@@ -1,0 +1,282 @@
+<div>
+  <h2 id="page-heading" data-cy="InventoryItemDelegateHeading">
+    <span sysTranslate="snpApp.inventoryItemDelegate.home.title">Inventory Item Delegates</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.inventoryItemDelegate.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inventory-item-delegate"
+        [routerLink]="['/inventory-item-delegate/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.inventoryItemDelegate.home.createLabel">Create a new Inventory Item Delegate</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (inventoryItemDelegates().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.inventoryItemDelegate.home.notFound">No Inventory Item Delegates found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="effectiveDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.effectiveDate">Effective Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantityOnHandDiff">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.quantityOnHandDiff">Quantity On Hand Diff</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="availableToPromiseDiff">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.availableToPromiseDiff">Available To Promise Diff</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="accountingQuantityDiff">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.accountingQuantityDiff">Accounting Quantity Diff</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="unitCost">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.unitCost">Unit Cost</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="remarks">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.remarks">Remarks</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.inventoryItem">Inventory Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoice.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.invoice">Invoice</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.invoiceItem">Invoice Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipment.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.shipment">Shipment</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipmentItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.shipmentItem">Shipment Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="itemIssuance.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.itemIssuance">Item Issuance</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="receipt.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItemDelegate.receipt">Receipt</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inventoryItemDelegate of inventoryItemDelegates(); track trackId(inventoryItemDelegate)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inventory-item-delegate', inventoryItemDelegate.id, 'view']">{{ inventoryItemDelegate.id }}</a>
+              </td>
+              <td>{{ inventoryItemDelegate.sequenceNo }}</td>
+              <td>{{ inventoryItemDelegate.effectiveDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryItemDelegate.quantityOnHandDiff }}</td>
+              <td>{{ inventoryItemDelegate.availableToPromiseDiff }}</td>
+              <td>{{ inventoryItemDelegate.accountingQuantityDiff }}</td>
+              <td>{{ inventoryItemDelegate.unitCost }}</td>
+              <td>{{ inventoryItemDelegate.remarks }}</td>
+              <td>
+                @if (inventoryItemDelegate.inventoryItem) {
+                  <div>
+                    <a [routerLink]="['/inventory-item', inventoryItemDelegate.inventoryItem.id, 'view']">{{
+                      inventoryItemDelegate.inventoryItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.order) {
+                  <div>
+                    <a [routerLink]="['/order', inventoryItemDelegate.order.id, 'view']">{{ inventoryItemDelegate.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', inventoryItemDelegate.orderItem.id, 'view']">{{
+                      inventoryItemDelegate.orderItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.invoice) {
+                  <div>
+                    <a [routerLink]="['/invoice', inventoryItemDelegate.invoice.id, 'view']">{{ inventoryItemDelegate.invoice.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.invoiceItem) {
+                  <div>
+                    <a [routerLink]="['/invoice-item', inventoryItemDelegate.invoiceItem.id, 'view']">{{
+                      inventoryItemDelegate.invoiceItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.shipment) {
+                  <div>
+                    <a [routerLink]="['/shipment', inventoryItemDelegate.shipment.id, 'view']">{{ inventoryItemDelegate.shipment.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.shipmentItem) {
+                  <div>
+                    <a [routerLink]="['/shipment-item', inventoryItemDelegate.shipmentItem.id, 'view']">{{
+                      inventoryItemDelegate.shipmentItem.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.itemIssuance) {
+                  <div>
+                    <a [routerLink]="['/item-issuance', inventoryItemDelegate.itemIssuance.id, 'view']">{{
+                      inventoryItemDelegate.itemIssuance.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItemDelegate.receipt) {
+                  <div>
+                    <a [routerLink]="['/shipment-receipt', inventoryItemDelegate.receipt.id, 'view']">{{
+                      inventoryItemDelegate.receipt.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/inventory-item-delegate', inventoryItemDelegate.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/inventory-item-delegate', inventoryItemDelegate.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(inventoryItemDelegate)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inventoryItemDelegates().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,34 @@
+{
+  "snpApp": {
+    "attachment": {
+      "home": {
+        "title": "Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Attachment",
+        "createOrEditLabel": "Create or edit a Attachment",
+        "notFound": "No Attachments found"
+      },
+      "created": "A new Attachment is created with identifier {{ param }}",
+      "updated": "A Attachment is updated with identifier {{ param }}",
+      "deleted": "A Attachment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Attachment {{ id }}?"
+      },
+      "detail": {
+        "title": "Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "fileAttachment": "File Attachment",
+      "attachmentUrl": "Attachment Url",
+      "mimeType": "Mime Type",
+      "fileSize": "File Size",
+      "uploadedDate": "Uploaded Date",
+      "isTrashed": "Is Trashed",
+      "checksum": "Checksum",
+      "contentType": "Content Type",
+      "folder": "Folder",
+      "owner": "Owner"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20231214220505"
+  },
+  "applications": ["snp"],
+  "fields": [],
+  "jpaMetamodelFiltering": true,
+  "name": "FacilityCarrierShipment",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facility",
+      "relationshipName": "facility",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "roleType",
+      "relationshipName": "roleType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "shipmentMethodType",
+      "relationshipName": "shipmentMethodType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

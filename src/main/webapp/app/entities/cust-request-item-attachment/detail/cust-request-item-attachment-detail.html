@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (custRequestItemAttachment(); as custRequestItemAttachmentRef) {
+      <div>
+        <h2 data-cy="custRequestItemAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.custRequestItemAttachment.detail.title">Cust Request Item Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ custRequestItemAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItemAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ custRequestItemAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItemAttachment.custRequestItem">Cust Request Item</span></dt>
+          <dd>
+            @if (custRequestItemAttachment()!.custRequestItem) {
+              <div>
+                <a [routerLink]="['/cust-request-item', custRequestItemAttachment()!.custRequestItem?.id, 'view']">{{
+                  custRequestItemAttachmentRef.custRequestItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItemAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (custRequestItemAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', custRequestItemAttachment()!.attachment?.id, 'view']">{{
+                  custRequestItemAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/cust-request-item-attachment', custRequestItemAttachmentRef.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

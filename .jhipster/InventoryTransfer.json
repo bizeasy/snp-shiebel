@@ -1,0 +1,77 @@
+{
+  "annotations": {
+    "changelogDate": "20231214221405"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "sentDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "receivedDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "comments",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "InventoryTransfer",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "inventoryItem",
+      "relationshipName": "inventoryItem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "status",
+      "relationshipName": "status",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facility",
+      "relationshipName": "facility",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "locationSeqId",
+      "otherEntityName": "facilityLocation",
+      "relationshipName": "facilityLocation",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "facility",
+      "relationshipName": "facilityTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "locationSeqId",
+      "otherEntityName": "facilityLocation",
+      "relationshipName": "facilityLocationTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "itemIssuance",
+      "relationshipName": "issuance",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,89 @@
+<div>
+  <h2 id="page-heading" data-cy="GeoPointHeading">
+    <span sysTranslate="snpApp.geoPoint.home.title">Geo Points</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.geoPoint.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-geo-point"
+        [routerLink]="['/geo-point/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.geoPoint.home.createLabel">Create a new Geo Point</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (geoPoints().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.geoPoint.home.notFound">No Geo Points found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="latitude">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.geoPoint.latitude">Latitude</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="longitude">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.geoPoint.longitude">Longitude</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (geoPoint of geoPoints(); track trackId(geoPoint)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/geo-point', geoPoint.id, 'view']">{{ geoPoint.id }}</a>
+              </td>
+              <td>{{ geoPoint.latitude }}</td>
+              <td>{{ geoPoint.longitude }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/geo-point', geoPoint.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/geo-point', geoPoint.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(geoPoint)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

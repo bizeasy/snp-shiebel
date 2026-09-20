@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "productAssoc": {
+      "home": {
+        "title": "Product Assocs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Assoc",
+        "createOrEditLabel": "Create or edit a Product Assoc",
+        "notFound": "No Product Assocs found"
+      },
+      "created": "A new Product Assoc is created with identifier {{ param }}",
+      "updated": "A Product Assoc is updated with identifier {{ param }}",
+      "deleted": "A Product Assoc is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Assoc {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Assoc"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "product": "Product",
+      "productTo": "Product To",
+      "productAssocType": "Product Assoc Type"
+    }
+  }
+}

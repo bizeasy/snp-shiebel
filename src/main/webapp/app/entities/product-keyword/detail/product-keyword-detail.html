@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productKeyword(); as productKeywordRef) {
+      <div>
+        <h2 data-cy="productKeywordDetailsHeading"><span sysTranslate="snpApp.productKeyword.detail.title">Product Keyword</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productKeywordRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productKeyword.keyword">Keyword</span></dt>
+          <dd>
+            <span>{{ productKeywordRef.keyword }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productKeyword.relevancyWeight">Relevancy Weight</span></dt>
+          <dd>
+            <span>{{ productKeywordRef.relevancyWeight }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productKeyword.product">Product</span></dt>
+          <dd>
+            @if (productKeyword()!.product) {
+              <div>
+                <a [routerLink]="['/product', productKeyword()!.product?.id, 'view']">{{ productKeywordRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productKeyword.keywordType">Keyword Type</span></dt>
+          <dd>
+            @if (productKeyword()!.keywordType) {
+              <div>
+                <a [routerLink]="['/keyword-type', productKeyword()!.keywordType?.id, 'view']">{{ productKeywordRef.keywordType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-keyword', productKeywordRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity UomConversion.
+    -->
+    <changeSet id="20231214212805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="from_uom_id"
+                                 baseTableName="uom_conversion"
+                                 constraintName="fk_uom_conversion__from_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="to_uom_id"
+                                 baseTableName="uom_conversion"
+                                 constraintName="fk_uom_conversion__to_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity InvoiceItem.
+    -->
+    <changeSet id="20231214224805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="invoice_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="invoice_item_type_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__invoice_item_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice_item_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="uom_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_feature_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__product_feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_feature"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_facility_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__product_facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="from_inventory_item_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__from_inventory_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tax_auth_rate_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__tax_auth_rate_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tax_authority_rate_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="parent_invoice_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__parent_invoice_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="parent_invoice_item_id"
+                                 baseTableName="invoice_item"
+                                 constraintName="fk_invoice_item__parent_invoice_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="invoice_item"
+                                 />
+    </changeSet>
+</databaseChangeLog>

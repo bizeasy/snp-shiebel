@@ -1,0 +1,280 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-quote-adjustment-heading"
+        data-cy="QuoteAdjustmentCreateUpdateHeading"
+        sysTranslate="snpApp.quoteAdjustment.home.createOrEditLabel"
+      >
+        Create or edit a Quote Adjustment
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.quoteAdjustment.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.quoteAdjustment.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" sysTranslate="snpApp.quoteAdjustment.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sourcePercentage" sysTranslate="snpApp.quoteAdjustment.sourcePercentage"
+            >Source Percentage</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="sourcePercentage"
+            id="field_sourcePercentage"
+            data-cy="sourcePercentage"
+            formControlName="sourcePercentage"
+          />
+        </div>
+
+        @let sourceRefIdRef = editForm.get('sourceRefId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sourceRefId" sysTranslate="snpApp.quoteAdjustment.sourceRefId">Source Ref Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sourceRefId"
+            id="field_sourceRefId"
+            data-cy="sourceRefId"
+            formControlName="sourceRefId"
+          />
+          @if (sourceRefIdRef.invalid && (sourceRefIdRef.dirty || sourceRefIdRef.touched)) {
+            <div>
+              @if (sourceRefIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_exemptAmount" sysTranslate="snpApp.quoteAdjustment.exemptAmount">Exempt Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="exemptAmount"
+            id="field_exemptAmount"
+            data-cy="exemptAmount"
+            formControlName="exemptAmount"
+          />
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="includeInTax"
+            id="field_includeInTax"
+            data-cy="includeInTax"
+            formControlName="includeInTax"
+          />
+          <label class="form-check-label" for="field_includeInTax" sysTranslate="snpApp.quoteAdjustment.includeInTax">Include In Tax</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="includeInShipping"
+            id="field_includeInShipping"
+            data-cy="includeInShipping"
+            formControlName="includeInShipping"
+          />
+          <label class="form-check-label" for="field_includeInShipping" sysTranslate="snpApp.quoteAdjustment.includeInShipping"
+            >Include In Shipping</label
+          >
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="includedInPrice"
+            id="field_includedInPrice"
+            data-cy="includedInPrice"
+            formControlName="includedInPrice"
+          />
+          <label class="form-check-label" for="field_includedInPrice" sysTranslate="snpApp.quoteAdjustment.includedInPrice"
+            >Included In Price</label
+          >
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_entryDate" sysTranslate="snpApp.quoteAdjustment.entryDate">Entry Date</label>
+          <div class="d-flex">
+            <input
+              id="field_entryDate"
+              data-cy="entryDate"
+              type="datetime-local"
+              class="form-control"
+              name="entryDate"
+              formControlName="entryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quote" sysTranslate="snpApp.quoteAdjustment.quote">Quote</label>
+          <select class="form-select" id="field_quote" data-cy="quote" name="quote" formControlName="quote" [compareWith]="compareQuote">
+            <option [ngValue]="null"></option>
+            @for (quoteOption of quotesSharedCollection(); track $index) {
+              <option [ngValue]="quoteOption">{{ quoteOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quoteItem" sysTranslate="snpApp.quoteAdjustment.quoteItem">Quote Item</label>
+          <select
+            class="form-select"
+            id="field_quoteItem"
+            data-cy="quoteItem"
+            name="quoteItem"
+            formControlName="quoteItem"
+            [compareWith]="compareQuoteItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (quoteItemOption of quoteItemsSharedCollection(); track $index) {
+              <option [ngValue]="quoteItemOption">{{ quoteItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_adjustmentType" sysTranslate="snpApp.quoteAdjustment.adjustmentType">Adjustment Type</label>
+          <select
+            class="form-select"
+            id="field_adjustmentType"
+            data-cy="adjustmentType"
+            name="adjustmentType"
+            formControlName="adjustmentType"
+            [compareWith]="compareOrderAdjustmentType"
+          >
+            <option [ngValue]="null"></option>
+            @for (orderAdjustmentTypeOption of orderAdjustmentTypesSharedCollection(); track $index) {
+              <option [ngValue]="orderAdjustmentTypeOption">{{ orderAdjustmentTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.quoteAdjustment.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productFeature" sysTranslate="snpApp.quoteAdjustment.productFeature">Product Feature</label>
+          <select
+            class="form-select"
+            id="field_productFeature"
+            data-cy="productFeature"
+            name="productFeature"
+            formControlName="productFeature"
+            [compareWith]="compareProductFeature"
+          >
+            <option [ngValue]="null"></option>
+            @for (productFeatureOption of productFeaturesSharedCollection(); track $index) {
+              <option [ngValue]="productFeatureOption">{{ productFeatureOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_taxAuthority" sysTranslate="snpApp.quoteAdjustment.taxAuthority">Tax Authority</label>
+          <select
+            class="form-select"
+            id="field_taxAuthority"
+            data-cy="taxAuthority"
+            name="taxAuthority"
+            formControlName="taxAuthority"
+            [compareWith]="compareTaxAuthority"
+          >
+            <option [ngValue]="null"></option>
+            @for (taxAuthorityOption of taxAuthoritiesSharedCollection(); track $index) {
+              <option [ngValue]="taxAuthorityOption">{{ taxAuthorityOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

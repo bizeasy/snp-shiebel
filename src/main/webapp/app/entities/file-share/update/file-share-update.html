@@ -1,0 +1,227 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-file-share-heading" data-cy="FileShareCreateUpdateHeading" sysTranslate="snpApp.fileShare.home.createOrEditLabel">
+        Create or edit a File Share
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let permissionRef = editForm.get('permission')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_permission" sysTranslate="snpApp.fileShare.permission">Permission</label>
+          <select class="form-select" name="permission" formControlName="permission" id="field_permission" data-cy="permission">
+            <option [ngValue]="null">{{ 'snpApp.SharePermission.null' | translate }}</option>
+            @for (sharePermission of sharePermissionValues; track $index) {
+              <option [value]="sharePermission">{{ 'snpApp.SharePermission.' + sharePermission | translate }}</option>
+            }
+          </select>
+          @if (permissionRef.invalid && (permissionRef.dirty || permissionRef.touched)) {
+            <div>
+              @if (permissionRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let sharedWithEmailRef = editForm.get('sharedWithEmail')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sharedWithEmail" sysTranslate="snpApp.fileShare.sharedWithEmail">Shared With Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="sharedWithEmail"
+            id="field_sharedWithEmail"
+            data-cy="sharedWithEmail"
+            formControlName="sharedWithEmail"
+          />
+          @if (sharedWithEmailRef.invalid && (sharedWithEmailRef.dirty || sharedWithEmailRef.touched)) {
+            <div>
+              @if (sharedWithEmailRef.errors?.minlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
+                  >This field is required to be at least 5 characters.</small
+                >
+              }
+              @if (sharedWithEmailRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let sharedDateRef = editForm.get('sharedDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sharedDate" sysTranslate="snpApp.fileShare.sharedDate">Shared Date</label>
+          <div class="d-flex">
+            <input
+              id="field_sharedDate"
+              data-cy="sharedDate"
+              type="datetime-local"
+              class="form-control"
+              name="sharedDate"
+              formControlName="sharedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (sharedDateRef.invalid && (sharedDateRef.dirty || sharedDateRef.touched)) {
+            <div>
+              @if (sharedDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!sharedDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_expiryDate" sysTranslate="snpApp.fileShare.expiryDate">Expiry Date</label>
+          <div class="d-flex">
+            <input
+              id="field_expiryDate"
+              data-cy="expiryDate"
+              type="datetime-local"
+              class="form-control"
+              name="expiryDate"
+              formControlName="expiryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let accessTokenRef = editForm.get('accessToken')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_accessToken" sysTranslate="snpApp.fileShare.accessToken">Access Token</label>
+          <input
+            type="text"
+            class="form-control"
+            name="accessToken"
+            id="field_accessToken"
+            data-cy="accessToken"
+            formControlName="accessToken"
+          />
+          @if (accessTokenRef.invalid && (accessTokenRef.dirty || accessTokenRef.touched)) {
+            <div>
+              @if (accessTokenRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isRevoked"
+            id="field_isRevoked"
+            data-cy="isRevoked"
+            formControlName="isRevoked"
+          />
+          <label class="form-check-label" for="field_isRevoked" sysTranslate="snpApp.fileShare.isRevoked">Is Revoked</label>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_folder" sysTranslate="snpApp.fileShare.folder">Folder</label>
+          <select
+            class="form-select"
+            id="field_folder"
+            data-cy="folder"
+            name="folder"
+            formControlName="folder"
+            [compareWith]="compareFileFolder"
+          >
+            <option [ngValue]="null"></option>
+            @for (fileFolderOption of fileFoldersSharedCollection(); track $index) {
+              <option [ngValue]="fileFolderOption">{{ fileFolderOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_attachment" sysTranslate="snpApp.fileShare.attachment">Attachment</label>
+          <select
+            class="form-select"
+            id="field_attachment"
+            data-cy="attachment"
+            name="attachment"
+            formControlName="attachment"
+            [compareWith]="compareAttachment"
+          >
+            <option [ngValue]="null"></option>
+            @for (attachmentOption of attachmentsSharedCollection(); track $index) {
+              <option [ngValue]="attachmentOption">{{ attachmentOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sharedWith" sysTranslate="snpApp.fileShare.sharedWith">Shared With</label>
+          <select
+            class="form-select"
+            id="field_sharedWith"
+            data-cy="sharedWith"
+            name="sharedWith"
+            formControlName="sharedWith"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sharedBy" sysTranslate="snpApp.fileShare.sharedBy">Shared By</label>
+          <select
+            class="form-select"
+            id="field_sharedBy"
+            data-cy="sharedBy"
+            name="sharedBy"
+            formControlName="sharedBy"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

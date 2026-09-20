@@ -1,0 +1,19 @@
+{
+  "annotations": {
+    "changelogDate": "20231214210205"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "25"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "GeoAssocType",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

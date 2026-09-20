@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facilityGroupMember(); as facilityGroupMemberRef) {
+      <div>
+        <h2 data-cy="facilityGroupMemberDetailsHeading">
+          <span sysTranslate="snpApp.facilityGroupMember.detail.title">Facility Group Member</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityGroupMemberRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityGroupMember.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ facilityGroupMemberRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityGroupMember.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ facilityGroupMemberRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityGroupMember.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ facilityGroupMemberRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityGroupMember.facility">Facility</span></dt>
+          <dd>
+            @if (facilityGroupMember()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', facilityGroupMember()!.facility?.id, 'view']">{{ facilityGroupMemberRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityGroupMember.facilityGroup">Facility Group</span></dt>
+          <dd>
+            @if (facilityGroupMember()!.facilityGroup) {
+              <div>
+                <a [routerLink]="['/facility-group', facilityGroupMember()!.facilityGroup?.id, 'view']">{{
+                  facilityGroupMemberRef.facilityGroup?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility-group-member', facilityGroupMemberRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

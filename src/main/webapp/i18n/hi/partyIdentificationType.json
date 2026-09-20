@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "partyIdentificationType": {
+      "home": {
+        "title": "PartyIdentificationTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Party Identification Type बनाएँ",
+        "createOrEditLabel": "Party Identification Type बनाएँ या संपादित करें",
+        "notFound": "No Party Identification Types found"
+      },
+      "created": "एक नया Party Identification Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Party Identification Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Party Identification Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Party Identification Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Party Identification Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

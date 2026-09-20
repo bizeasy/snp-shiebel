@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productCategory(); as productCategoryRef) {
+      <div>
+        <h2 data-cy="productCategoryDetailsHeading"><span sysTranslate="snpApp.productCategory.detail.title">Product Category</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.name">Name</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.description">Description</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.longDescription">Long Description</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.longDescription }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.attribute">Attribute</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.attribute }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.imageUrl">Image Url</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.imageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.altImageUrl">Alt Image Url</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.altImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.bannerUrl">Banner Url</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.bannerUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.largeImageUrl">Large Image Url</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.largeImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.altLargeImageUrl">Alt Large Image Url</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.altLargeImageUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.info">Info</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.info }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.isBanner">Is Banner</span></dt>
+          <dd>
+            <span>{{ productCategoryRef.isBanner }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.productCategoryType">Product Category Type</span></dt>
+          <dd>
+            @if (productCategory()!.productCategoryType) {
+              <div>
+                <a [routerLink]="['/product-category-type', productCategory()!.productCategoryType?.id, 'view']">{{
+                  productCategoryRef.productCategoryType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productCategory.parent">Parent</span></dt>
+          <dd>
+            @if (productCategory()!.parent) {
+              <div>
+                <a [routerLink]="['/product-category', productCategory()!.parent?.id, 'view']">{{ productCategoryRef.parent?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-category', productCategoryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

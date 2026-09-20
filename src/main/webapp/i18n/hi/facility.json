@@ -1,0 +1,34 @@
+{
+  "snpApp": {
+    "facility": {
+      "home": {
+        "title": "Facilities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Facility बनाएँ",
+        "createOrEditLabel": "Facility बनाएँ या संपादित करें",
+        "notFound": "No Facilities found"
+      },
+      "created": "एक नया Facility [identifier: {{ param }}] तैयार है",
+      "updated": "एक Facility [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Facility [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Facility [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Facility"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "facilitySize": "Facility Size",
+      "facilityType": "Facility Type",
+      "parentFacility": "Parent Facility",
+      "ownerParty": "Owner Party",
+      "facilityGroup": "Facility Group",
+      "sizeUom": "Size Uom",
+      "geoPoint": "Geo Point",
+      "inventoryItemType": "Inventory Item Type",
+      "productStore": "Product Store"
+    }
+  }
+}

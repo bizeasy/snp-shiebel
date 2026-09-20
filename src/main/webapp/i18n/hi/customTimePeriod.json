@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "customTimePeriod": {
+      "home": {
+        "title": "CustomTimePeriods",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Custom Time Period बनाएँ",
+        "createOrEditLabel": "Custom Time Period बनाएँ या संपादित करें",
+        "notFound": "No Custom Time Periods found"
+      },
+      "created": "एक नया Custom Time Period [identifier: {{ param }}] तैयार है",
+      "updated": "एक Custom Time Period [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Custom Time Period [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Custom Time Period [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Custom Time Period"
+      },
+      "id": "ID",
+      "name": "Name",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date"
+    }
+  }
+}

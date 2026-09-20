@@ -1,0 +1,285 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-shipment-heading" data-cy="ShipmentCreateUpdateHeading" sysTranslate="snpApp.shipment.home.createOrEditLabel">
+        Create or edit a Shipment
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedShipDate" sysTranslate="snpApp.shipment.estimatedShipDate"
+            >Estimated Ship Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedShipDate"
+              data-cy="estimatedShipDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedShipDate"
+              formControlName="estimatedShipDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedReadyDate" sysTranslate="snpApp.shipment.estimatedReadyDate"
+            >Estimated Ready Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedReadyDate"
+              data-cy="estimatedReadyDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedReadyDate"
+              formControlName="estimatedReadyDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedArrivalDate" sysTranslate="snpApp.shipment.estimatedArrivalDate"
+            >Estimated Arrival Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedArrivalDate"
+              data-cy="estimatedArrivalDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedArrivalDate"
+              formControlName="estimatedArrivalDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedShipCost" sysTranslate="snpApp.shipment.estimatedShipCost"
+            >Estimated Ship Cost</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="estimatedShipCost"
+            id="field_estimatedShipCost"
+            data-cy="estimatedShipCost"
+            formControlName="estimatedShipCost"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipmentType" sysTranslate="snpApp.shipment.shipmentType">Shipment Type</label>
+          <select
+            class="form-select"
+            id="field_shipmentType"
+            data-cy="shipmentType"
+            name="shipmentType"
+            formControlName="shipmentType"
+            [compareWith]="compareShipmentType"
+          >
+            <option [ngValue]="null"></option>
+            @for (shipmentTypeOption of shipmentTypesSharedCollection(); track $index) {
+              <option [ngValue]="shipmentTypeOption">{{ shipmentTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipmentMethodType" sysTranslate="snpApp.shipment.shipmentMethodType"
+            >Shipment Method Type</label
+          >
+          <select
+            class="form-select"
+            id="field_shipmentMethodType"
+            data-cy="shipmentMethodType"
+            name="shipmentMethodType"
+            formControlName="shipmentMethodType"
+            [compareWith]="compareShipmentMethodType"
+          >
+            <option [ngValue]="null"></option>
+            @for (shipmentMethodTypeOption of shipmentMethodTypesSharedCollection(); track $index) {
+              <option [ngValue]="shipmentMethodTypeOption">{{ shipmentMethodTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.shipment.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_order" sysTranslate="snpApp.shipment.order">Order</label>
+          <select class="form-select" id="field_order" data-cy="order" name="order" formControlName="order" [compareWith]="compareOrder">
+            <option [ngValue]="null"></option>
+            @for (orderOption of ordersSharedCollection(); track $index) {
+              <option [ngValue]="orderOption">{{ orderOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_orderItem" sysTranslate="snpApp.shipment.orderItem">Order Item</label>
+          <select
+            class="form-select"
+            id="field_orderItem"
+            data-cy="orderItem"
+            name="orderItem"
+            formControlName="orderItem"
+            [compareWith]="compareOrderItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (orderItemOption of orderItemsSharedCollection(); track $index) {
+              <option [ngValue]="orderItemOption">{{ orderItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_originFacility" sysTranslate="snpApp.shipment.originFacility">Origin Facility</label>
+          <select
+            class="form-select"
+            id="field_originFacility"
+            data-cy="originFacility"
+            name="originFacility"
+            formControlName="originFacility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_destinationFacility" sysTranslate="snpApp.shipment.destinationFacility"
+            >Destination Facility</label
+          >
+          <select
+            class="form-select"
+            id="field_destinationFacility"
+            data-cy="destinationFacility"
+            name="destinationFacility"
+            formControlName="destinationFacility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fromParty" sysTranslate="snpApp.shipment.fromParty">From Party</label>
+          <select
+            class="form-select"
+            id="field_fromParty"
+            data-cy="fromParty"
+            name="fromParty"
+            formControlName="fromParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_toParty" sysTranslate="snpApp.shipment.toParty">To Party</label>
+          <select
+            class="form-select"
+            id="field_toParty"
+            data-cy="toParty"
+            name="toParty"
+            formControlName="toParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_carrierParty" sysTranslate="snpApp.shipment.carrierParty">Carrier Party</label>
+          <select
+            class="form-select"
+            id="field_carrierParty"
+            data-cy="carrierParty"
+            name="carrierParty"
+            formControlName="carrierParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_contactMech" sysTranslate="snpApp.shipment.contactMech">Contact Mech</label>
+          <select
+            class="form-select"
+            id="field_contactMech"
+            data-cy="contactMech"
+            name="contactMech"
+            formControlName="contactMech"
+            [compareWith]="compareContactMech"
+          >
+            <option [ngValue]="null"></option>
+            @for (contactMechOption of contactMechesSharedCollection(); track $index) {
+              <option [ngValue]="contactMechOption">{{ contactMechOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

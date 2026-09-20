@@ -1,0 +1,29 @@
+{
+  "snpApp": {
+    "uomConversion": {
+      "home": {
+        "title": "Uom Conversions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Uom Conversion సృష్టించండి",
+        "createOrEditLabel": "Uom Conversion సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Uom Conversions found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Uom Conversion సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Uom Conversion సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Uom Conversion తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Uom Conversion {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Uom Conversion"
+      },
+      "id": "ID",
+      "name": "Name",
+      "conversionFactor": "Conversion Factor",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "fromUom": "From Uom",
+      "toUom": "To Uom"
+    }
+  }
+}

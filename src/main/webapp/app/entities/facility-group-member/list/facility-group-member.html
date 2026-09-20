@@ -1,0 +1,153 @@
+<div>
+  <h2 id="page-heading" data-cy="FacilityGroupMemberHeading">
+    <span sysTranslate="snpApp.facilityGroupMember.home.title">Facility Group Members</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.facilityGroupMember.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-facility-group-member"
+        [routerLink]="['/facility-group-member/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.facilityGroupMember.home.createLabel">Create a new Facility Group Member</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (facilityGroupMembers().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.facilityGroupMember.home.notFound">No Facility Group Members found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facilityGroupMember.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facilityGroupMember.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facilityGroupMember.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facilityGroupMember.facility">Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityGroup.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facilityGroupMember.facilityGroup">Facility Group</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (facilityGroupMember of facilityGroupMembers(); track trackId(facilityGroupMember)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/facility-group-member', facilityGroupMember.id, 'view']">{{ facilityGroupMember.id }}</a>
+              </td>
+              <td>{{ facilityGroupMember.fromDate | formatMediumDatetime }}</td>
+              <td>{{ facilityGroupMember.thruDate | formatMediumDatetime }}</td>
+              <td>{{ facilityGroupMember.sequenceNo }}</td>
+              <td>
+                @if (facilityGroupMember.facility) {
+                  <div>
+                    <a [routerLink]="['/facility', facilityGroupMember.facility.id, 'view']">{{ facilityGroupMember.facility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facilityGroupMember.facilityGroup) {
+                  <div>
+                    <a [routerLink]="['/facility-group', facilityGroupMember.facilityGroup.id, 'view']">{{
+                      facilityGroupMember.facilityGroup.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/facility-group-member', facilityGroupMember.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/facility-group-member', facilityGroupMember.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(facilityGroupMember)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (facilityGroupMembers().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

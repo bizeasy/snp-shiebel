@@ -1,0 +1,424 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-invoice-item-heading" data-cy="InvoiceItemCreateUpdateHeading" sysTranslate="snpApp.invoiceItem.home.createOrEditLabel">
+        Create or edit a Invoice Item
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.invoiceItem.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.invoiceItem.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" sysTranslate="snpApp.invoiceItem.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cancelQuantity" sysTranslate="snpApp.invoiceItem.cancelQuantity">Cancel Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            name="cancelQuantity"
+            id="field_cancelQuantity"
+            data-cy="cancelQuantity"
+            formControlName="cancelQuantity"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_selectedAmount" sysTranslate="snpApp.invoiceItem.selectedAmount">Selected Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="selectedAmount"
+            id="field_selectedAmount"
+            data-cy="selectedAmount"
+            formControlName="selectedAmount"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_unitPrice" sysTranslate="snpApp.invoiceItem.unitPrice">Unit Price</label>
+          <input type="number" class="form-control" name="unitPrice" id="field_unitPrice" data-cy="unitPrice" formControlName="unitPrice" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_unitListPrice" sysTranslate="snpApp.invoiceItem.unitListPrice">Unit List Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="unitListPrice"
+            id="field_unitListPrice"
+            data-cy="unitListPrice"
+            formControlName="unitListPrice"
+          />
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isModifiedPrice"
+            id="field_isModifiedPrice"
+            data-cy="isModifiedPrice"
+            formControlName="isModifiedPrice"
+          />
+          <label class="form-check-label" for="field_isModifiedPrice" sysTranslate="snpApp.invoiceItem.isModifiedPrice"
+            >Is Modified Price</label
+          >
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedShipDate" sysTranslate="snpApp.invoiceItem.estimatedShipDate"
+            >Estimated Ship Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedShipDate"
+              data-cy="estimatedShipDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedShipDate"
+              formControlName="estimatedShipDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedDeliveryDate" sysTranslate="snpApp.invoiceItem.estimatedDeliveryDate"
+            >Estimated Delivery Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedDeliveryDate"
+              data-cy="estimatedDeliveryDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedDeliveryDate"
+              formControlName="estimatedDeliveryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipBeforeDate" sysTranslate="snpApp.invoiceItem.shipBeforeDate">Ship Before Date</label>
+          <div class="d-flex">
+            <input
+              id="field_shipBeforeDate"
+              data-cy="shipBeforeDate"
+              type="datetime-local"
+              class="form-control"
+              name="shipBeforeDate"
+              formControlName="shipBeforeDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipAfterDate" sysTranslate="snpApp.invoiceItem.shipAfterDate">Ship After Date</label>
+          <div class="d-flex">
+            <input
+              id="field_shipAfterDate"
+              data-cy="shipAfterDate"
+              type="datetime-local"
+              class="form-control"
+              name="shipAfterDate"
+              formControlName="shipAfterDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_entryDate" sysTranslate="snpApp.invoiceItem.entryDate">Entry Date</label>
+          <div class="d-flex">
+            <input
+              id="field_entryDate"
+              data-cy="entryDate"
+              type="datetime-local"
+              class="form-control"
+              name="entryDate"
+              formControlName="entryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let attr1Ref = editForm.get('attr1')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_attr1" sysTranslate="snpApp.invoiceItem.attr1">Attr 1</label>
+          <input type="text" class="form-control" name="attr1" id="field_attr1" data-cy="attr1" formControlName="attr1" />
+          @if (attr1Ref.invalid && (attr1Ref.dirty || attr1Ref.touched)) {
+            <div>
+              @if (attr1Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let attr2Ref = editForm.get('attr2')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_attr2" sysTranslate="snpApp.invoiceItem.attr2">Attr 2</label>
+          <input type="text" class="form-control" name="attr2" id="field_attr2" data-cy="attr2" formControlName="attr2" />
+          @if (attr2Ref.invalid && (attr2Ref.dirty || attr2Ref.touched)) {
+            <div>
+              @if (attr2Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let attr3Ref = editForm.get('attr3')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_attr3" sysTranslate="snpApp.invoiceItem.attr3">Attr 3</label>
+          <input type="text" class="form-control" name="attr3" id="field_attr3" data-cy="attr3" formControlName="attr3" />
+          @if (attr3Ref.invalid && (attr3Ref.dirty || attr3Ref.touched)) {
+            <div>
+              @if (attr3Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_invoice" sysTranslate="snpApp.invoiceItem.invoice">Invoice</label>
+          <select
+            class="form-select"
+            id="field_invoice"
+            data-cy="invoice"
+            name="invoice"
+            formControlName="invoice"
+            [compareWith]="compareInvoice"
+          >
+            @if (!editForm.get('invoice')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (invoiceOption of invoicesSharedCollection(); track $index) {
+              <option [ngValue]="invoiceOption">{{ invoiceOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['invoice'])!.invalid && (editForm.get(['invoice'])!.dirty || editForm.get(['invoice'])!.touched)) {
+          <div>
+            @if (editForm.get(['invoice'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceItemType" sysTranslate="snpApp.invoiceItem.invoiceItemType">Invoice Item Type</label>
+          <select
+            class="form-select"
+            id="field_invoiceItemType"
+            data-cy="invoiceItemType"
+            name="invoiceItemType"
+            formControlName="invoiceItemType"
+            [compareWith]="compareInvoiceItemType"
+          >
+            <option [ngValue]="null"></option>
+            @for (invoiceItemTypeOption of invoiceItemTypesSharedCollection(); track $index) {
+              <option [ngValue]="invoiceItemTypeOption">{{ invoiceItemTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.invoiceItem.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_uom" sysTranslate="snpApp.invoiceItem.uom">Uom</label>
+          <select class="form-select" id="field_uom" data-cy="uom" name="uom" formControlName="uom" [compareWith]="compareUom">
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productFeature" sysTranslate="snpApp.invoiceItem.productFeature">Product Feature</label>
+          <select
+            class="form-select"
+            id="field_productFeature"
+            data-cy="productFeature"
+            name="productFeature"
+            formControlName="productFeature"
+            [compareWith]="compareProductFeature"
+          >
+            <option [ngValue]="null"></option>
+            @for (productFeatureOption of productFeaturesSharedCollection(); track $index) {
+              <option [ngValue]="productFeatureOption">{{ productFeatureOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productFacility" sysTranslate="snpApp.invoiceItem.productFacility">Product Facility</label>
+          <select
+            class="form-select"
+            id="field_productFacility"
+            data-cy="productFacility"
+            name="productFacility"
+            formControlName="productFacility"
+            [compareWith]="compareProductFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (productFacilityOption of productFacilitiesSharedCollection(); track $index) {
+              <option [ngValue]="productFacilityOption">{{ productFacilityOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fromInventoryItem" sysTranslate="snpApp.invoiceItem.fromInventoryItem"
+            >From Inventory Item</label
+          >
+          <select
+            class="form-select"
+            id="field_fromInventoryItem"
+            data-cy="fromInventoryItem"
+            name="fromInventoryItem"
+            formControlName="fromInventoryItem"
+            [compareWith]="compareInventoryItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (inventoryItemOption of inventoryItemsSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemOption">{{ inventoryItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_taxAuthRate" sysTranslate="snpApp.invoiceItem.taxAuthRate">Tax Auth Rate</label>
+          <select
+            class="form-select"
+            id="field_taxAuthRate"
+            data-cy="taxAuthRate"
+            name="taxAuthRate"
+            formControlName="taxAuthRate"
+            [compareWith]="compareTaxAuthorityRateType"
+          >
+            <option [ngValue]="null"></option>
+            @for (taxAuthorityRateTypeOption of taxAuthorityRateTypesSharedCollection(); track $index) {
+              <option [ngValue]="taxAuthorityRateTypeOption">{{ taxAuthorityRateTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_parentInvoice" sysTranslate="snpApp.invoiceItem.parentInvoice">Parent Invoice</label>
+          <select
+            class="form-select"
+            id="field_parentInvoice"
+            data-cy="parentInvoice"
+            name="parentInvoice"
+            formControlName="parentInvoice"
+            [compareWith]="compareInvoice"
+          >
+            <option [ngValue]="null"></option>
+            @for (invoiceOption of invoicesSharedCollection(); track $index) {
+              <option [ngValue]="invoiceOption">{{ invoiceOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_parentInvoiceItem" sysTranslate="snpApp.invoiceItem.parentInvoiceItem"
+            >Parent Invoice Item</label
+          >
+          <select
+            class="form-select"
+            id="field_parentInvoiceItem"
+            data-cy="parentInvoiceItem"
+            name="parentInvoiceItem"
+            formControlName="parentInvoiceItem"
+            [compareWith]="compareInvoiceItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (invoiceItemOption of invoiceItemsSharedCollection(); track $index) {
+              <option [ngValue]="invoiceItemOption">{{ invoiceItemOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

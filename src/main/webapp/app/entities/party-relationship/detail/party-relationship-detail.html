@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (partyRelationship(); as partyRelationshipRef) {
+      <div>
+        <h2 data-cy="partyRelationshipDetailsHeading">
+          <span sysTranslate="snpApp.partyRelationship.detail.title">Party Relationship</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyRelationshipRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ partyRelationshipRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ partyRelationshipRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.relationshipName">Relationship Name</span></dt>
+          <dd>
+            <span>{{ partyRelationshipRef.relationshipName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.partyFrom">Party From</span></dt>
+          <dd>
+            @if (partyRelationship()!.partyFrom) {
+              <div>
+                <a [routerLink]="['/party', partyRelationship()!.partyFrom?.id, 'view']">{{ partyRelationshipRef.partyFrom?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.partyTo">Party To</span></dt>
+          <dd>
+            @if (partyRelationship()!.partyTo) {
+              <div>
+                <a [routerLink]="['/party', partyRelationship()!.partyTo?.id, 'view']">{{ partyRelationshipRef.partyTo?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.roleTypeFrom">Role Type From</span></dt>
+          <dd>
+            @if (partyRelationship()!.roleTypeFrom) {
+              <div>
+                <a [routerLink]="['/role-type', partyRelationship()!.roleTypeFrom?.id, 'view']">{{
+                  partyRelationshipRef.roleTypeFrom?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.roleTypeTo">Role Type To</span></dt>
+          <dd>
+            @if (partyRelationship()!.roleTypeTo) {
+              <div>
+                <a [routerLink]="['/role-type', partyRelationship()!.roleTypeTo?.id, 'view']">{{
+                  partyRelationshipRef.roleTypeTo?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationship.relationshipType">Relationship Type</span></dt>
+          <dd>
+            @if (partyRelationship()!.relationshipType) {
+              <div>
+                <a [routerLink]="['/party-relationship-type', partyRelationship()!.relationshipType?.id, 'view']">{{
+                  partyRelationshipRef.relationshipType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party-relationship', partyRelationshipRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

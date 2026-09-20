@@ -1,0 +1,11 @@
+{
+  "snpApp": {
+    "SharePermission": {
+      "null": "",
+      "VIEW": "VIEW",
+      "COMMENT": "COMMENT",
+      "EDIT": "EDIT",
+      "OWNER": "OWNER"
+    }
+  }
+}

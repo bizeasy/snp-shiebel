@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFacility(); as productFacilityRef) {
+      <div>
+        <h2 data-cy="productFacilityDetailsHeading"><span sysTranslate="snpApp.productFacility.detail.title">Product Facility</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFacilityRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.minimumStock">Minimum Stock</span></dt>
+          <dd>
+            <span>{{ productFacilityRef.minimumStock }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.reorderQty">Reorder Qty</span></dt>
+          <dd>
+            <span>{{ productFacilityRef.reorderQty }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.daysToShip">Days To Ship</span></dt>
+          <dd>
+            <span>{{ productFacilityRef.daysToShip }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.lastInventoryCount">Last Inventory Count</span></dt>
+          <dd>
+            <span>{{ productFacilityRef.lastInventoryCount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.product">Product</span></dt>
+          <dd>
+            @if (productFacility()!.product) {
+              <div>
+                <a [routerLink]="['/product', productFacility()!.product?.id, 'view']">{{ productFacilityRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacility.facility">Facility</span></dt>
+          <dd>
+            @if (productFacility()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', productFacility()!.facility?.id, 'view']">{{ productFacilityRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-facility', productFacilityRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

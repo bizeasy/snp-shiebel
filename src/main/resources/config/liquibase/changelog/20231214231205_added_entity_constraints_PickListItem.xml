@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity PickListItem.
+    -->
+    <changeSet id="20231214231205-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="pick_list_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__pick_list_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pick_list"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sys_order"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="inventory_item_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__inventory_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_location_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__facility_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility_location"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="pick_list_item"
+                                 constraintName="fk_pick_list_item__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,24 @@
+@if (uom) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(uom.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="uomDeleteDialogHeading" sysTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p id="sys-delete-uom-heading" sysTranslate="snpApp.uom.delete.question" [translateValues]="{ id: uom.id }">
+        Are you sure you want to delete Uom {{ uom.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-uom" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

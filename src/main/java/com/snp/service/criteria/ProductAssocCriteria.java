@@ -1,0 +1,277 @@
+package com.snp.service.criteria;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.Optional;
+import org.springdoc.core.annotations.ParameterObject;
+import tech.jhipster.service.Criteria;
+import tech.jhipster.service.filter.*;
+
+/**
+ * Criteria class for the {@link com.snp.domain.ProductAssoc} entity. This class is used
+ * in {@link com.snp.web.rest.ProductAssocResource} to receive all the possible filtering options from
+ * the Http GET request parameters.
+ * For example the following could be a valid request:
+ * {@code /product-assocs?id.greaterThan=5&attr1.contains=something&attr2.specified=false}
+ * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
+ * fix type specific filters.
+ */
+@ParameterObject
+@SuppressWarnings("common-java:DuplicatedBlocks")
+public class ProductAssocCriteria implements Serializable, Criteria {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private LongFilter id;
+
+    private InstantFilter fromDate;
+
+    private InstantFilter thruDate;
+
+    private IntegerFilter sequenceNo;
+
+    private BigDecimalFilter quantity;
+
+    private LongFilter productId;
+
+    private LongFilter productToId;
+
+    private LongFilter productAssocTypeId;
+
+    private Boolean distinct;
+
+    public ProductAssocCriteria() {}
+
+    public ProductAssocCriteria(ProductAssocCriteria other) {
+        this.id = other.optionalId().map(LongFilter::copy).orElse(null);
+        this.fromDate = other.optionalFromDate().map(InstantFilter::copy).orElse(null);
+        this.thruDate = other.optionalThruDate().map(InstantFilter::copy).orElse(null);
+        this.sequenceNo = other.optionalSequenceNo().map(IntegerFilter::copy).orElse(null);
+        this.quantity = other.optionalQuantity().map(BigDecimalFilter::copy).orElse(null);
+        this.productId = other.optionalProductId().map(LongFilter::copy).orElse(null);
+        this.productToId = other.optionalProductToId().map(LongFilter::copy).orElse(null);
+        this.productAssocTypeId = other.optionalProductAssocTypeId().map(LongFilter::copy).orElse(null);
+        this.distinct = other.distinct;
+    }
+
+    @Override
+    public ProductAssocCriteria copy() {
+        return new ProductAssocCriteria(this);
+    }
+
+    public LongFilter getId() {
+        return id;
+    }
+
+    public Optional<LongFilter> optionalId() {
+        return Optional.ofNullable(id);
+    }
+
+    public LongFilter id() {
+        if (id == null) {
+            setId(new LongFilter());
+        }
+        return id;
+    }
+
+    public void setId(LongFilter id) {
+        this.id = id;
+    }
+
+    public InstantFilter getFromDate() {
+        return fromDate;
+    }
+
+    public Optional<InstantFilter> optionalFromDate() {
+        return Optional.ofNullable(fromDate);
+    }
+
+    public InstantFilter fromDate() {
+        if (fromDate == null) {
+            setFromDate(new InstantFilter());
+        }
+        return fromDate;
+    }
+
+    public void setFromDate(InstantFilter fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public InstantFilter getThruDate() {
+        return thruDate;
+    }
+
+    public Optional<InstantFilter> optionalThruDate() {
+        return Optional.ofNullable(thruDate);
+    }
+
+    public InstantFilter thruDate() {
+        if (thruDate == null) {
+            setThruDate(new InstantFilter());
+        }
+        return thruDate;
+    }
+
+    public void setThruDate(InstantFilter thruDate) {
+        this.thruDate = thruDate;
+    }
+
+    public IntegerFilter getSequenceNo() {
+        return sequenceNo;
+    }
+
+    public Optional<IntegerFilter> optionalSequenceNo() {
+        return Optional.ofNullable(sequenceNo);
+    }
+
+    public IntegerFilter sequenceNo() {
+        if (sequenceNo == null) {
+            setSequenceNo(new IntegerFilter());
+        }
+        return sequenceNo;
+    }
+
+    public void setSequenceNo(IntegerFilter sequenceNo) {
+        this.sequenceNo = sequenceNo;
+    }
+
+    public BigDecimalFilter getQuantity() {
+        return quantity;
+    }
+
+    public Optional<BigDecimalFilter> optionalQuantity() {
+        return Optional.ofNullable(quantity);
+    }
+
+    public BigDecimalFilter quantity() {
+        if (quantity == null) {
+            setQuantity(new BigDecimalFilter());
+        }
+        return quantity;
+    }
+
+    public void setQuantity(BigDecimalFilter quantity) {
+        this.quantity = quantity;
+    }
+
+    public LongFilter getProductId() {
+        return productId;
+    }
+
+    public Optional<LongFilter> optionalProductId() {
+        return Optional.ofNullable(productId);
+    }
+
+    public LongFilter productId() {
+        if (productId == null) {
+            setProductId(new LongFilter());
+        }
+        return productId;
+    }
+
+    public void setProductId(LongFilter productId) {
+        this.productId = productId;
+    }
+
+    public LongFilter getProductToId() {
+        return productToId;
+    }
+
+    public Optional<LongFilter> optionalProductToId() {
+        return Optional.ofNullable(productToId);
+    }
+
+    public LongFilter productToId() {
+        if (productToId == null) {
+            setProductToId(new LongFilter());
+        }
+        return productToId;
+    }
+
+    public void setProductToId(LongFilter productToId) {
+        this.productToId = productToId;
+    }
+
+    public LongFilter getProductAssocTypeId() {
+        return productAssocTypeId;
+    }
+
+    public Optional<LongFilter> optionalProductAssocTypeId() {
+        return Optional.ofNullable(productAssocTypeId);
+    }
+
+    public LongFilter productAssocTypeId() {
+        if (productAssocTypeId == null) {
+            setProductAssocTypeId(new LongFilter());
+        }
+        return productAssocTypeId;
+    }
+
+    public void setProductAssocTypeId(LongFilter productAssocTypeId) {
+        this.productAssocTypeId = productAssocTypeId;
+    }
+
+    public Boolean getDistinct() {
+        return distinct;
+    }
+
+    public Optional<Boolean> optionalDistinct() {
+        return Optional.ofNullable(distinct);
+    }
+
+    public Boolean distinct() {
+        if (distinct == null) {
+            setDistinct(true);
+        }
+        return distinct;
+    }
+
+    public void setDistinct(Boolean distinct) {
+        this.distinct = distinct;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final ProductAssocCriteria that = (ProductAssocCriteria) o;
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(fromDate, that.fromDate) &&
+            Objects.equals(thruDate, that.thruDate) &&
+            Objects.equals(sequenceNo, that.sequenceNo) &&
+            Objects.equals(quantity, that.quantity) &&
+            Objects.equals(productId, that.productId) &&
+            Objects.equals(productToId, that.productToId) &&
+            Objects.equals(productAssocTypeId, that.productAssocTypeId) &&
+            Objects.equals(distinct, that.distinct)
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fromDate, thruDate, sequenceNo, quantity, productId, productToId, productAssocTypeId, distinct);
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "ProductAssocCriteria{" +
+            optionalId().map(f -> "id=" + f + ", ").orElse("") +
+            optionalFromDate().map(f -> "fromDate=" + f + ", ").orElse("") +
+            optionalThruDate().map(f -> "thruDate=" + f + ", ").orElse("") +
+            optionalSequenceNo().map(f -> "sequenceNo=" + f + ", ").orElse("") +
+            optionalQuantity().map(f -> "quantity=" + f + ", ").orElse("") +
+            optionalProductId().map(f -> "productId=" + f + ", ").orElse("") +
+            optionalProductToId().map(f -> "productToId=" + f + ", ").orElse("") +
+            optionalProductAssocTypeId().map(f -> "productAssocTypeId=" + f + ", ").orElse("") +
+            optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
+        "}";
+    }
+}

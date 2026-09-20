@@ -1,0 +1,382 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-payment-heading" data-cy="PaymentCreateUpdateHeading" sysTranslate="snpApp.payment.home.createOrEditLabel">
+        Create or edit a Payment
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let paymentRefNumberRef = editForm.get('paymentRefNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentRefNumber" sysTranslate="snpApp.payment.paymentRefNumber">Payment Ref Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="paymentRefNumber"
+            id="field_paymentRefNumber"
+            data-cy="paymentRefNumber"
+            formControlName="paymentRefNumber"
+          />
+          @if (paymentRefNumberRef.invalid && (paymentRefNumberRef.dirty || paymentRefNumberRef.touched)) {
+            <div>
+              @if (paymentRefNumberRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_effectiveDate" sysTranslate="snpApp.payment.effectiveDate">Effective Date</label>
+          <div class="d-flex">
+            <input
+              id="field_effectiveDate"
+              data-cy="effectiveDate"
+              type="datetime-local"
+              class="form-control"
+              name="effectiveDate"
+              formControlName="effectiveDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentDate" sysTranslate="snpApp.payment.paymentDate">Payment Date</label>
+          <div class="d-flex">
+            <input
+              id="field_paymentDate"
+              data-cy="paymentDate"
+              type="datetime-local"
+              class="form-control"
+              name="paymentDate"
+              formControlName="paymentDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let amountRef = editForm.get('amount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_amount" sysTranslate="snpApp.payment.amount">Amount</label>
+          <input type="number" class="form-control" name="amount" id="field_amount" data-cy="amount" formControlName="amount" />
+          @if (amountRef.invalid && (amountRef.dirty || amountRef.touched)) {
+            <div>
+              @if (amountRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!amountRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_actualAmount" sysTranslate="snpApp.payment.actualAmount">Actual Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="actualAmount"
+            id="field_actualAmount"
+            data-cy="actualAmount"
+            formControlName="actualAmount"
+          />
+        </div>
+
+        @let paymentStatusRef = editForm.get('paymentStatus')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentStatus" sysTranslate="snpApp.payment.paymentStatus">Payment Status</label>
+          <input
+            type="text"
+            class="form-control"
+            name="paymentStatus"
+            id="field_paymentStatus"
+            data-cy="paymentStatus"
+            formControlName="paymentStatus"
+          />
+          @if (paymentStatusRef.invalid && (paymentStatusRef.dirty || paymentStatusRef.touched)) {
+            <div>
+              @if (paymentStatusRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mihpayIdRef = editForm.get('mihpayId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mihpayId" sysTranslate="snpApp.payment.mihpayId">Mihpay Id</label>
+          <input type="text" class="form-control" name="mihpayId" id="field_mihpayId" data-cy="mihpayId" formControlName="mihpayId" />
+          @if (mihpayIdRef.invalid && (mihpayIdRef.dirty || mihpayIdRef.touched)) {
+            <div>
+              @if (mihpayIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let txnIdRef = editForm.get('txnId')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_txnId" sysTranslate="snpApp.payment.txnId">Txn Id</label>
+          <input type="text" class="form-control" name="txnId" id="field_txnId" data-cy="txnId" formControlName="txnId" />
+          @if (txnIdRef.invalid && (txnIdRef.dirty || txnIdRef.touched)) {
+            <div>
+              @if (txnIdRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let emailRef = editForm.get('email')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_email" sysTranslate="snpApp.payment.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+            <div>
+              @if (emailRef.errors?.minlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
+                  >This field is required to be at least 5 characters.</small
+                >
+              }
+              @if (emailRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '75' }"
+                  >This field cannot be longer than 75 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let phoneRef = editForm.get('phone')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_phone" sysTranslate="snpApp.payment.phone">Phone</label>
+          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
+          @if (phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)) {
+            <div>
+              @if (phoneRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let productInfoRef = editForm.get('productInfo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_productInfo" sysTranslate="snpApp.payment.productInfo">Product Info</label>
+          <input
+            type="text"
+            class="form-control"
+            name="productInfo"
+            id="field_productInfo"
+            data-cy="productInfo"
+            formControlName="productInfo"
+          />
+          @if (productInfoRef.invalid && (productInfoRef.dirty || productInfoRef.touched)) {
+            <div>
+              @if (productInfoRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentType" sysTranslate="snpApp.payment.paymentType">Payment Type</label>
+          <select
+            class="form-select"
+            id="field_paymentType"
+            data-cy="paymentType"
+            name="paymentType"
+            formControlName="paymentType"
+            [compareWith]="comparePaymentType"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentTypeOption of paymentTypesSharedCollection(); track $index) {
+              <option [ngValue]="paymentTypeOption">{{ paymentTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentMethodType" sysTranslate="snpApp.payment.paymentMethodType"
+            >Payment Method Type</label
+          >
+          <select
+            class="form-select"
+            id="field_paymentMethodType"
+            data-cy="paymentMethodType"
+            name="paymentMethodType"
+            formControlName="paymentMethodType"
+            [compareWith]="comparePaymentMethodType"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentMethodTypeOption of paymentMethodTypesSharedCollection(); track $index) {
+              <option [ngValue]="paymentMethodTypeOption">{{ paymentMethodTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentMethod" sysTranslate="snpApp.payment.paymentMethod">Payment Method</label>
+          <select
+            class="form-select"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+            name="paymentMethod"
+            formControlName="paymentMethod"
+            [compareWith]="comparePaymentMethod"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentMethodOption of paymentMethodsSharedCollection(); track $index) {
+              <option [ngValue]="paymentMethodOption">{{ paymentMethodOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentGatewayResponse" sysTranslate="snpApp.payment.paymentGatewayResponse"
+            >Payment Gateway Response</label
+          >
+          <select
+            class="form-select"
+            id="field_paymentGatewayResponse"
+            data-cy="paymentGatewayResponse"
+            name="paymentGatewayResponse"
+            formControlName="paymentGatewayResponse"
+            [compareWith]="comparePaymentGatewayResponse"
+          >
+            <option [ngValue]="null"></option>
+            @for (paymentGatewayResponseOption of paymentGatewayResponsesSharedCollection(); track $index) {
+              <option [ngValue]="paymentGatewayResponseOption">{{ paymentGatewayResponseOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.payment.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fromParty" sysTranslate="snpApp.payment.fromParty">From Party</label>
+          <select
+            class="form-select"
+            id="field_fromParty"
+            data-cy="fromParty"
+            name="fromParty"
+            formControlName="fromParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_toParty" sysTranslate="snpApp.payment.toParty">To Party</label>
+          <select
+            class="form-select"
+            id="field_toParty"
+            data-cy="toParty"
+            name="toParty"
+            formControlName="toParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_roleType" sysTranslate="snpApp.payment.roleType">Role Type</label>
+          <select
+            class="form-select"
+            id="field_roleType"
+            data-cy="roleType"
+            name="roleType"
+            formControlName="roleType"
+            [compareWith]="compareRoleType"
+          >
+            <option [ngValue]="null"></option>
+            @for (roleTypeOption of roleTypesSharedCollection(); track $index) {
+              <option [ngValue]="roleTypeOption">{{ roleTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_currencyUom" sysTranslate="snpApp.payment.currencyUom">Currency Uom</label>
+          <select
+            class="form-select"
+            id="field_currencyUom"
+            data-cy="currencyUom"
+            name="currencyUom"
+            formControlName="currencyUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

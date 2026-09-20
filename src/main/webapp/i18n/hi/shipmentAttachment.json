@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "shipmentAttachment": {
+      "home": {
+        "title": "ShipmentAttachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shipment Attachment बनाएँ",
+        "createOrEditLabel": "Shipment Attachment बनाएँ या संपादित करें",
+        "notFound": "No Shipment Attachments found"
+      },
+      "created": "एक नया Shipment Attachment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shipment Attachment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shipment Attachment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shipment Attachment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shipment Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "shipment": "Shipment",
+      "attachment": "Attachment"
+    }
+  }
+}

@@ -1,0 +1,258 @@
+<div>
+  <h2 id="page-heading" data-cy="OrderAdjustmentHeading">
+    <span sysTranslate="snpApp.orderAdjustment.home.title">Order Adjustments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.orderAdjustment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-order-adjustment"
+        [routerLink]="['/order-adjustment/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.orderAdjustment.home.createLabel">Create a new Order Adjustment</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (orderAdjustments().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.orderAdjustment.home.notFound">No Order Adjustments found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="comments">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.comments">Comments</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="amount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.amount">Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sourcePercentage">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.sourcePercentage">Source Percentage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sourceRefId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.sourceRefId">Source Ref Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="exemptAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.exemptAmount">Exempt Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="includeInTax">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.includeInTax">Include In Tax</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="includeInShipping">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.includeInShipping">Include In Shipping</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="includedInPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.includedInPrice">Included In Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="entryDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.entryDate">Entry Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="adjustmentType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.adjustmentType">Adjustment Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productFeature.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.productFeature">Product Feature</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="taxAuthority.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderAdjustment.taxAuthority">Tax Authority</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (orderAdjustment of orderAdjustments(); track trackId(orderAdjustment)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/order-adjustment', orderAdjustment.id, 'view']">{{ orderAdjustment.id }}</a>
+              </td>
+              <td>{{ orderAdjustment.description }}</td>
+              <td>{{ orderAdjustment.comments }}</td>
+              <td>{{ orderAdjustment.amount }}</td>
+              <td>{{ orderAdjustment.sourcePercentage }}</td>
+              <td>{{ orderAdjustment.sourceRefId }}</td>
+              <td>{{ orderAdjustment.exemptAmount }}</td>
+              <td>{{ orderAdjustment.includeInTax }}</td>
+              <td>{{ orderAdjustment.includeInShipping }}</td>
+              <td>{{ orderAdjustment.includedInPrice }}</td>
+              <td>{{ orderAdjustment.entryDate | formatMediumDatetime }}</td>
+              <td>
+                @if (orderAdjustment.order) {
+                  <div>
+                    <a [routerLink]="['/order', orderAdjustment.order.id, 'view']">{{ orderAdjustment.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderAdjustment.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', orderAdjustment.orderItem.id, 'view']">{{ orderAdjustment.orderItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderAdjustment.adjustmentType) {
+                  <div>
+                    <a [routerLink]="['/order-adjustment-type', orderAdjustment.adjustmentType.id, 'view']">{{
+                      orderAdjustment.adjustmentType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderAdjustment.product) {
+                  <div>
+                    <a [routerLink]="['/product', orderAdjustment.product.id, 'view']">{{ orderAdjustment.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderAdjustment.productFeature) {
+                  <div>
+                    <a [routerLink]="['/product-feature', orderAdjustment.productFeature.id, 'view']">{{
+                      orderAdjustment.productFeature.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderAdjustment.taxAuthority) {
+                  <div>
+                    <a [routerLink]="['/tax-authority', orderAdjustment.taxAuthority.id, 'view']">{{
+                      orderAdjustment.taxAuthority.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/order-adjustment', orderAdjustment.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/order-adjustment', orderAdjustment.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(orderAdjustment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (orderAdjustments().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

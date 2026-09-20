@@ -1,0 +1,89 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-custom-time-period-heading"
+        data-cy="CustomTimePeriodCreateUpdateHeading"
+        sysTranslate="snpApp.customTimePeriod.home.createOrEditLabel"
+      >
+        Create or edit a Custom Time Period
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.customTimePeriod.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '25' }"
+                  >This field cannot be longer than 25 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fromDate" sysTranslate="snpApp.customTimePeriod.fromDate">From Date</label>
+          <div class="input-group">
+            <input
+              id="field_fromDate"
+              data-cy="fromDate"
+              type="text"
+              class="form-control"
+              name="fromDate"
+              ngbDatepicker
+              #fromDateDp="ngbDatepicker"
+              formControlName="fromDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fromDateDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_thruDate" sysTranslate="snpApp.customTimePeriod.thruDate">Thru Date</label>
+          <div class="input-group">
+            <input
+              id="field_thruDate"
+              data-cy="thruDate"
+              type="text"
+              class="form-control"
+              name="thruDate"
+              ngbDatepicker
+              #thruDateDp="ngbDatepicker"
+              formControlName="thruDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="thruDateDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

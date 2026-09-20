@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "cashBookAttachment": {
+      "home": {
+        "title": "Cash Book Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Cash Book Attachment సృష్టించండి",
+        "createOrEditLabel": "Cash Book Attachment సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Cash Book Attachments found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Cash Book Attachment సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Cash Book Attachment సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Cash Book Attachment తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Cash Book Attachment {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Cash Book Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "cashBook": "Cash Book",
+      "attachment": "Attachment"
+    }
+  }
+}

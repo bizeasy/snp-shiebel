@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "productFeatureGroupAppl": {
+      "home": {
+        "title": "ProductFeatureGroupAppls",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Feature Group Appl बनाएँ",
+        "createOrEditLabel": "Product Feature Group Appl बनाएँ या संपादित करें",
+        "notFound": "No Product Feature Group Appls found"
+      },
+      "created": "एक नया Product Feature Group Appl [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Feature Group Appl [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Feature Group Appl [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Feature Group Appl [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Feature Group Appl"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "sequenceNo": "Sequence No",
+      "productFeatureGroup": "Product Feature Group",
+      "productFeature": "Product Feature"
+    }
+  }
+}

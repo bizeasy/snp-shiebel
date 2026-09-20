@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Order.
+    -->
+    <changeSet id="20231214223405-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="order_type_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__order_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="sales_channel_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__sales_channel_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sales_channel"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="party_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="supplier_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__supplier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="currency_uom_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__currency_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="currency_conversion_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__currency_conversion_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom_conversion"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="quote_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__quote_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quote"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_store_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__product_store_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_store"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="custom_time_period_id"
+                                 baseTableName="sys_order"
+                                 constraintName="fk_sys_order__custom_time_period_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="custom_time_period"
+                                 />
+    </changeSet>
+</databaseChangeLog>

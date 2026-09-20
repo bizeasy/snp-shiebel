@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "partyRelationship": {
+      "home": {
+        "title": "PartyRelationships",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Party Relationship बनाएँ",
+        "createOrEditLabel": "Party Relationship बनाएँ या संपादित करें",
+        "notFound": "No Party Relationships found"
+      },
+      "created": "एक नया Party Relationship [identifier: {{ param }}] तैयार है",
+      "updated": "एक Party Relationship [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Party Relationship [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Party Relationship [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Party Relationship"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "relationshipName": "Relationship Name",
+      "partyFrom": "Party From",
+      "partyTo": "Party To",
+      "roleTypeFrom": "Role Type From",
+      "roleTypeTo": "Role Type To",
+      "relationshipType": "Relationship Type"
+    }
+  }
+}

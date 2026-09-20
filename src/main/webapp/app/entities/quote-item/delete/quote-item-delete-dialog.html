@@ -1,0 +1,24 @@
+@if (quoteItem) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(quoteItem.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="quoteItemDeleteDialogHeading" sysTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p id="sys-delete-quoteItem-heading" sysTranslate="snpApp.quoteItem.delete.question" [translateValues]="{ id: quoteItem.id }">
+        Are you sure you want to delete Quote Item {{ quoteItem.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-quoteItem" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

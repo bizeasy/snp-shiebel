@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "productAttachment": {
+      "home": {
+        "title": "Product Attachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Product Attachment సృష్టించండి",
+        "createOrEditLabel": "Product Attachment సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Product Attachments found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Product Attachment సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Product Attachment సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Product Attachment తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Product Attachment {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Product Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "product": "Product",
+      "attachment": "Attachment"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "facilityContactMech": {
+      "home": {
+        "title": "Facility Contact Meches",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Facility Contact Mech సృష్టించండి",
+        "createOrEditLabel": "Facility Contact Mech సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Facility Contact Meches found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Facility Contact Mech సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Facility Contact Mech సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Facility Contact Mech తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Facility Contact Mech {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Facility Contact Mech"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "facility": "Facility",
+      "contactMech": "Contact Mech",
+      "contactMechPurpose": "Contact Mech Purpose"
+    }
+  }
+}

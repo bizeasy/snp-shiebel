@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "productFeatureGroup": {
+      "home": {
+        "title": "Product Feature Groups",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Feature Group",
+        "createOrEditLabel": "Create or edit a Product Feature Group",
+        "notFound": "No Product Feature Groups found"
+      },
+      "created": "A new Product Feature Group is created with identifier {{ param }}",
+      "updated": "A Product Feature Group is updated with identifier {{ param }}",
+      "deleted": "A Product Feature Group is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Feature Group {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Feature Group"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

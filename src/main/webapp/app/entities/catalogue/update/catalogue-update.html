@@ -1,0 +1,197 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-catalogue-heading" data-cy="CatalogueCreateUpdateHeading" sysTranslate="snpApp.catalogue.home.createOrEditLabel">
+        Create or edit a Catalogue
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.catalogue.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.catalogue.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.catalogue.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        @let imagePathRef = editForm.get('imagePath')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_imagePath" sysTranslate="snpApp.catalogue.imagePath">Image Path</label>
+          <input type="text" class="form-control" name="imagePath" id="field_imagePath" data-cy="imagePath" formControlName="imagePath" />
+          @if (imagePathRef.invalid && (imagePathRef.dirty || imagePathRef.touched)) {
+            <div>
+              @if (imagePathRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mobileImagePathRef = editForm.get('mobileImagePath')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mobileImagePath" sysTranslate="snpApp.catalogue.mobileImagePath">Mobile Image Path</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mobileImagePath"
+            id="field_mobileImagePath"
+            data-cy="mobileImagePath"
+            formControlName="mobileImagePath"
+          />
+          @if (mobileImagePathRef.invalid && (mobileImagePathRef.dirty || mobileImagePathRef.touched)) {
+            <div>
+              @if (mobileImagePathRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImage1Ref = editForm.get('altImage1')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImage1" sysTranslate="snpApp.catalogue.altImage1">Alt Image 1</label>
+          <input type="text" class="form-control" name="altImage1" id="field_altImage1" data-cy="altImage1" formControlName="altImage1" />
+          @if (altImage1Ref.invalid && (altImage1Ref.dirty || altImage1Ref.touched)) {
+            <div>
+              @if (altImage1Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImage2Ref = editForm.get('altImage2')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImage2" sysTranslate="snpApp.catalogue.altImage2">Alt Image 2</label>
+          <input type="text" class="form-control" name="altImage2" id="field_altImage2" data-cy="altImage2" formControlName="altImage2" />
+          @if (altImage2Ref.invalid && (altImage2Ref.dirty || altImage2Ref.touched)) {
+            <div>
+              @if (altImage2Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImage3Ref = editForm.get('altImage3')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImage3" sysTranslate="snpApp.catalogue.altImage3">Alt Image 3</label>
+          <input type="text" class="form-control" name="altImage3" id="field_altImage3" data-cy="altImage3" formControlName="altImage3" />
+          @if (altImage3Ref.invalid && (altImage3Ref.dirty || altImage3Ref.touched)) {
+            <div>
+              @if (altImage3Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let bannerUrlRef = editForm.get('bannerUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_bannerUrl" sysTranslate="snpApp.catalogue.bannerUrl">Banner Url</label>
+          <input type="text" class="form-control" name="bannerUrl" id="field_bannerUrl" data-cy="bannerUrl" formControlName="bannerUrl" />
+          @if (bannerUrlRef.invalid && (bannerUrlRef.dirty || bannerUrlRef.touched)) {
+            <div>
+              @if (bannerUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isBanner"
+            id="field_isBanner"
+            data-cy="isBanner"
+            formControlName="isBanner"
+          />
+          <label class="form-check-label" for="field_isBanner" sysTranslate="snpApp.catalogue.isBanner">Is Banner</label>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

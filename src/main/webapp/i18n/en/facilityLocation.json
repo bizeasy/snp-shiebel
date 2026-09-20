@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "facilityLocation": {
+      "home": {
+        "title": "Facility Locations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Facility Location",
+        "createOrEditLabel": "Create or edit a Facility Location",
+        "notFound": "No Facility Locations found"
+      },
+      "created": "A new Facility Location is created with identifier {{ param }}",
+      "updated": "A Facility Location is updated with identifier {{ param }}",
+      "deleted": "A Facility Location is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Facility Location {{ id }}?"
+      },
+      "detail": {
+        "title": "Facility Location"
+      },
+      "id": "ID",
+      "locationSeqId": "Location Seq Id",
+      "areaId": "Area Id",
+      "aisleId": "Aisle Id",
+      "sectionId": "Section Id",
+      "levelId": "Level Id",
+      "positionId": "Position Id",
+      "facility": "Facility",
+      "locationType": "Location Type"
+    }
+  }
+}

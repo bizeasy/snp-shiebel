@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (supplierProduct(); as supplierProductRef) {
+      <div>
+        <h2 data-cy="supplierProductDetailsHeading"><span sysTranslate="snpApp.supplierProduct.detail.title">Supplier Product</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.supplierProductId">Supplier Product Id</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.supplierProductId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.minOrderQty">Min Order Qty</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.minOrderQty }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.lastPrice">Last Price</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.lastPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.shippingPrice">Shipping Price</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.shippingPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.cgst">Cgst</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.cgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.igst">Igst</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.igst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.sgst">Sgst</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.sgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.totalPrice">Total Price</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.totalPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.comments">Comments</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.leadTimeDays">Lead Time Days</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.leadTimeDays }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.unitsIncluded">Units Included</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.unitsIncluded }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.canDropShip">Can Drop Ship</span></dt>
+          <dd>
+            <span>{{ supplierProductRef.canDropShip }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.product">Product</span></dt>
+          <dd>
+            @if (supplierProduct()!.product) {
+              <div>
+                <a [routerLink]="['/product', supplierProduct()!.product?.id, 'view']">{{ supplierProductRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.party">Party</span></dt>
+          <dd>
+            @if (supplierProduct()!.party) {
+              <div>
+                <a [routerLink]="['/party', supplierProduct()!.party?.id, 'view']">{{ supplierProductRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.quantityUom">Quantity Uom</span></dt>
+          <dd>
+            @if (supplierProduct()!.quantityUom) {
+              <div>
+                <a [routerLink]="['/uom', supplierProduct()!.quantityUom?.id, 'view']">{{ supplierProductRef.quantityUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.supplierProduct.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (supplierProduct()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', supplierProduct()!.currencyUom?.id, 'view']">{{ supplierProductRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/supplier-product', supplierProductRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

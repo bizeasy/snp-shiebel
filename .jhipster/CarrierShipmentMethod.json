@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "changelogDate": "20231214230405"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "sequenceNo",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "carrierServiceCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "CarrierShipmentMethod",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "shipmentMethodType",
+      "relationshipName": "shipmentMethodType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "roleType",
+      "relationshipName": "roleType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

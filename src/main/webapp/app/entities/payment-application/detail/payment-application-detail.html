@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paymentApplication(); as paymentApplicationRef) {
+      <div>
+        <h2 data-cy="paymentApplicationDetailsHeading">
+          <span sysTranslate="snpApp.paymentApplication.detail.title">Payment Application</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentApplicationRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.amountApplied">Amount Applied</span></dt>
+          <dd>
+            <span>{{ paymentApplicationRef.amountApplied }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.payment">Payment</span></dt>
+          <dd>
+            @if (paymentApplication()!.payment) {
+              <div>
+                <a [routerLink]="['/payment', paymentApplication()!.payment?.id, 'view']">{{ paymentApplicationRef.payment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.toPayment">To Payment</span></dt>
+          <dd>
+            @if (paymentApplication()!.toPayment) {
+              <div>
+                <a [routerLink]="['/payment', paymentApplication()!.toPayment?.id, 'view']">{{ paymentApplicationRef.toPayment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.invoice">Invoice</span></dt>
+          <dd>
+            @if (paymentApplication()!.invoice) {
+              <div>
+                <a [routerLink]="['/invoice', paymentApplication()!.invoice?.id, 'view']">{{ paymentApplicationRef.invoice?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.invoiceItem">Invoice Item</span></dt>
+          <dd>
+            @if (paymentApplication()!.invoiceItem) {
+              <div>
+                <a [routerLink]="['/invoice-item', paymentApplication()!.invoiceItem?.id, 'view']">{{
+                  paymentApplicationRef.invoiceItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.order">Order</span></dt>
+          <dd>
+            @if (paymentApplication()!.order) {
+              <div>
+                <a [routerLink]="['/order', paymentApplication()!.order?.id, 'view']">{{ paymentApplicationRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentApplication.orderItem">Order Item</span></dt>
+          <dd>
+            @if (paymentApplication()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', paymentApplication()!.orderItem?.id, 'view']">{{ paymentApplicationRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment-application', paymentApplicationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

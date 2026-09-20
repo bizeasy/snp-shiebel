@@ -1,0 +1,232 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-attachment-heading" data-cy="AttachmentCreateUpdateHeading" sysTranslate="snpApp.attachment.home.createOrEditLabel">
+        Create or edit a Attachment
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.attachment.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let fileAttachmentRef = editForm.get('fileAttachment')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fileAttachment" sysTranslate="snpApp.attachment.fileAttachment">File Attachment</label>
+          <div>
+            @if (fileAttachmentRef.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(fileAttachmentRef.value!, editForm.get('fileAttachmentContentType')!.value!)"
+                  sysTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('fileAttachmentContentType')!.value }}, {{ byteSize(fileAttachmentRef.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ fileAttachment: undefined, fileAttachmentContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times" />
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_fileAttachment"
+              data-cy="fileAttachment"
+              (change)="setFileData($event, 'fileAttachment', false)"
+              sysTranslate="entity.action.addblob"
+              aria-label="File Attachment"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="fileAttachment"
+            id="field_fileAttachment"
+            data-cy="fileAttachment"
+            formControlName="fileAttachment"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="fileAttachmentContentType"
+            id="field_fileAttachmentContentType"
+            formControlName="fileAttachmentContentType"
+          />
+        </div>
+
+        @let attachmentUrlRef = editForm.get('attachmentUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_attachmentUrl" sysTranslate="snpApp.attachment.attachmentUrl">Attachment Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="attachmentUrl"
+            id="field_attachmentUrl"
+            data-cy="attachmentUrl"
+            formControlName="attachmentUrl"
+          />
+          @if (attachmentUrlRef.invalid && (attachmentUrlRef.dirty || attachmentUrlRef.touched)) {
+            <div>
+              @if (attachmentUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mimeTypeRef = editForm.get('mimeType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mimeType" sysTranslate="snpApp.attachment.mimeType">Mime Type</label>
+          <input type="text" class="form-control" name="mimeType" id="field_mimeType" data-cy="mimeType" formControlName="mimeType" />
+          @if (mimeTypeRef.invalid && (mimeTypeRef.dirty || mimeTypeRef.touched)) {
+            <div>
+              @if (mimeTypeRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_fileSize" sysTranslate="snpApp.attachment.fileSize">File Size</label>
+          <input type="number" class="form-control" name="fileSize" id="field_fileSize" data-cy="fileSize" formControlName="fileSize" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_uploadedDate" sysTranslate="snpApp.attachment.uploadedDate">Uploaded Date</label>
+          <div class="d-flex">
+            <input
+              id="field_uploadedDate"
+              data-cy="uploadedDate"
+              type="datetime-local"
+              class="form-control"
+              name="uploadedDate"
+              formControlName="uploadedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isTrashed"
+            id="field_isTrashed"
+            data-cy="isTrashed"
+            formControlName="isTrashed"
+          />
+          <label class="form-check-label" for="field_isTrashed" sysTranslate="snpApp.attachment.isTrashed">Is Trashed</label>
+        </div>
+
+        @let checksumRef = editForm.get('checksum')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_checksum" sysTranslate="snpApp.attachment.checksum">Checksum</label>
+          <input type="text" class="form-control" name="checksum" id="field_checksum" data-cy="checksum" formControlName="checksum" />
+          @if (checksumRef.invalid && (checksumRef.dirty || checksumRef.touched)) {
+            <div>
+              @if (checksumRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '128' }"
+                  >This field cannot be longer than 128 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_contentType" sysTranslate="snpApp.attachment.contentType">Content Type</label>
+          <select
+            class="form-select"
+            id="field_contentType"
+            data-cy="contentType"
+            name="contentType"
+            formControlName="contentType"
+            [compareWith]="compareContentType"
+          >
+            <option [ngValue]="null"></option>
+            @for (contentTypeOption of contentTypesSharedCollection(); track $index) {
+              <option [ngValue]="contentTypeOption">{{ contentTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_folder" sysTranslate="snpApp.attachment.folder">Folder</label>
+          <select
+            class="form-select"
+            id="field_folder"
+            data-cy="folder"
+            name="folder"
+            formControlName="folder"
+            [compareWith]="compareFileFolder"
+          >
+            <option [ngValue]="null"></option>
+            @for (fileFolderOption of fileFoldersSharedCollection(); track $index) {
+              <option [ngValue]="fileFolderOption">{{ fileFolderOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_owner" sysTranslate="snpApp.attachment.owner">Owner</label>
+          <select class="form-select" id="field_owner" data-cy="owner" name="owner" formControlName="owner" [compareWith]="compareParty">
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

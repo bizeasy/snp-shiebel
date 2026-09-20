@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-geo-assoc-heading" data-cy="GeoAssocCreateUpdateHeading" sysTranslate="snpApp.geoAssoc.home.createOrEditLabel">
+        Create or edit a Geo Assoc
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_geo" sysTranslate="snpApp.geoAssoc.geo">Geo</label>
+          <select class="form-select" id="field_geo" data-cy="geo" name="geo" formControlName="geo" [compareWith]="compareGeo">
+            @if (!editForm.get('geo')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (geoOption of geosSharedCollection(); track $index) {
+              <option [ngValue]="geoOption">{{ geoOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['geo'])!.invalid && (editForm.get(['geo'])!.dirty || editForm.get(['geo'])!.touched)) {
+          <div>
+            @if (editForm.get(['geo'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_geoTo" sysTranslate="snpApp.geoAssoc.geoTo">Geo To</label>
+          <select class="form-select" id="field_geoTo" data-cy="geoTo" name="geoTo" formControlName="geoTo" [compareWith]="compareGeo">
+            @if (!editForm.get('geoTo')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (geoOption of geosSharedCollection(); track $index) {
+              <option [ngValue]="geoOption">{{ geoOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['geoTo'])!.invalid && (editForm.get(['geoTo'])!.dirty || editForm.get(['geoTo'])!.touched)) {
+          <div>
+            @if (editForm.get(['geoTo'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_geoAssocType" sysTranslate="snpApp.geoAssoc.geoAssocType">Geo Assoc Type</label>
+          <select
+            class="form-select"
+            id="field_geoAssocType"
+            data-cy="geoAssocType"
+            name="geoAssocType"
+            formControlName="geoAssocType"
+            [compareWith]="compareGeoAssocType"
+          >
+            <option [ngValue]="null"></option>
+            @for (geoAssocTypeOption of geoAssocTypesSharedCollection(); track $index) {
+              <option [ngValue]="geoAssocTypeOption">{{ geoAssocTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

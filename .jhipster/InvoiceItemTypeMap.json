@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20231214224905"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "invoiceItemMapKey",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "InvoiceItemTypeMap",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "invoiceType",
+      "relationshipName": "invoiceType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "invoiceItemType",
+      "relationshipName": "invoiceItemType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (shipment(); as shipmentRef) {
+      <div>
+        <h2 data-cy="shipmentDetailsHeading"><span sysTranslate="snpApp.shipment.detail.title">Shipment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ shipmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.estimatedShipDate">Estimated Ship Date</span></dt>
+          <dd>
+            <span>{{ shipmentRef.estimatedShipDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.estimatedReadyDate">Estimated Ready Date</span></dt>
+          <dd>
+            <span>{{ shipmentRef.estimatedReadyDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.estimatedArrivalDate">Estimated Arrival Date</span></dt>
+          <dd>
+            <span>{{ shipmentRef.estimatedArrivalDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.estimatedShipCost">Estimated Ship Cost</span></dt>
+          <dd>
+            <span>{{ shipmentRef.estimatedShipCost }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.shipmentType">Shipment Type</span></dt>
+          <dd>
+            @if (shipment()!.shipmentType) {
+              <div>
+                <a [routerLink]="['/shipment-type', shipment()!.shipmentType?.id, 'view']">{{ shipmentRef.shipmentType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.shipmentMethodType">Shipment Method Type</span></dt>
+          <dd>
+            @if (shipment()!.shipmentMethodType) {
+              <div>
+                <a [routerLink]="['/shipment-method-type', shipment()!.shipmentMethodType?.id, 'view']">{{
+                  shipmentRef.shipmentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.status">Status</span></dt>
+          <dd>
+            @if (shipment()!.status) {
+              <div>
+                <a [routerLink]="['/status', shipment()!.status?.id, 'view']">{{ shipmentRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.order">Order</span></dt>
+          <dd>
+            @if (shipment()!.order) {
+              <div>
+                <a [routerLink]="['/order', shipment()!.order?.id, 'view']">{{ shipmentRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.orderItem">Order Item</span></dt>
+          <dd>
+            @if (shipment()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', shipment()!.orderItem?.id, 'view']">{{ shipmentRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.originFacility">Origin Facility</span></dt>
+          <dd>
+            @if (shipment()!.originFacility) {
+              <div>
+                <a [routerLink]="['/facility', shipment()!.originFacility?.id, 'view']">{{ shipmentRef.originFacility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.destinationFacility">Destination Facility</span></dt>
+          <dd>
+            @if (shipment()!.destinationFacility) {
+              <div>
+                <a [routerLink]="['/facility', shipment()!.destinationFacility?.id, 'view']">{{ shipmentRef.destinationFacility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.fromParty">From Party</span></dt>
+          <dd>
+            @if (shipment()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', shipment()!.fromParty?.id, 'view']">{{ shipmentRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.toParty">To Party</span></dt>
+          <dd>
+            @if (shipment()!.toParty) {
+              <div>
+                <a [routerLink]="['/party', shipment()!.toParty?.id, 'view']">{{ shipmentRef.toParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.carrierParty">Carrier Party</span></dt>
+          <dd>
+            @if (shipment()!.carrierParty) {
+              <div>
+                <a [routerLink]="['/party', shipment()!.carrierParty?.id, 'view']">{{ shipmentRef.carrierParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipment.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (shipment()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', shipment()!.contactMech?.id, 'view']">{{ shipmentRef.contactMech?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/shipment', shipmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

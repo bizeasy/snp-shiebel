@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "productFacilityUser": {
+      "home": {
+        "title": "ProductFacilityUsers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Facility User बनाएँ",
+        "createOrEditLabel": "Product Facility User बनाएँ या संपादित करें",
+        "notFound": "No Product Facility Users found"
+      },
+      "created": "एक नया Product Facility User [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Facility User [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Facility User [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Facility User [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Facility User"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "costPerDay": "Cost Per Day",
+      "totalCost": "Total Cost",
+      "discount": "Discount",
+      "productFacility": "Product Facility",
+      "party": "Party",
+      "status": "Status"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "shoppingListItem": {
+      "home": {
+        "title": "Shopping List Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shopping List Item",
+        "createOrEditLabel": "Create or edit a Shopping List Item",
+        "notFound": "No Shopping List Items found"
+      },
+      "created": "A new Shopping List Item is created with identifier {{ param }}",
+      "updated": "A Shopping List Item is updated with identifier {{ param }}",
+      "deleted": "A Shopping List Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shopping List Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Shopping List Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "requiredByDate": "Required By Date",
+      "selectedAmount": "Selected Amount",
+      "maxAmount": "Max Amount",
+      "description": "Description",
+      "story": "Story",
+      "shoppingList": "Shopping List",
+      "product": "Product",
+      "status": "Status"
+    }
+  }
+}

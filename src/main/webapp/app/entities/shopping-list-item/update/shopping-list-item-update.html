@@ -1,0 +1,201 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-shopping-list-item-heading"
+        data-cy="ShoppingListItemCreateUpdateHeading"
+        sysTranslate="snpApp.shoppingListItem.home.createOrEditLabel"
+      >
+        Create or edit a Shopping List Item
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.shoppingListItem.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.shoppingListItem.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_requiredByDate" sysTranslate="snpApp.shoppingListItem.requiredByDate"
+            >Required By Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_requiredByDate"
+              data-cy="requiredByDate"
+              type="datetime-local"
+              class="form-control"
+              name="requiredByDate"
+              formControlName="requiredByDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_selectedAmount" sysTranslate="snpApp.shoppingListItem.selectedAmount">Selected Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="selectedAmount"
+            id="field_selectedAmount"
+            data-cy="selectedAmount"
+            formControlName="selectedAmount"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_maxAmount" sysTranslate="snpApp.shoppingListItem.maxAmount">Max Amount</label>
+          <input type="number" class="form-control" name="maxAmount" id="field_maxAmount" data-cy="maxAmount" formControlName="maxAmount" />
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.shoppingListItem.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let storyRef = editForm.get('story')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_story" sysTranslate="snpApp.shoppingListItem.story">Story</label>
+          <input type="text" class="form-control" name="story" id="field_story" data-cy="story" formControlName="story" />
+          @if (storyRef.invalid && (storyRef.dirty || storyRef.touched)) {
+            <div>
+              @if (storyRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shoppingList" sysTranslate="snpApp.shoppingListItem.shoppingList">Shopping List</label>
+          <select
+            class="form-select"
+            id="field_shoppingList"
+            data-cy="shoppingList"
+            name="shoppingList"
+            formControlName="shoppingList"
+            [compareWith]="compareShoppingList"
+          >
+            @if (!editForm.get('shoppingList')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (shoppingListOption of shoppingListsSharedCollection(); track $index) {
+              <option [ngValue]="shoppingListOption">{{ shoppingListOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['shoppingList'])!.invalid && (editForm.get(['shoppingList'])!.dirty || editForm.get(['shoppingList'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['shoppingList'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.shoppingListItem.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.shoppingListItem.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

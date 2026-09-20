@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity PartyRelationship.
+    -->
+    <changeSet id="20231214211605-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="party_from_id"
+                                 baseTableName="party_relationship"
+                                 constraintName="fk_party_relationship__party_from_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="party_to_id"
+                                 baseTableName="party_relationship"
+                                 constraintName="fk_party_relationship__party_to_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="role_type_from_id"
+                                 baseTableName="party_relationship"
+                                 constraintName="fk_party_relationship__role_type_from_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="role_type_to_id"
+                                 baseTableName="party_relationship"
+                                 constraintName="fk_party_relationship__role_type_to_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="relationship_type_id"
+                                 baseTableName="party_relationship"
+                                 constraintName="fk_party_relationship__relationship_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party_relationship_type"
+                                 />
+    </changeSet>
+</databaseChangeLog>

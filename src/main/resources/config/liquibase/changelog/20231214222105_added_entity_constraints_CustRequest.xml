@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity CustRequest.
+    -->
+    <changeSet id="20231214222105-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="cust_request_type_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__cust_request_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cust_request_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="cust_request_category_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__cust_request_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cust_request_category"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="from_party_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__from_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_store_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__product_store_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_store"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="sales_channel_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__sales_channel_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sales_channel"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="currency_uom_id"
+                                 baseTableName="cust_request"
+                                 constraintName="fk_cust_request__currency_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+    </changeSet>
+</databaseChangeLog>

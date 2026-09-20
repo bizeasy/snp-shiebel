@@ -1,0 +1,186 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (invoiceItem(); as invoiceItemRef) {
+      <div>
+        <h2 data-cy="invoiceItemDetailsHeading"><span sysTranslate="snpApp.invoiceItem.detail.title">Invoice Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.amount">Amount</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.cancelQuantity">Cancel Quantity</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.cancelQuantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.selectedAmount">Selected Amount</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.selectedAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.unitPrice">Unit Price</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.unitPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.unitListPrice">Unit List Price</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.unitListPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.isModifiedPrice">Is Modified Price</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.isModifiedPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.estimatedShipDate">Estimated Ship Date</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.estimatedShipDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.estimatedDeliveryDate">Estimated Delivery Date</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.estimatedDeliveryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.shipBeforeDate">Ship Before Date</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.shipBeforeDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.shipAfterDate">Ship After Date</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.shipAfterDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.entryDate">Entry Date</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.entryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.attr1">Attr 1</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.attr1 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.attr2">Attr 2</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.attr2 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.attr3">Attr 3</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.attr3 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.invoice">Invoice</span></dt>
+          <dd>
+            @if (invoiceItem()!.invoice) {
+              <div>
+                <a [routerLink]="['/invoice', invoiceItem()!.invoice?.id, 'view']">{{ invoiceItemRef.invoice?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.invoiceItemType">Invoice Item Type</span></dt>
+          <dd>
+            @if (invoiceItem()!.invoiceItemType) {
+              <div>
+                <a [routerLink]="['/invoice-item-type', invoiceItem()!.invoiceItemType?.id, 'view']">{{
+                  invoiceItemRef.invoiceItemType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.product">Product</span></dt>
+          <dd>
+            @if (invoiceItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', invoiceItem()!.product?.id, 'view']">{{ invoiceItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.uom">Uom</span></dt>
+          <dd>
+            @if (invoiceItem()!.uom) {
+              <div>
+                <a [routerLink]="['/uom', invoiceItem()!.uom?.id, 'view']">{{ invoiceItemRef.uom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.productFeature">Product Feature</span></dt>
+          <dd>
+            @if (invoiceItem()!.productFeature) {
+              <div>
+                <a [routerLink]="['/product-feature', invoiceItem()!.productFeature?.id, 'view']">{{
+                  invoiceItemRef.productFeature?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.productFacility">Product Facility</span></dt>
+          <dd>
+            @if (invoiceItem()!.productFacility) {
+              <div>
+                <a [routerLink]="['/product-facility', invoiceItem()!.productFacility?.id, 'view']">{{
+                  invoiceItemRef.productFacility?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.fromInventoryItem">From Inventory Item</span></dt>
+          <dd>
+            @if (invoiceItem()!.fromInventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', invoiceItem()!.fromInventoryItem?.id, 'view']">{{
+                  invoiceItemRef.fromInventoryItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.taxAuthRate">Tax Auth Rate</span></dt>
+          <dd>
+            @if (invoiceItem()!.taxAuthRate) {
+              <div>
+                <a [routerLink]="['/tax-authority-rate-type', invoiceItem()!.taxAuthRate?.id, 'view']">{{
+                  invoiceItemRef.taxAuthRate?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.parentInvoice">Parent Invoice</span></dt>
+          <dd>
+            @if (invoiceItem()!.parentInvoice) {
+              <div>
+                <a [routerLink]="['/invoice', invoiceItem()!.parentInvoice?.id, 'view']">{{ invoiceItemRef.parentInvoice?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItem.parentInvoiceItem">Parent Invoice Item</span></dt>
+          <dd>
+            @if (invoiceItem()!.parentInvoiceItem) {
+              <div>
+                <a [routerLink]="['/invoice-item', invoiceItem()!.parentInvoiceItem?.id, 'view']">{{
+                  invoiceItemRef.parentInvoiceItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/invoice-item', invoiceItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

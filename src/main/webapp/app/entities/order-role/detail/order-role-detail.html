@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderRole(); as orderRoleRef) {
+      <div>
+        <h2 data-cy="orderRoleDetailsHeading"><span sysTranslate="snpApp.orderRole.detail.title">Order Role</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderRoleRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderRole.order">Order</span></dt>
+          <dd>
+            @if (orderRole()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderRole()!.order?.id, 'view']">{{ orderRoleRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderRole.orderItem">Order Item</span></dt>
+          <dd>
+            @if (orderRole()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', orderRole()!.orderItem?.id, 'view']">{{ orderRoleRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderRole.party">Party</span></dt>
+          <dd>
+            @if (orderRole()!.party) {
+              <div>
+                <a [routerLink]="['/party', orderRole()!.party?.id, 'view']">{{ orderRoleRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderRole.roleType">Role Type</span></dt>
+          <dd>
+            @if (orderRole()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', orderRole()!.roleType?.id, 'view']">{{ orderRoleRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-role', orderRoleRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

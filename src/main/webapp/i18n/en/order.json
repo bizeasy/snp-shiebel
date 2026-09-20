@@ -1,0 +1,57 @@
+{
+  "snpApp": {
+    "order": {
+      "home": {
+        "title": "Orders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order",
+        "createOrEditLabel": "Create or edit a Order",
+        "notFound": "No Orders found"
+      },
+      "created": "A new Order is created with identifier {{ param }}",
+      "updated": "A Order is updated with identifier {{ param }}",
+      "deleted": "A Order is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order {{ id }}?"
+      },
+      "detail": {
+        "title": "Order"
+      },
+      "id": "ID",
+      "name": "Name",
+      "orderRefNo": "Order Ref No",
+      "externalId": "External Id",
+      "orderDate": "Order Date",
+      "entryDate": "Entry Date",
+      "deliveryDate": "Delivery Date",
+      "priority": "Priority",
+      "isRushOrder": "Is Rush Order",
+      "needsInventoryIssuance": "Needs Inventory Issuance",
+      "remainingSubTotal": "Remaining Sub Total",
+      "grandTotal": "Grand Total",
+      "projectName": "Project Name",
+      "version": "Version",
+      "versionRef": "Version Ref",
+      "description": "Description",
+      "remarks": "Remarks",
+      "paymentTerms": "Payment Terms",
+      "deliveryTerms": "Delivery Terms",
+      "info": "Info",
+      "attr1": "Attr 1",
+      "attr2": "Attr 2",
+      "attr3": "Attr 3",
+      "orderType": "Order Type",
+      "salesChannel": "Sales Channel",
+      "party": "Party",
+      "supplier": "Supplier",
+      "status": "Status",
+      "currencyUom": "Currency Uom",
+      "currencyConversion": "Currency Conversion",
+      "quote": "Quote",
+      "facility": "Facility",
+      "productStore": "Product Store",
+      "department": "Department",
+      "customTimePeriod": "Custom Time Period"
+    }
+  }
+}

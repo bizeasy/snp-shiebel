@@ -1,0 +1,120 @@
+<div>
+  <h2 id="page-heading" data-cy="InvoiceItemTypeMapHeading">
+    <span sysTranslate="snpApp.invoiceItemTypeMap.home.title">Invoice Item Type Maps</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.invoiceItemTypeMap.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-invoice-item-type-map"
+        [routerLink]="['/invoice-item-type-map/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.invoiceItemTypeMap.home.createLabel">Create a new Invoice Item Type Map</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (invoiceItemTypeMaps().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.invoiceItemTypeMap.home.notFound">No Invoice Item Type Maps found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceItemMapKey">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemMapKey">Invoice Item Map Key</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.invoiceItemTypeMap.invoiceType">Invoice Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceItemType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemType">Invoice Item Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (invoiceItemTypeMap of invoiceItemTypeMaps(); track trackId(invoiceItemTypeMap)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/invoice-item-type-map', invoiceItemTypeMap.id, 'view']">{{ invoiceItemTypeMap.id }}</a>
+              </td>
+              <td>{{ invoiceItemTypeMap.invoiceItemMapKey }}</td>
+              <td>
+                @if (invoiceItemTypeMap.invoiceType) {
+                  <div>
+                    <a [routerLink]="['/invoice-type', invoiceItemTypeMap.invoiceType.id, 'view']">{{
+                      invoiceItemTypeMap.invoiceType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (invoiceItemTypeMap.invoiceItemType) {
+                  <div>
+                    <a [routerLink]="['/invoice-item-type', invoiceItemTypeMap.invoiceItemType.id, 'view']">{{
+                      invoiceItemTypeMap.invoiceItemType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/invoice-item-type-map', invoiceItemTypeMap.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/invoice-item-type-map', invoiceItemTypeMap.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(invoiceItemTypeMap)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

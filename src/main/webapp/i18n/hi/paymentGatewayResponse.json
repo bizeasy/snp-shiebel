@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "paymentGatewayResponse": {
+      "home": {
+        "title": "PaymentGatewayResponses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Payment Gateway Response बनाएँ",
+        "createOrEditLabel": "Payment Gateway Response बनाएँ या संपादित करें",
+        "notFound": "No Payment Gateway Responses found"
+      },
+      "created": "एक नया Payment Gateway Response [identifier: {{ param }}] तैयार है",
+      "updated": "एक Payment Gateway Response [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Payment Gateway Response [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Payment Gateway Response [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Payment Gateway Response"
+      },
+      "id": "ID",
+      "referenceNumber": "Reference Number",
+      "amount": "Amount",
+      "gatewayMessage": "Gateway Message",
+      "paymentGatewayConfig": "Payment Gateway Config",
+      "paymentMethodType": "Payment Method Type"
+    }
+  }
+}

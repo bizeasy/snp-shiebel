@@ -1,0 +1,370 @@
+<div>
+  <h2 id="page-heading" data-cy="OrderItemHeading">
+    <span sysTranslate="snpApp.orderItem.home.title">Order Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.orderItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-order-item"
+        [routerLink]="['/order-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.orderItem.home.createLabel">Create a new Order Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (orderItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.orderItem.home.notFound">No Order Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="cancelQuantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.cancelQuantity">Cancel Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="selectedAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.selectedAmount">Selected Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="unitPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.unitPrice">Unit Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="unitListPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.unitListPrice">Unit List Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isModifiedPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.isModifiedPrice">Is Modified Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedShipDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.estimatedShipDate">Estimated Ship Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedDeliveryDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.estimatedDeliveryDate">Estimated Delivery Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipBeforeDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.shipBeforeDate">Ship Before Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shipAfterDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.shipAfterDate">Ship After Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="entryDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.entryDate">Entry Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="attr1">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.attr1">Attr 1</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="attr2">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.attr2">Attr 2</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="attr3">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.attr3">Attr 3</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItemType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.orderItemType">Order Item Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="uom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.uom">Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="supplierProduct.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.supplierProduct">Supplier Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="supplier.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.supplier">Supplier</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productFeature.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.productFeature">Product Feature</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productFacility.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.productFacility">Product Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromInventoryItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.fromInventoryItem">From Inventory Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shoppingListItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.shoppingListItem">Shopping List Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quoteItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.quoteItem">Quote Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="taxAuthRate.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderItem.taxAuthRate">Tax Auth Rate</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (orderItem of orderItems(); track trackId(orderItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/order-item', orderItem.id, 'view']">{{ orderItem.id }}</a>
+              </td>
+              <td>{{ orderItem.sequenceNo }}</td>
+              <td>{{ orderItem.quantity }}</td>
+              <td>{{ orderItem.cancelQuantity }}</td>
+              <td>{{ orderItem.selectedAmount }}</td>
+              <td>{{ orderItem.unitPrice }}</td>
+              <td>{{ orderItem.unitListPrice }}</td>
+              <td>{{ orderItem.isModifiedPrice }}</td>
+              <td>{{ orderItem.estimatedShipDate | formatMediumDatetime }}</td>
+              <td>{{ orderItem.estimatedDeliveryDate | formatMediumDatetime }}</td>
+              <td>{{ orderItem.shipBeforeDate | formatMediumDatetime }}</td>
+              <td>{{ orderItem.shipAfterDate | formatMediumDatetime }}</td>
+              <td>{{ orderItem.entryDate | formatMediumDatetime }}</td>
+              <td>{{ orderItem.attr1 }}</td>
+              <td>{{ orderItem.attr2 }}</td>
+              <td>{{ orderItem.attr3 }}</td>
+              <td>
+                @if (orderItem.order) {
+                  <div>
+                    <a [routerLink]="['/order', orderItem.order.id, 'view']">{{ orderItem.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.orderItemType) {
+                  <div>
+                    <a [routerLink]="['/order-item-type', orderItem.orderItemType.id, 'view']">{{ orderItem.orderItemType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', orderItem.product.id, 'view']">{{ orderItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.uom) {
+                  <div>
+                    <a [routerLink]="['/uom', orderItem.uom.id, 'view']">{{ orderItem.uom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.supplierProduct) {
+                  <div>
+                    <a [routerLink]="['/supplier-product', orderItem.supplierProduct.id, 'view']">{{ orderItem.supplierProduct.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.supplier) {
+                  <div>
+                    <a [routerLink]="['/party', orderItem.supplier.id, 'view']">{{ orderItem.supplier.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.productFeature) {
+                  <div>
+                    <a [routerLink]="['/product-feature', orderItem.productFeature.id, 'view']">{{ orderItem.productFeature.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.productFacility) {
+                  <div>
+                    <a [routerLink]="['/product-facility', orderItem.productFacility.id, 'view']">{{ orderItem.productFacility.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.fromInventoryItem) {
+                  <div>
+                    <a [routerLink]="['/inventory-item', orderItem.fromInventoryItem.id, 'view']">{{ orderItem.fromInventoryItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.shoppingListItem) {
+                  <div>
+                    <a [routerLink]="['/shopping-list-item', orderItem.shoppingListItem.id, 'view']">{{ orderItem.shoppingListItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.quoteItem) {
+                  <div>
+                    <a [routerLink]="['/quote-item', orderItem.quoteItem.id, 'view']">{{ orderItem.quoteItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', orderItem.status.id, 'view']">{{ orderItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderItem.taxAuthRate) {
+                  <div>
+                    <a [routerLink]="['/tax-authority-rate-type', orderItem.taxAuthRate.id, 'view']">{{ orderItem.taxAuthRate.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/order-item', orderItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/order-item', orderItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(orderItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (orderItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

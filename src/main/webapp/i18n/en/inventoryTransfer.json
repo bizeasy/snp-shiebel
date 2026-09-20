@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "inventoryTransfer": {
+      "home": {
+        "title": "Inventory Transfers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Inventory Transfer",
+        "createOrEditLabel": "Create or edit a Inventory Transfer",
+        "notFound": "No Inventory Transfers found"
+      },
+      "created": "A new Inventory Transfer is created with identifier {{ param }}",
+      "updated": "A Inventory Transfer is updated with identifier {{ param }}",
+      "deleted": "A Inventory Transfer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Inventory Transfer {{ id }}?"
+      },
+      "detail": {
+        "title": "Inventory Transfer"
+      },
+      "id": "ID",
+      "sentDate": "Sent Date",
+      "receivedDate": "Received Date",
+      "comments": "Comments",
+      "inventoryItem": "Inventory Item",
+      "status": "Status",
+      "facility": "Facility",
+      "facilityLocation": "Facility Location",
+      "facilityTo": "Facility To",
+      "facilityLocationTo": "Facility Location To",
+      "issuance": "Issuance"
+    }
+  }
+}

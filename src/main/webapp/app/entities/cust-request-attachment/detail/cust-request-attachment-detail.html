@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (custRequestAttachment(); as custRequestAttachmentRef) {
+      <div>
+        <h2 data-cy="custRequestAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.custRequestAttachment.detail.title">Cust Request Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ custRequestAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ custRequestAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestAttachment.custRequest">Cust Request</span></dt>
+          <dd>
+            @if (custRequestAttachment()!.custRequest) {
+              <div>
+                <a [routerLink]="['/cust-request', custRequestAttachment()!.custRequest?.id, 'view']">{{
+                  custRequestAttachmentRef.custRequest?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (custRequestAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', custRequestAttachment()!.attachment?.id, 'view']">{{
+                  custRequestAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cust-request-attachment', custRequestAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

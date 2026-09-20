@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "orderAdjustmentType": {
+      "home": {
+        "title": "Order Adjustment Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order Adjustment Type",
+        "createOrEditLabel": "Create or edit a Order Adjustment Type",
+        "notFound": "No Order Adjustment Types found"
+      },
+      "created": "A new Order Adjustment Type is created with identifier {{ param }}",
+      "updated": "A Order Adjustment Type is updated with identifier {{ param }}",
+      "deleted": "A Order Adjustment Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order Adjustment Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Order Adjustment Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "parent": "Parent"
+    }
+  }
+}

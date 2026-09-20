@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20231214211405"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "idValue",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "PartyIdentification",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "partyIdentificationType",
+      "relationshipName": "type",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "invoiceRole": {
+      "home": {
+        "title": "InvoiceRoles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Invoice Role बनाएँ",
+        "createOrEditLabel": "Invoice Role बनाएँ या संपादित करें",
+        "notFound": "No Invoice Roles found"
+      },
+      "created": "एक नया Invoice Role [identifier: {{ param }}] तैयार है",
+      "updated": "एक Invoice Role [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Invoice Role [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Invoice Role [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Invoice Role"
+      },
+      "id": "ID",
+      "invoice": "Invoice",
+      "invoiceItem": "Invoice Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

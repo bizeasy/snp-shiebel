@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "fileFolder": {
+      "home": {
+        "title": "FileFolders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया File Folder बनाएँ",
+        "createOrEditLabel": "File Folder बनाएँ या संपादित करें",
+        "notFound": "No File Folders found"
+      },
+      "created": "एक नया File Folder [identifier: {{ param }}] तैयार है",
+      "updated": "एक File Folder [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "File Folder [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "File Folder [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "File Folder"
+      },
+      "id": "ID",
+      "name": "Name",
+      "path": "Path",
+      "isSystemFolder": "Is System Folder",
+      "isTrashed": "Is Trashed",
+      "createdDate": "Created Date",
+      "parent": "Parent",
+      "owner": "Owner"
+    }
+  }
+}

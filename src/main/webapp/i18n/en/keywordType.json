@@ -1,0 +1,24 @@
+{
+  "snpApp": {
+    "keywordType": {
+      "home": {
+        "title": "Keyword Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Keyword Type",
+        "createOrEditLabel": "Create or edit a Keyword Type",
+        "notFound": "No Keyword Types found"
+      },
+      "created": "A new Keyword Type is created with identifier {{ param }}",
+      "updated": "A Keyword Type is updated with identifier {{ param }}",
+      "deleted": "A Keyword Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Keyword Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Keyword Type"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}

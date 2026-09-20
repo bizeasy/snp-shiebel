@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-status-valid-change-heading"
+        data-cy="StatusValidChangeCreateUpdateHeading"
+        sysTranslate="snpApp.statusValidChange.home.createOrEditLabel"
+      >
+        Create or edit a Status Valid Change
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let transitionNameRef = editForm.get('transitionName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_transitionName" sysTranslate="snpApp.statusValidChange.transitionName"
+            >Transition Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="transitionName"
+            id="field_transitionName"
+            data-cy="transitionName"
+            formControlName="transitionName"
+          />
+          @if (transitionNameRef.invalid && (transitionNameRef.dirty || transitionNameRef.touched)) {
+            <div>
+              @if (transitionNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.statusValidChange.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            @if (!editForm.get('status')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['status'])!.invalid && (editForm.get(['status'])!.dirty || editForm.get(['status'])!.touched)) {
+          <div>
+            @if (editForm.get(['status'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_statusTo" sysTranslate="snpApp.statusValidChange.statusTo">Status To</label>
+          <select
+            class="form-select"
+            id="field_statusTo"
+            data-cy="statusTo"
+            name="statusTo"
+            formControlName="statusTo"
+            [compareWith]="compareStatus"
+          >
+            @if (!editForm.get('statusTo')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['statusTo'])!.invalid && (editForm.get(['statusTo'])!.dirty || editForm.get(['statusTo'])!.touched)) {
+          <div>
+            @if (editForm.get(['statusTo'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

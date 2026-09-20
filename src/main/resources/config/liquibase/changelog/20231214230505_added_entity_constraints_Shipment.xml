@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Shipment.
+    -->
+    <changeSet id="20231214230505-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="shipment_type_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__shipment_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shipment_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="shipment_method_type_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__shipment_method_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shipment_method_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sys_order"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="origin_facility_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__origin_facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="destination_facility_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__destination_facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="from_party_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__from_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="to_party_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__to_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="carrier_party_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__carrier_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="contact_mech_id"
+                                 baseTableName="shipment"
+                                 constraintName="fk_shipment__contact_mech_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contact_mech"
+                                 />
+    </changeSet>
+</databaseChangeLog>

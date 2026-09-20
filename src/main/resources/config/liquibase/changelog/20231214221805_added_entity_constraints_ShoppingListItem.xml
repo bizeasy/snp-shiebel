@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ShoppingListItem.
+    -->
+    <changeSet id="20231214221805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="shopping_list_id"
+                                 baseTableName="shopping_list_item"
+                                 constraintName="fk_shopping_list_item__shopping_list_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shopping_list"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="shopping_list_item"
+                                 constraintName="fk_shopping_list_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="shopping_list_item"
+                                 constraintName="fk_shopping_list_item__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+    </changeSet>
+</databaseChangeLog>

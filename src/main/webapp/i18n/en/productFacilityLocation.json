@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "productFacilityLocation": {
+      "home": {
+        "title": "Product Facility Locations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Facility Location",
+        "createOrEditLabel": "Create or edit a Product Facility Location",
+        "notFound": "No Product Facility Locations found"
+      },
+      "created": "A new Product Facility Location is created with identifier {{ param }}",
+      "updated": "A Product Facility Location is updated with identifier {{ param }}",
+      "deleted": "A Product Facility Location is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Facility Location {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Facility Location"
+      },
+      "id": "ID",
+      "minimumStock": "Minimum Stock",
+      "moveQuantity": "Move Quantity",
+      "product": "Product",
+      "facility": "Facility",
+      "facilityLocation": "Facility Location"
+    }
+  }
+}

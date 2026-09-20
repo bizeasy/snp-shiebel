@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productAttachment(); as productAttachmentRef) {
+      <div>
+        <h2 data-cy="productAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.productAttachment.detail.title">Product Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ productAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productAttachment.product">Product</span></dt>
+          <dd>
+            @if (productAttachment()!.product) {
+              <div>
+                <a [routerLink]="['/product', productAttachment()!.product?.id, 'view']">{{ productAttachmentRef.product?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (productAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', productAttachment()!.attachment?.id, 'view']">{{
+                  productAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-attachment', productAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

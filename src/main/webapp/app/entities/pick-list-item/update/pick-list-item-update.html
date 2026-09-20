@@ -1,0 +1,179 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-pick-list-item-heading"
+        data-cy="PickListItemCreateUpdateHeading"
+        sysTranslate="snpApp.pickListItem.home.createOrEditLabel"
+      >
+        Create or edit a Pick List Item
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.pickListItem.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_pickList" sysTranslate="snpApp.pickListItem.pickList">Pick List</label>
+          <select
+            class="form-select"
+            id="field_pickList"
+            data-cy="pickList"
+            name="pickList"
+            formControlName="pickList"
+            [compareWith]="comparePickList"
+          >
+            @if (!editForm.get('pickList')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (pickListOption of pickListsSharedCollection(); track $index) {
+              <option [ngValue]="pickListOption">{{ pickListOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['pickList'])!.invalid && (editForm.get(['pickList'])!.dirty || editForm.get(['pickList'])!.touched)) {
+          <div>
+            @if (editForm.get(['pickList'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_order" sysTranslate="snpApp.pickListItem.order">Order</label>
+          <select class="form-select" id="field_order" data-cy="order" name="order" formControlName="order" [compareWith]="compareOrder">
+            <option [ngValue]="null"></option>
+            @for (orderOption of ordersSharedCollection(); track $index) {
+              <option [ngValue]="orderOption">{{ orderOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_orderItem" sysTranslate="snpApp.pickListItem.orderItem">Order Item</label>
+          <select
+            class="form-select"
+            id="field_orderItem"
+            data-cy="orderItem"
+            name="orderItem"
+            formControlName="orderItem"
+            [compareWith]="compareOrderItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (orderItemOption of orderItemsSharedCollection(); track $index) {
+              <option [ngValue]="orderItemOption">{{ orderItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItem" sysTranslate="snpApp.pickListItem.inventoryItem">Inventory Item</label>
+          <select
+            class="form-select"
+            id="field_inventoryItem"
+            data-cy="inventoryItem"
+            name="inventoryItem"
+            formControlName="inventoryItem"
+            [compareWith]="compareInventoryItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (inventoryItemOption of inventoryItemsSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemOption">{{ inventoryItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.pickListItem.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityLocation" sysTranslate="snpApp.pickListItem.facilityLocation"
+            >Facility Location</label
+          >
+          <select
+            class="form-select"
+            id="field_facilityLocation"
+            data-cy="facilityLocation"
+            name="facilityLocation"
+            formControlName="facilityLocation"
+            [compareWith]="compareFacilityLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityLocationOption of facilityLocationsSharedCollection(); track $index) {
+              <option [ngValue]="facilityLocationOption">{{ facilityLocationOption.locationSeqId }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.pickListItem.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

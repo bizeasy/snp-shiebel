@@ -1,0 +1,218 @@
+<div>
+  <h2 id="page-heading" data-cy="ReturnHeaderHeading">
+    <span sysTranslate="snpApp.returnHeader.home.title">Return Headers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.returnHeader.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-return-header"
+        [routerLink]="['/return-header/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.returnHeader.home.createLabel">Create a new Return Header</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (returnHeaders().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.returnHeader.home.notFound">No Return Headers found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="needsInventoryReceive">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.needsInventoryReceive">Needs Inventory Receive</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="supplierRmaId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.supplierRmaId">Supplier Rma Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.returnType">Return Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.fromParty">From Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="toParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.toParty">To Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethod.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.paymentMethod">Payment Method</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="originContactMech.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.originContactMech">Origin Contact Mech</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="destinationFacility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.destinationFacility">Destination Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="currencyUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnHeader.currencyUom">Currency Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (returnHeader of returnHeaders(); track trackId(returnHeader)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/return-header', returnHeader.id, 'view']">{{ returnHeader.id }}</a>
+              </td>
+              <td>{{ returnHeader.needsInventoryReceive }}</td>
+              <td>{{ returnHeader.supplierRmaId }}</td>
+              <td>
+                @if (returnHeader.returnType) {
+                  <div>
+                    <a [routerLink]="['/return-header-type', returnHeader.returnType.id, 'view']">{{ returnHeader.returnType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.status) {
+                  <div>
+                    <a [routerLink]="['/status', returnHeader.status.id, 'view']">{{ returnHeader.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.fromParty) {
+                  <div>
+                    <a [routerLink]="['/party', returnHeader.fromParty.id, 'view']">{{ returnHeader.fromParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.toParty) {
+                  <div>
+                    <a [routerLink]="['/party', returnHeader.toParty.id, 'view']">{{ returnHeader.toParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.paymentMethod) {
+                  <div>
+                    <a [routerLink]="['/payment-method', returnHeader.paymentMethod.id, 'view']">{{ returnHeader.paymentMethod.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.originContactMech) {
+                  <div>
+                    <a [routerLink]="['/contact-mech', returnHeader.originContactMech.id, 'view']">{{
+                      returnHeader.originContactMech.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.destinationFacility) {
+                  <div>
+                    <a [routerLink]="['/facility', returnHeader.destinationFacility.id, 'view']">{{
+                      returnHeader.destinationFacility.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnHeader.currencyUom) {
+                  <div>
+                    <a [routerLink]="['/uom', returnHeader.currencyUom.id, 'view']">{{ returnHeader.currencyUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/return-header', returnHeader.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/return-header', returnHeader.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(returnHeader)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (returnHeaders().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

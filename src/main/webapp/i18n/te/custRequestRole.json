@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "custRequestRole": {
+      "home": {
+        "title": "Cust Request Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Cust Request Role సృష్టించండి",
+        "createOrEditLabel": "Cust Request Role సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Cust Request Roles found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request Role సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request Role సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Cust Request Role తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Cust Request Role {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Cust Request Role"
+      },
+      "id": "ID",
+      "custRequest": "Cust Request",
+      "custRequestItem": "Cust Request Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

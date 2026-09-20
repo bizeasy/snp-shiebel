@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "custRequestCategory": {
+      "home": {
+        "title": "CustRequestCategories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Cust Request Category बनाएँ",
+        "createOrEditLabel": "Cust Request Category बनाएँ या संपादित करें",
+        "notFound": "No Cust Request Categories found"
+      },
+      "created": "एक नया Cust Request Category [identifier: {{ param }}] तैयार है",
+      "updated": "एक Cust Request Category [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Cust Request Category [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Cust Request Category [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Cust Request Category"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "custRequestType": "Cust Request Type"
+    }
+  }
+}

@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (shipmentReceipt(); as shipmentReceiptRef) {
+      <div>
+        <h2 data-cy="shipmentReceiptDetailsHeading"><span sysTranslate="snpApp.shipmentReceipt.detail.title">Shipment Receipt</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.quantityAccepted">Quantity Accepted</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.quantityAccepted }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.quantityRejected">Quantity Rejected</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.quantityRejected }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.receivedDate">Received Date</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.receivedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.message">Message</span></dt>
+          <dd>
+            <span>{{ shipmentReceiptRef.message }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.shipment">Shipment</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', shipmentReceipt()!.shipment?.id, 'view']">{{ shipmentReceiptRef.shipment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.shipmentItem">Shipment Item</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.shipmentItem) {
+              <div>
+                <a [routerLink]="['/shipment-item', shipmentReceipt()!.shipmentItem?.id, 'view']">{{
+                  shipmentReceiptRef.shipmentItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.order">Order</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.order) {
+              <div>
+                <a [routerLink]="['/order', shipmentReceipt()!.order?.id, 'view']">{{ shipmentReceiptRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.orderItem">Order Item</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', shipmentReceipt()!.orderItem?.id, 'view']">{{ shipmentReceiptRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', shipmentReceipt()!.inventoryItem?.id, 'view']">{{
+                  shipmentReceiptRef.inventoryItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.product">Product</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.product) {
+              <div>
+                <a [routerLink]="['/product', shipmentReceipt()!.product?.id, 'view']">{{ shipmentReceiptRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentReceipt.receivedBy">Received By</span></dt>
+          <dd>
+            @if (shipmentReceipt()!.receivedBy) {
+              <div>
+                <a [routerLink]="['/party', shipmentReceipt()!.receivedBy?.id, 'view']">{{ shipmentReceiptRef.receivedBy?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/shipment-receipt', shipmentReceiptRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

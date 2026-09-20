@@ -1,0 +1,28 @@
+@if (itemIssuance) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(itemIssuance.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="itemIssuanceDeleteDialogHeading" sysTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p
+        id="sys-delete-itemIssuance-heading"
+        sysTranslate="snpApp.itemIssuance.delete.question"
+        [translateValues]="{ id: itemIssuance.id }"
+      >
+        Are you sure you want to delete Item Issuance {{ itemIssuance.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-itemIssuance" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

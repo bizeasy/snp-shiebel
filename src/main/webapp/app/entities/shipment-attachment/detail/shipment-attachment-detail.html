@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (shipmentAttachment(); as shipmentAttachmentRef) {
+      <div>
+        <h2 data-cy="shipmentAttachmentDetailsHeading">
+          <span sysTranslate="snpApp.shipmentAttachment.detail.title">Shipment Attachment</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ shipmentAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ shipmentAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentAttachment.shipment">Shipment</span></dt>
+          <dd>
+            @if (shipmentAttachment()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', shipmentAttachment()!.shipment?.id, 'view']">{{ shipmentAttachmentRef.shipment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (shipmentAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', shipmentAttachment()!.attachment?.id, 'view']">{{
+                  shipmentAttachmentRef.attachment?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/shipment-attachment', shipmentAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

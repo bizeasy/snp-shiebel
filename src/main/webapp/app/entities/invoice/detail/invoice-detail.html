@@ -1,0 +1,150 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (invoice(); as invoiceRef) {
+      <div>
+        <h2 data-cy="invoiceDetailsHeading"><span sysTranslate="snpApp.invoice.detail.title">Invoice</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ invoiceRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.invoiceDate">Invoice Date</span></dt>
+          <dd>
+            <span>{{ invoiceRef.invoiceDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.dueDate">Due Date</span></dt>
+          <dd>
+            <span>{{ invoiceRef.dueDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.paidDate">Paid Date</span></dt>
+          <dd>
+            <span>{{ invoiceRef.paidDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.referenceNumber">Reference Number</span></dt>
+          <dd>
+            <span>{{ invoiceRef.referenceNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.invoiceMessage">Invoice Message</span></dt>
+          <dd>
+            <span>{{ invoiceRef.invoiceMessage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.externalId">External Id</span></dt>
+          <dd>
+            <span>{{ invoiceRef.externalId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.entryDate">Entry Date</span></dt>
+          <dd>
+            <span>{{ invoiceRef.entryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.grandTotal">Grand Total</span></dt>
+          <dd>
+            <span>{{ invoiceRef.grandTotal }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.projectName">Project Name</span></dt>
+          <dd>
+            <span>{{ invoiceRef.projectName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.description">Description</span></dt>
+          <dd>
+            <span>{{ invoiceRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ invoiceRef.remarks }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.paymentTerms">Payment Terms</span></dt>
+          <dd>
+            <span>{{ invoiceRef.paymentTerms }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.deliveryTerms">Delivery Terms</span></dt>
+          <dd>
+            <span>{{ invoiceRef.deliveryTerms }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.info">Info</span></dt>
+          <dd>
+            <span>{{ invoiceRef.info }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.invoiceType">Invoice Type</span></dt>
+          <dd>
+            @if (invoice()!.invoiceType) {
+              <div>
+                <a [routerLink]="['/invoice-type', invoice()!.invoiceType?.id, 'view']">{{ invoiceRef.invoiceType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.order">Order</span></dt>
+          <dd>
+            @if (invoice()!.order) {
+              <div>
+                <a [routerLink]="['/order', invoice()!.order?.id, 'view']">{{ invoiceRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.fromParty">From Party</span></dt>
+          <dd>
+            @if (invoice()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', invoice()!.fromParty?.id, 'view']">{{ invoiceRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.toParty">To Party</span></dt>
+          <dd>
+            @if (invoice()!.toParty) {
+              <div>
+                <a [routerLink]="['/party', invoice()!.toParty?.id, 'view']">{{ invoiceRef.toParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.roleType">Role Type</span></dt>
+          <dd>
+            @if (invoice()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', invoice()!.roleType?.id, 'view']">{{ invoiceRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.status">Status</span></dt>
+          <dd>
+            @if (invoice()!.status) {
+              <div>
+                <a [routerLink]="['/status', invoice()!.status?.id, 'view']">{{ invoiceRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (invoice()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', invoice()!.contactMech?.id, 'view']">{{ invoiceRef.contactMech?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoice.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (invoice()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', invoice()!.currencyUom?.id, 'view']">{{ invoiceRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/invoice', invoiceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

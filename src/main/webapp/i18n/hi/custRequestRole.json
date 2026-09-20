@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "custRequestRole": {
+      "home": {
+        "title": "CustRequestRoles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Cust Request Role बनाएँ",
+        "createOrEditLabel": "Cust Request Role बनाएँ या संपादित करें",
+        "notFound": "No Cust Request Roles found"
+      },
+      "created": "एक नया Cust Request Role [identifier: {{ param }}] तैयार है",
+      "updated": "एक Cust Request Role [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Cust Request Role [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Cust Request Role [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Cust Request Role"
+      },
+      "id": "ID",
+      "custRequest": "Cust Request",
+      "custRequestItem": "Cust Request Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

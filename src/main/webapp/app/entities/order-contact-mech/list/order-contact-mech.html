@@ -1,0 +1,159 @@
+<div>
+  <h2 id="page-heading" data-cy="OrderContactMechHeading">
+    <span sysTranslate="snpApp.orderContactMech.home.title">Order Contact Meches</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.orderContactMech.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-order-contact-mech"
+        [routerLink]="['/order-contact-mech/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.orderContactMech.home.createLabel">Create a new Order Contact Mech</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (orderContactMeches().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.orderContactMech.home.notFound">No Order Contact Meches found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderContactMech.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderContactMech.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderContactMech.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="contactMech.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderContactMech.contactMech">Contact Mech</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="contactMechPurpose.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.orderContactMech.contactMechPurpose">Contact Mech Purpose</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (orderContactMech of orderContactMeches(); track trackId(orderContactMech)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/order-contact-mech', orderContactMech.id, 'view']">{{ orderContactMech.id }}</a>
+              </td>
+              <td>{{ orderContactMech.fromDate | formatMediumDatetime }}</td>
+              <td>{{ orderContactMech.thruDate | formatMediumDatetime }}</td>
+              <td>
+                @if (orderContactMech.order) {
+                  <div>
+                    <a [routerLink]="['/order', orderContactMech.order.id, 'view']">{{ orderContactMech.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderContactMech.contactMech) {
+                  <div>
+                    <a [routerLink]="['/contact-mech', orderContactMech.contactMech.id, 'view']">{{ orderContactMech.contactMech.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (orderContactMech.contactMechPurpose) {
+                  <div>
+                    <a [routerLink]="['/contact-mech-purpose', orderContactMech.contactMechPurpose.id, 'view']">{{
+                      orderContactMech.contactMechPurpose.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/order-contact-mech', orderContactMech.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/order-contact-mech', orderContactMech.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(orderContactMech)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (orderContactMeches().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity FacilityCarrierShipment.
+    -->
+    <changeSet id="20231214220505-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="facility_id"
+                                 baseTableName="facility_carrier_shipment"
+                                 constraintName="fk_facility_carrier_shipment__facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="party_id"
+                                 baseTableName="facility_carrier_shipment"
+                                 constraintName="fk_facility_carrier_shipment__party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="role_type_id"
+                                 baseTableName="facility_carrier_shipment"
+                                 constraintName="fk_facility_carrier_shipment__role_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="shipment_method_type_id"
+                                 baseTableName="facility_carrier_shipment"
+                                 constraintName="fk_facility_carrier_shipment__shipment_method_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shipment_method_type"
+                                 />
+    </changeSet>
+</databaseChangeLog>

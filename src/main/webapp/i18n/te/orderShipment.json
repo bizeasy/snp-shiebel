@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "orderShipment": {
+      "home": {
+        "title": "Order Shipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Order Shipment సృష్టించండి",
+        "createOrEditLabel": "Order Shipment సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Order Shipments found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Order Shipment సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Order Shipment సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Order Shipment తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Order Shipment {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Order Shipment"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "shipment": "Shipment",
+      "shipmentItem": "Shipment Item"
+    }
+  }
+}

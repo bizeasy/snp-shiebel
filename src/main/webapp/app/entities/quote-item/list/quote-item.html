@@ -1,0 +1,243 @@
+<div>
+  <h2 id="page-heading" data-cy="QuoteItemHeading">
+    <span sysTranslate="snpApp.quoteItem.home.title">Quote Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.quoteItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-quote-item"
+        [routerLink]="['/quote-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.quoteItem.home.createLabel">Create a new Quote Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (quoteItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.quoteItem.home.notFound">No Quote Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="selectedAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.selectedAmount">Selected Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quoteUnitPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.quoteUnitPrice">Quote Unit Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="totalAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.totalAmount">Total Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="estimatedDeliveryDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.estimatedDeliveryDate">Estimated Delivery Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="leadTimeDays">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.leadTimeDays">Lead Time Days</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="comments">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.comments">Comments</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quote.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.quote">Quote</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productFeature.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.productFeature">Product Feature</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="uom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.uom">Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="custRequest.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.custRequest">Cust Request</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="custRequestItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.quoteItem.custRequestItem">Cust Request Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (quoteItem of quoteItems(); track trackId(quoteItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/quote-item', quoteItem.id, 'view']">{{ quoteItem.id }}</a>
+              </td>
+              <td>{{ quoteItem.sequenceNo }}</td>
+              <td>{{ quoteItem.quantity }}</td>
+              <td>{{ quoteItem.selectedAmount }}</td>
+              <td>{{ quoteItem.quoteUnitPrice }}</td>
+              <td>{{ quoteItem.totalAmount }}</td>
+              <td>{{ quoteItem.estimatedDeliveryDate | formatMediumDatetime }}</td>
+              <td>{{ quoteItem.leadTimeDays }}</td>
+              <td>{{ quoteItem.comments }}</td>
+              <td>
+                @if (quoteItem.quote) {
+                  <div>
+                    <a [routerLink]="['/quote', quoteItem.quote.id, 'view']">{{ quoteItem.quote.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', quoteItem.product.id, 'view']">{{ quoteItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.productFeature) {
+                  <div>
+                    <a [routerLink]="['/product-feature', quoteItem.productFeature.id, 'view']">{{ quoteItem.productFeature.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.uom) {
+                  <div>
+                    <a [routerLink]="['/uom', quoteItem.uom.id, 'view']">{{ quoteItem.uom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', quoteItem.status.id, 'view']">{{ quoteItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.custRequest) {
+                  <div>
+                    <a [routerLink]="['/cust-request', quoteItem.custRequest.id, 'view']">{{ quoteItem.custRequest.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (quoteItem.custRequestItem) {
+                  <div>
+                    <a [routerLink]="['/cust-request-item', quoteItem.custRequestItem.id, 'view']">{{ quoteItem.custRequestItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/quote-item', quoteItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/quote-item', quoteItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(quoteItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (quoteItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

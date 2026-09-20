@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "productFeature": {
+      "home": {
+        "title": "Product Features",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Feature",
+        "createOrEditLabel": "Create or edit a Product Feature",
+        "notFound": "No Product Features found"
+      },
+      "created": "A new Product Feature is created with identifier {{ param }}",
+      "updated": "A Product Feature is updated with identifier {{ param }}",
+      "deleted": "A Product Feature is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Feature {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Feature"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "amount": "Amount",
+      "sequenceNo": "Sequence No",
+      "abbrev": "Abbrev",
+      "productFeatureType": "Product Feature Type",
+      "productFeatureCategory": "Product Feature Category"
+    }
+  }
+}

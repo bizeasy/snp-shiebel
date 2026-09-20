@@ -1,0 +1,219 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-item-issuance-heading"
+        data-cy="ItemIssuanceCreateUpdateHeading"
+        sysTranslate="snpApp.itemIssuance.home.createOrEditLabel"
+      >
+        Create or edit a Item Issuance
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let messageRef = editForm.get('message')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_message" sysTranslate="snpApp.itemIssuance.message">Message</label>
+          <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
+          @if (messageRef.invalid && (messageRef.dirty || messageRef.touched)) {
+            <div>
+              @if (messageRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_issuedDate" sysTranslate="snpApp.itemIssuance.issuedDate">Issued Date</label>
+          <div class="d-flex">
+            <input
+              id="field_issuedDate"
+              data-cy="issuedDate"
+              type="datetime-local"
+              class="form-control"
+              name="issuedDate"
+              formControlName="issuedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let issuedByRef = editForm.get('issuedBy')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_issuedBy" sysTranslate="snpApp.itemIssuance.issuedBy">Issued By</label>
+          <input type="text" class="form-control" name="issuedBy" id="field_issuedBy" data-cy="issuedBy" formControlName="issuedBy" />
+          @if (issuedByRef.invalid && (issuedByRef.dirty || issuedByRef.touched)) {
+            <div>
+              @if (issuedByRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.itemIssuance.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cancelQuantity" sysTranslate="snpApp.itemIssuance.cancelQuantity">Cancel Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            name="cancelQuantity"
+            id="field_cancelQuantity"
+            data-cy="cancelQuantity"
+            formControlName="cancelQuantity"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItem" sysTranslate="snpApp.itemIssuance.inventoryItem">Inventory Item</label>
+          <select
+            class="form-select"
+            id="field_inventoryItem"
+            data-cy="inventoryItem"
+            name="inventoryItem"
+            formControlName="inventoryItem"
+            [compareWith]="compareInventoryItem"
+          >
+            @if (!editForm.get('inventoryItem')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (inventoryItemOption of inventoryItemsSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemOption">{{ inventoryItemOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['inventoryItem'])!.invalid && (editForm.get(['inventoryItem'])!.dirty || editForm.get(['inventoryItem'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['inventoryItem'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_order" sysTranslate="snpApp.itemIssuance.order">Order</label>
+          <select class="form-select" id="field_order" data-cy="order" name="order" formControlName="order" [compareWith]="compareOrder">
+            <option [ngValue]="null"></option>
+            @for (orderOption of ordersSharedCollection(); track $index) {
+              <option [ngValue]="orderOption">{{ orderOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_orderItem" sysTranslate="snpApp.itemIssuance.orderItem">Order Item</label>
+          <select
+            class="form-select"
+            id="field_orderItem"
+            data-cy="orderItem"
+            name="orderItem"
+            formControlName="orderItem"
+            [compareWith]="compareOrderItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (orderItemOption of orderItemsSharedCollection(); track $index) {
+              <option [ngValue]="orderItemOption">{{ orderItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipment" sysTranslate="snpApp.itemIssuance.shipment">Shipment</label>
+          <select
+            class="form-select"
+            id="field_shipment"
+            data-cy="shipment"
+            name="shipment"
+            formControlName="shipment"
+            [compareWith]="compareShipment"
+          >
+            <option [ngValue]="null"></option>
+            @for (shipmentOption of shipmentsSharedCollection(); track $index) {
+              <option [ngValue]="shipmentOption">{{ shipmentOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_shipmentItem" sysTranslate="snpApp.itemIssuance.shipmentItem">Shipment Item</label>
+          <select
+            class="form-select"
+            id="field_shipmentItem"
+            data-cy="shipmentItem"
+            name="shipmentItem"
+            formControlName="shipmentItem"
+            [compareWith]="compareShipmentItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (shipmentItemOption of shipmentItemsSharedCollection(); track $index) {
+              <option [ngValue]="shipmentItemOption">{{ shipmentItemOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_issuedByParty" sysTranslate="snpApp.itemIssuance.issuedByParty">Issued By Party</label>
+          <select
+            class="form-select"
+            id="field_issuedByParty"
+            data-cy="issuedByParty"
+            name="issuedByParty"
+            formControlName="issuedByParty"
+            [compareWith]="compareParty"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

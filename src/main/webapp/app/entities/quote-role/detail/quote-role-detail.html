@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quoteRole(); as quoteRoleRef) {
+      <div>
+        <h2 data-cy="quoteRoleDetailsHeading"><span sysTranslate="snpApp.quoteRole.detail.title">Quote Role</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ quoteRoleRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteRole.quote">Quote</span></dt>
+          <dd>
+            @if (quoteRole()!.quote) {
+              <div>
+                <a [routerLink]="['/quote', quoteRole()!.quote?.id, 'view']">{{ quoteRoleRef.quote?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteRole.quoteItem">Quote Item</span></dt>
+          <dd>
+            @if (quoteRole()!.quoteItem) {
+              <div>
+                <a [routerLink]="['/quote-item', quoteRole()!.quoteItem?.id, 'view']">{{ quoteRoleRef.quoteItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteRole.party">Party</span></dt>
+          <dd>
+            @if (quoteRole()!.party) {
+              <div>
+                <a [routerLink]="['/party', quoteRole()!.party?.id, 'view']">{{ quoteRoleRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteRole.roleType">Role Type</span></dt>
+          <dd>
+            @if (quoteRole()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', quoteRole()!.roleType?.id, 'view']">{{ quoteRoleRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quote-role', quoteRoleRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

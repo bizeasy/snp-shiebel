@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "shoppingList": {
+      "home": {
+        "title": "ShoppingLists",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shopping List बनाएँ",
+        "createOrEditLabel": "Shopping List बनाएँ या संपादित करें",
+        "notFound": "No Shopping Lists found"
+      },
+      "created": "एक नया Shopping List [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shopping List [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shopping List [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shopping List [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shopping List"
+      },
+      "id": "ID",
+      "name": "Name",
+      "isActive": "Is Active",
+      "shoppingListType": "Shopping List Type",
+      "party": "Party",
+      "status": "Status"
+    }
+  }
+}

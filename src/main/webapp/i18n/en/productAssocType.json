@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "productAssocType": {
+      "home": {
+        "title": "Product Assoc Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Assoc Type",
+        "createOrEditLabel": "Create or edit a Product Assoc Type",
+        "notFound": "No Product Assoc Types found"
+      },
+      "created": "A new Product Assoc Type is created with identifier {{ param }}",
+      "updated": "A Product Assoc Type is updated with identifier {{ param }}",
+      "deleted": "A Product Assoc Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Assoc Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Assoc Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

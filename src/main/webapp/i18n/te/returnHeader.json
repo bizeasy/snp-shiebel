@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "returnHeader": {
+      "home": {
+        "title": "Return Headers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Return Header సృష్టించండి",
+        "createOrEditLabel": "Return Header సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Return Headers found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Return Header సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Return Header సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Return Header తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Return Header {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Return Header"
+      },
+      "id": "ID",
+      "needsInventoryReceive": "Needs Inventory Receive",
+      "supplierRmaId": "Supplier Rma Id",
+      "returnType": "Return Type",
+      "status": "Status",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "paymentMethod": "Payment Method",
+      "originContactMech": "Origin Contact Mech",
+      "destinationFacility": "Destination Facility",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

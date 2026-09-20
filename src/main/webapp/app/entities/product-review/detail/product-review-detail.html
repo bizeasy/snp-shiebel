@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productReview(); as productReviewRef) {
+      <div>
+        <h2 data-cy="productReviewDetailsHeading"><span sysTranslate="snpApp.productReview.detail.title">Product Review</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productReviewRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.rating">Rating</span></dt>
+          <dd>
+            <span>{{ productReviewRef.rating }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.ratingInfo">Rating Info</span></dt>
+          <dd>
+            <span>{{ productReviewRef.ratingInfo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.message">Message</span></dt>
+          <dd>
+            <span>{{ productReviewRef.message }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.reviewDate">Review Date</span></dt>
+          <dd>
+            <span>{{ productReviewRef.reviewDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.product">Product</span></dt>
+          <dd>
+            @if (productReview()!.product) {
+              <div>
+                <a [routerLink]="['/product', productReview()!.product?.id, 'view']">{{ productReviewRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.party">Party</span></dt>
+          <dd>
+            @if (productReview()!.party) {
+              <div>
+                <a [routerLink]="['/party', productReview()!.party?.id, 'view']">{{ productReviewRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productReview.orderItem">Order Item</span></dt>
+          <dd>
+            @if (productReview()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', productReview()!.orderItem?.id, 'view']">{{ productReviewRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-review', productReviewRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

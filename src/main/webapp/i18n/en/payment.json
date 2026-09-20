@@ -1,0 +1,43 @@
+{
+  "snpApp": {
+    "payment": {
+      "home": {
+        "title": "Payments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Payment",
+        "createOrEditLabel": "Create or edit a Payment",
+        "notFound": "No Payments found"
+      },
+      "created": "A new Payment is created with identifier {{ param }}",
+      "updated": "A Payment is updated with identifier {{ param }}",
+      "deleted": "A Payment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Payment"
+      },
+      "id": "ID",
+      "paymentRefNumber": "Payment Ref Number",
+      "effectiveDate": "Effective Date",
+      "paymentDate": "Payment Date",
+      "amount": "Amount",
+      "actualAmount": "Actual Amount",
+      "paymentStatus": "Payment Status",
+      "mihpayId": "Mihpay Id",
+      "txnId": "Txn Id",
+      "email": "Email",
+      "phone": "Phone",
+      "productInfo": "Product Info",
+      "paymentType": "Payment Type",
+      "paymentMethodType": "Payment Method Type",
+      "paymentMethod": "Payment Method",
+      "paymentGatewayResponse": "Payment Gateway Response",
+      "status": "Status",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "roleType": "Role Type",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

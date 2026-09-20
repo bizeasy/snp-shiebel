@@ -1,0 +1,813 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-product-heading" data-cy="ProductCreateUpdateHeading" sysTranslate="snpApp.product.home.createOrEditLabel">
+        Create or edit a Product
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" sysTranslate="snpApp.product.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (nameRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (nameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let internalNameRef = editForm.get('internalName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_internalName" sysTranslate="snpApp.product.internalName">Internal Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="internalName"
+            id="field_internalName"
+            data-cy="internalName"
+            formControlName="internalName"
+          />
+          @if (internalNameRef.invalid && (internalNameRef.dirty || internalNameRef.touched)) {
+            <div>
+              @if (internalNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let brandNameRef = editForm.get('brandName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_brandName" sysTranslate="snpApp.product.brandName">Brand Name</label>
+          <input type="text" class="form-control" name="brandName" id="field_brandName" data-cy="brandName" formControlName="brandName" />
+          @if (brandNameRef.invalid && (brandNameRef.dirty || brandNameRef.touched)) {
+            <div>
+              @if (brandNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let variantRef = editForm.get('variant')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_variant" sysTranslate="snpApp.product.variant">Variant</label>
+          <input type="text" class="form-control" name="variant" id="field_variant" data-cy="variant" formControlName="variant" />
+          @if (variantRef.invalid && (variantRef.dirty || variantRef.touched)) {
+            <div>
+              @if (variantRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let skuRef = editForm.get('sku')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sku" sysTranslate="snpApp.product.sku">Sku</label>
+          <input type="text" class="form-control" name="sku" id="field_sku" data-cy="sku" formControlName="sku" />
+          @if (skuRef.invalid && (skuRef.dirty || skuRef.touched)) {
+            <div>
+              @if (skuRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_introductionDate" sysTranslate="snpApp.product.introductionDate">Introduction Date</label>
+          <div class="d-flex">
+            <input
+              id="field_introductionDate"
+              data-cy="introductionDate"
+              type="datetime-local"
+              class="form-control"
+              name="introductionDate"
+              formControlName="introductionDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_releaseDate" sysTranslate="snpApp.product.releaseDate">Release Date</label>
+          <div class="d-flex">
+            <input
+              id="field_releaseDate"
+              data-cy="releaseDate"
+              type="datetime-local"
+              class="form-control"
+              name="releaseDate"
+              formControlName="releaseDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantityIncluded" sysTranslate="snpApp.product.quantityIncluded">Quantity Included</label>
+          <input
+            type="number"
+            class="form-control"
+            name="quantityIncluded"
+            id="field_quantityIncluded"
+            data-cy="quantityIncluded"
+            formControlName="quantityIncluded"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_piecesIncluded" sysTranslate="snpApp.product.piecesIncluded">Pieces Included</label>
+          <input
+            type="number"
+            class="form-control"
+            name="piecesIncluded"
+            id="field_piecesIncluded"
+            data-cy="piecesIncluded"
+            formControlName="piecesIncluded"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_weight" sysTranslate="snpApp.product.weight">Weight</label>
+          <input type="number" class="form-control" name="weight" id="field_weight" data-cy="weight" formControlName="weight" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_height" sysTranslate="snpApp.product.height">Height</label>
+          <input type="number" class="form-control" name="height" id="field_height" data-cy="height" formControlName="height" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_width" sysTranslate="snpApp.product.width">Width</label>
+          <input type="number" class="form-control" name="width" id="field_width" data-cy="width" formControlName="width" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_depth" sysTranslate="snpApp.product.depth">Depth</label>
+          <input type="number" class="form-control" name="depth" id="field_depth" data-cy="depth" formControlName="depth" />
+        </div>
+
+        @let smallImageUrlRef = editForm.get('smallImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_smallImageUrl" sysTranslate="snpApp.product.smallImageUrl">Small Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="smallImageUrl"
+            id="field_smallImageUrl"
+            data-cy="smallImageUrl"
+            formControlName="smallImageUrl"
+          />
+          @if (smallImageUrlRef.invalid && (smallImageUrlRef.dirty || smallImageUrlRef.touched)) {
+            <div>
+              @if (smallImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let mediumImageUrlRef = editForm.get('mediumImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_mediumImageUrl" sysTranslate="snpApp.product.mediumImageUrl">Medium Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mediumImageUrl"
+            id="field_mediumImageUrl"
+            data-cy="mediumImageUrl"
+            formControlName="mediumImageUrl"
+          />
+          @if (mediumImageUrlRef.invalid && (mediumImageUrlRef.dirty || mediumImageUrlRef.touched)) {
+            <div>
+              @if (mediumImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let largeImageUrlRef = editForm.get('largeImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_largeImageUrl" sysTranslate="snpApp.product.largeImageUrl">Large Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="largeImageUrl"
+            id="field_largeImageUrl"
+            data-cy="largeImageUrl"
+            formControlName="largeImageUrl"
+          />
+          @if (largeImageUrlRef.invalid && (largeImageUrlRef.dirty || largeImageUrlRef.touched)) {
+            <div>
+              @if (largeImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let detailImageUrlRef = editForm.get('detailImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_detailImageUrl" sysTranslate="snpApp.product.detailImageUrl">Detail Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="detailImageUrl"
+            id="field_detailImageUrl"
+            data-cy="detailImageUrl"
+            formControlName="detailImageUrl"
+          />
+          @if (detailImageUrlRef.invalid && (detailImageUrlRef.dirty || detailImageUrlRef.touched)) {
+            <div>
+              @if (detailImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let originalImageUrlRef = editForm.get('originalImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_originalImageUrl" sysTranslate="snpApp.product.originalImageUrl">Original Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="originalImageUrl"
+            id="field_originalImageUrl"
+            data-cy="originalImageUrl"
+            formControlName="originalImageUrl"
+          />
+          @if (originalImageUrlRef.invalid && (originalImageUrlRef.dirty || originalImageUrlRef.touched)) {
+            <div>
+              @if (originalImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl1Ref = editForm.get('altImageUrl1')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl1" sysTranslate="snpApp.product.altImageUrl1">Alt Image Url 1</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl1"
+            id="field_altImageUrl1"
+            data-cy="altImageUrl1"
+            formControlName="altImageUrl1"
+          />
+          @if (altImageUrl1Ref.invalid && (altImageUrl1Ref.dirty || altImageUrl1Ref.touched)) {
+            <div>
+              @if (altImageUrl1Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl2Ref = editForm.get('altImageUrl2')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl2" sysTranslate="snpApp.product.altImageUrl2">Alt Image Url 2</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl2"
+            id="field_altImageUrl2"
+            data-cy="altImageUrl2"
+            formControlName="altImageUrl2"
+          />
+          @if (altImageUrl2Ref.invalid && (altImageUrl2Ref.dirty || altImageUrl2Ref.touched)) {
+            <div>
+              @if (altImageUrl2Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl3Ref = editForm.get('altImageUrl3')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl3" sysTranslate="snpApp.product.altImageUrl3">Alt Image Url 3</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl3"
+            id="field_altImageUrl3"
+            data-cy="altImageUrl3"
+            formControlName="altImageUrl3"
+          />
+          @if (altImageUrl3Ref.invalid && (altImageUrl3Ref.dirty || altImageUrl3Ref.touched)) {
+            <div>
+              @if (altImageUrl3Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl4Ref = editForm.get('altImageUrl4')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl4" sysTranslate="snpApp.product.altImageUrl4">Alt Image Url 4</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl4"
+            id="field_altImageUrl4"
+            data-cy="altImageUrl4"
+            formControlName="altImageUrl4"
+          />
+          @if (altImageUrl4Ref.invalid && (altImageUrl4Ref.dirty || altImageUrl4Ref.touched)) {
+            <div>
+              @if (altImageUrl4Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl5Ref = editForm.get('altImageUrl5')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl5" sysTranslate="snpApp.product.altImageUrl5">Alt Image Url 5</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl5"
+            id="field_altImageUrl5"
+            data-cy="altImageUrl5"
+            formControlName="altImageUrl5"
+          />
+          @if (altImageUrl5Ref.invalid && (altImageUrl5Ref.dirty || altImageUrl5Ref.touched)) {
+            <div>
+              @if (altImageUrl5Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let altImageUrl6Ref = editForm.get('altImageUrl6')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_altImageUrl6" sysTranslate="snpApp.product.altImageUrl6">Alt Image Url 6</label>
+          <input
+            type="text"
+            class="form-control"
+            name="altImageUrl6"
+            id="field_altImageUrl6"
+            data-cy="altImageUrl6"
+            formControlName="altImageUrl6"
+          />
+          @if (altImageUrl6Ref.invalid && (altImageUrl6Ref.dirty || altImageUrl6Ref.touched)) {
+            <div>
+              @if (altImageUrl6Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let videoUrlRef = editForm.get('videoUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_videoUrl" sysTranslate="snpApp.product.videoUrl">Video Url</label>
+          <input type="text" class="form-control" name="videoUrl" id="field_videoUrl" data-cy="videoUrl" formControlName="videoUrl" />
+          @if (videoUrlRef.invalid && (videoUrlRef.dirty || videoUrlRef.touched)) {
+            <div>
+              @if (videoUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.product.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_price" sysTranslate="snpApp.product.price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cgst" sysTranslate="snpApp.product.cgst">Cgst</label>
+          <input type="number" class="form-control" name="cgst" id="field_cgst" data-cy="cgst" formControlName="cgst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_igst" sysTranslate="snpApp.product.igst">Igst</label>
+          <input type="number" class="form-control" name="igst" id="field_igst" data-cy="igst" formControlName="igst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sgst" sysTranslate="snpApp.product.sgst">Sgst</label>
+          <input type="number" class="form-control" name="sgst" id="field_sgst" data-cy="sgst" formControlName="sgst" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cgstPercentage" sysTranslate="snpApp.product.cgstPercentage">Cgst Percentage</label>
+          <input
+            type="number"
+            class="form-control"
+            name="cgstPercentage"
+            id="field_cgstPercentage"
+            data-cy="cgstPercentage"
+            formControlName="cgstPercentage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_igstPercentage" sysTranslate="snpApp.product.igstPercentage">Igst Percentage</label>
+          <input
+            type="number"
+            class="form-control"
+            name="igstPercentage"
+            id="field_igstPercentage"
+            data-cy="igstPercentage"
+            formControlName="igstPercentage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sgstPercentage" sysTranslate="snpApp.product.sgstPercentage">Sgst Percentage</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sgstPercentage"
+            id="field_sgstPercentage"
+            data-cy="sgstPercentage"
+            formControlName="sgstPercentage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_totalPrice" sysTranslate="snpApp.product.totalPrice">Total Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalPrice"
+            id="field_totalPrice"
+            data-cy="totalPrice"
+            formControlName="totalPrice"
+          />
+        </div>
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" sysTranslate="snpApp.product.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (descriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let longDescriptionRef = editForm.get('longDescription')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_longDescription" sysTranslate="snpApp.product.longDescription">Long Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="longDescription"
+            id="field_longDescription"
+            data-cy="longDescription"
+            formControlName="longDescription"
+          />
+          @if (longDescriptionRef.invalid && (longDescriptionRef.dirty || longDescriptionRef.touched)) {
+            <div>
+              @if (longDescriptionRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_info" sysTranslate="snpApp.product.info">Info</label>
+          <textarea class="form-control" name="info" id="field_info" data-cy="info" formControlName="info"></textarea>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isVirtual"
+            id="field_isVirtual"
+            data-cy="isVirtual"
+            formControlName="isVirtual"
+          />
+          <label class="form-check-label" for="field_isVirtual" sysTranslate="snpApp.product.isVirtual">Is Virtual</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isVariant"
+            id="field_isVariant"
+            data-cy="isVariant"
+            formControlName="isVariant"
+          />
+          <label class="form-check-label" for="field_isVariant" sysTranslate="snpApp.product.isVariant">Is Variant</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="requireInventory"
+            id="field_requireInventory"
+            data-cy="requireInventory"
+            formControlName="requireInventory"
+          />
+          <label class="form-check-label" for="field_requireInventory" sysTranslate="snpApp.product.requireInventory"
+            >Require Inventory</label
+          >
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="returnable"
+            id="field_returnable"
+            data-cy="returnable"
+            formControlName="returnable"
+          />
+          <label class="form-check-label" for="field_returnable" sysTranslate="snpApp.product.returnable">Returnable</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isPopular"
+            id="field_isPopular"
+            data-cy="isPopular"
+            formControlName="isPopular"
+          />
+          <label class="form-check-label" for="field_isPopular" sysTranslate="snpApp.product.isPopular">Is Popular</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isBanner"
+            id="field_isBanner"
+            data-cy="isBanner"
+            formControlName="isBanner"
+          />
+          <label class="form-check-label" for="field_isBanner" sysTranslate="snpApp.product.isBanner">Is Banner</label>
+        </div>
+
+        @let bannerUrlRef = editForm.get('bannerUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_bannerUrl" sysTranslate="snpApp.product.bannerUrl">Banner Url</label>
+          <input type="text" class="form-control" name="bannerUrl" id="field_bannerUrl" data-cy="bannerUrl" formControlName="bannerUrl" />
+          @if (bannerUrlRef.invalid && (bannerUrlRef.dirty || bannerUrlRef.touched)) {
+            <div>
+              @if (bannerUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productType" sysTranslate="snpApp.product.productType">Product Type</label>
+          <select
+            class="form-select"
+            id="field_productType"
+            data-cy="productType"
+            name="productType"
+            formControlName="productType"
+            [compareWith]="compareProductType"
+          >
+            <option [ngValue]="null"></option>
+            @for (productTypeOption of productTypesSharedCollection(); track $index) {
+              <option [ngValue]="productTypeOption">{{ productTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_primaryProductCategory" sysTranslate="snpApp.product.primaryProductCategory"
+            >Primary Product Category</label
+          >
+          <select
+            class="form-select"
+            id="field_primaryProductCategory"
+            data-cy="primaryProductCategory"
+            name="primaryProductCategory"
+            formControlName="primaryProductCategory"
+            [compareWith]="compareProductCategory"
+          >
+            <option [ngValue]="null"></option>
+            @for (productCategoryOption of productCategoriesSharedCollection(); track $index) {
+              <option [ngValue]="productCategoryOption">{{ productCategoryOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_virtualProduct" sysTranslate="snpApp.product.virtualProduct">Virtual Product</label>
+          <select
+            class="form-select"
+            id="field_virtualProduct"
+            data-cy="virtualProduct"
+            name="virtualProduct"
+            formControlName="virtualProduct"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItemType" sysTranslate="snpApp.product.inventoryItemType"
+            >Inventory Item Type</label
+          >
+          <select
+            class="form-select"
+            id="field_inventoryItemType"
+            data-cy="inventoryItemType"
+            name="inventoryItemType"
+            formControlName="inventoryItemType"
+            [compareWith]="compareInventoryItemType"
+          >
+            <option [ngValue]="null"></option>
+            @for (inventoryItemTypeOption of inventoryItemTypesSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemTypeOption">{{ inventoryItemTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_taxSlab" sysTranslate="snpApp.product.taxSlab">Tax Slab</label>
+          <select
+            class="form-select"
+            id="field_taxSlab"
+            data-cy="taxSlab"
+            name="taxSlab"
+            formControlName="taxSlab"
+            [compareWith]="compareTaxSlab"
+          >
+            <option [ngValue]="null"></option>
+            @for (taxSlabOption of taxSlabsSharedCollection(); track $index) {
+              <option [ngValue]="taxSlabOption">{{ taxSlabOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_uom" sysTranslate="snpApp.product.uom">Uom</label>
+          <select class="form-select" id="field_uom" data-cy="uom" name="uom" formControlName="uom" [compareWith]="compareUom">
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quantityUom" sysTranslate="snpApp.product.quantityUom">Quantity Uom</label>
+          <select
+            class="form-select"
+            id="field_quantityUom"
+            data-cy="quantityUom"
+            name="quantityUom"
+            formControlName="quantityUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_weightUom" sysTranslate="snpApp.product.weightUom">Weight Uom</label>
+          <select
+            class="form-select"
+            id="field_weightUom"
+            data-cy="weightUom"
+            name="weightUom"
+            formControlName="weightUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sizeUom" sysTranslate="snpApp.product.sizeUom">Size Uom</label>
+          <select
+            class="form-select"
+            id="field_sizeUom"
+            data-cy="sizeUom"
+            name="sizeUom"
+            formControlName="sizeUom"
+            [compareWith]="compareUom"
+          >
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

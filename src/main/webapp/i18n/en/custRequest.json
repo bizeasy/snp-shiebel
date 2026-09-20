@@ -1,0 +1,40 @@
+{
+  "snpApp": {
+    "custRequest": {
+      "home": {
+        "title": "Cust Requests",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cust Request",
+        "createOrEditLabel": "Create or edit a Cust Request",
+        "notFound": "No Cust Requests found"
+      },
+      "created": "A new Cust Request is created with identifier {{ param }}",
+      "updated": "A Cust Request is updated with identifier {{ param }}",
+      "deleted": "A Cust Request is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cust Request {{ id }}?"
+      },
+      "detail": {
+        "title": "Cust Request"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "priority": "Priority",
+      "custRequestDate": "Cust Request Date",
+      "responseRequiredDate": "Response Required Date",
+      "openDateTime": "Open Date Time",
+      "closedDateTime": "Closed Date Time",
+      "internalComment": "Internal Comment",
+      "billed": "Billed",
+      "custEstimatedDurationDays": "Cust Estimated Duration Days",
+      "custRequestType": "Cust Request Type",
+      "custRequestCategory": "Cust Request Category",
+      "status": "Status",
+      "fromParty": "From Party",
+      "productStore": "Product Store",
+      "salesChannel": "Sales Channel",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

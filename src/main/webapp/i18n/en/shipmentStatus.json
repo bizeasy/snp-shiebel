@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "shipmentStatus": {
+      "home": {
+        "title": "Shipment Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Shipment Status",
+        "createOrEditLabel": "Create or edit a Shipment Status",
+        "notFound": "No Shipment Statuses found"
+      },
+      "created": "A new Shipment Status is created with identifier {{ param }}",
+      "updated": "A Shipment Status is updated with identifier {{ param }}",
+      "deleted": "A Shipment Status is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Shipment Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Shipment Status"
+      },
+      "id": "ID",
+      "statusDateTime": "Status Date Time",
+      "sequenceNo": "Sequence No",
+      "shipment": "Shipment",
+      "status": "Status"
+    }
+  }
+}

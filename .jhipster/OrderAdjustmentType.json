@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20231214224205"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "OrderAdjustmentType",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "orderAdjustmentType",
+      "relationshipName": "parent",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,17 @@
+export enum RecurrenceFrequency {
+  NONE = 'NONE',
+
+  DAILY = 'DAILY',
+
+  WEEKLY = 'WEEKLY',
+
+  FORTNIGHTLY = 'FORTNIGHTLY',
+
+  MONTHLY = 'MONTHLY',
+
+  QUARTERLY = 'QUARTERLY',
+
+  HALF_YEARLY = 'HALF_YEARLY',
+
+  YEARLY = 'YEARLY',
+}

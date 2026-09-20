@@ -1,0 +1,34 @@
+{
+  "snpApp": {
+    "returnItem": {
+      "home": {
+        "title": "Return Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Return Item సృష్టించండి",
+        "createOrEditLabel": "Return Item సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Return Items found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Return Item సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Return Item సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Return Item తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Return Item {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Return Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "description": "Description",
+      "returnQuantity": "Return Quantity",
+      "receivedQuantity": "Received Quantity",
+      "returnPrice": "Return Price",
+      "returnItemPurpose": "Return Item Purpose",
+      "returnHeader": "Return Header",
+      "returnType": "Return Type",
+      "product": "Product",
+      "orderItem": "Order Item",
+      "status": "Status"
+    }
+  }
+}

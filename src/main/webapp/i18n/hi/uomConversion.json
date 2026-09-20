@@ -1,0 +1,29 @@
+{
+  "snpApp": {
+    "uomConversion": {
+      "home": {
+        "title": "UomConversions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Uom Conversion बनाएँ",
+        "createOrEditLabel": "Uom Conversion बनाएँ या संपादित करें",
+        "notFound": "No Uom Conversions found"
+      },
+      "created": "एक नया Uom Conversion [identifier: {{ param }}] तैयार है",
+      "updated": "एक Uom Conversion [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Uom Conversion [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Uom Conversion [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Uom Conversion"
+      },
+      "id": "ID",
+      "name": "Name",
+      "conversionFactor": "Conversion Factor",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "fromUom": "From Uom",
+      "toUom": "To Uom"
+    }
+  }
+}

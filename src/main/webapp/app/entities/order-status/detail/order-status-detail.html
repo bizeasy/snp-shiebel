@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderStatus(); as orderStatusRef) {
+      <div>
+        <h2 data-cy="orderStatusDetailsHeading"><span sysTranslate="snpApp.orderStatus.detail.title">Order Status</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderStatusRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderStatus.statusDateTime">Status Date Time</span></dt>
+          <dd>
+            <span>{{ orderStatusRef.statusDateTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderStatus.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ orderStatusRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderStatus.order">Order</span></dt>
+          <dd>
+            @if (orderStatus()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderStatus()!.order?.id, 'view']">{{ orderStatusRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderStatus.status">Status</span></dt>
+          <dd>
+            @if (orderStatus()!.status) {
+              <div>
+                <a [routerLink]="['/status', orderStatus()!.status?.id, 'view']">{{ orderStatusRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-status', orderStatusRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

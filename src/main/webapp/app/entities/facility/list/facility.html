@@ -1,0 +1,223 @@
+<div>
+  <h2 id="page-heading" data-cy="FacilityHeading">
+    <span sysTranslate="snpApp.facility.home.title">Facilities</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.facility.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-facility"
+        [routerLink]="['/facility/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.facility.home.createLabel">Create a new Facility</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (facilities().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.facility.home.notFound">No Facilities found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilitySize">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.facilitySize">Facility Size</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.facilityType">Facility Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="parentFacility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.parentFacility">Parent Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="ownerParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.ownerParty">Owner Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityGroup.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.facilityGroup">Facility Group</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sizeUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.sizeUom">Size Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="geoPoint.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.geoPoint">Geo Point</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItemType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.inventoryItemType">Inventory Item Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productStore.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.facility.productStore">Product Store</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (facility of facilities(); track trackId(facility)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/facility', facility.id, 'view']">{{ facility.id }}</a>
+              </td>
+              <td>{{ facility.name }}</td>
+              <td>{{ facility.description }}</td>
+              <td>{{ facility.facilitySize }}</td>
+              <td>
+                @if (facility.facilityType) {
+                  <div>
+                    <a [routerLink]="['/facility-type', facility.facilityType.id, 'view']">{{ facility.facilityType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.parentFacility) {
+                  <div>
+                    <a [routerLink]="['/facility', facility.parentFacility.id, 'view']">{{ facility.parentFacility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.ownerParty) {
+                  <div>
+                    <a [routerLink]="['/party', facility.ownerParty.id, 'view']">{{ facility.ownerParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.facilityGroup) {
+                  <div>
+                    <a [routerLink]="['/facility-group', facility.facilityGroup.id, 'view']">{{ facility.facilityGroup.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.sizeUom) {
+                  <div>
+                    <a [routerLink]="['/uom', facility.sizeUom.id, 'view']">{{ facility.sizeUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.geoPoint) {
+                  <div>
+                    <a [routerLink]="['/geo-point', facility.geoPoint.id, 'view']">{{ facility.geoPoint.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.inventoryItemType) {
+                  <div>
+                    <a [routerLink]="['/inventory-item-type', facility.inventoryItemType.id, 'view']">{{
+                      facility.inventoryItemType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (facility.productStore) {
+                  <div>
+                    <a [routerLink]="['/product-store', facility.productStore.id, 'view']">{{ facility.productStore.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/facility', facility.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/facility', facility.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(facility)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (facilities().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

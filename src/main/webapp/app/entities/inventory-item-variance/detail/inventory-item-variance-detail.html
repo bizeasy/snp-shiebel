@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inventoryItemVariance(); as inventoryItemVarianceRef) {
+      <div>
+        <h2 data-cy="inventoryItemVarianceDetailsHeading">
+          <span sysTranslate="snpApp.inventoryItemVariance.detail.title">Inventory Item Variance</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inventoryItemVarianceRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemVariance.varianceReason">Variance Reason</span></dt>
+          <dd>
+            <span>{{ inventoryItemVarianceRef.varianceReason }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemVariance.atpVar">Atp Var</span></dt>
+          <dd>
+            <span>{{ inventoryItemVarianceRef.atpVar }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemVariance.qohVar">Qoh Var</span></dt>
+          <dd>
+            <span>{{ inventoryItemVarianceRef.qohVar }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemVariance.comments">Comments</span></dt>
+          <dd>
+            <span>{{ inventoryItemVarianceRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemVariance.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (inventoryItemVariance()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', inventoryItemVariance()!.inventoryItem?.id, 'view']">{{
+                  inventoryItemVarianceRef.inventoryItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inventory-item-variance', inventoryItemVarianceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

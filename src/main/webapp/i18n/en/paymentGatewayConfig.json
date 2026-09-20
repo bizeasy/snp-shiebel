@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "paymentGatewayConfig": {
+      "home": {
+        "title": "Payment Gateway Configs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Payment Gateway Config",
+        "createOrEditLabel": "Create or edit a Payment Gateway Config",
+        "notFound": "No Payment Gateway Configs found"
+      },
+      "created": "A new Payment Gateway Config is created with identifier {{ param }}",
+      "updated": "A Payment Gateway Config is updated with identifier {{ param }}",
+      "deleted": "A Payment Gateway Config is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Payment Gateway Config {{ id }}?"
+      },
+      "detail": {
+        "title": "Payment Gateway Config"
+      },
+      "id": "ID",
+      "name": "Name",
+      "authUrl": "Auth Url",
+      "releaseUrl": "Release Url",
+      "refundUrl": "Refund Url"
+    }
+  }
+}

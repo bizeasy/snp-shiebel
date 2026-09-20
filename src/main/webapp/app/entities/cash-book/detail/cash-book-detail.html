@@ -1,0 +1,178 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (cashBook(); as cashBookRef) {
+      <div>
+        <h2 data-cy="cashBookDetailsHeading"><span sysTranslate="snpApp.cashBook.detail.title">Cash Book</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ cashBookRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.transactionDate">Transaction Date</span></dt>
+          <dd>
+            <span>{{ cashBookRef.transactionDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.dueDate">Due Date</span></dt>
+          <dd>
+            <span>{{ cashBookRef.dueDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.amount">Amount</span></dt>
+          <dd>
+            <span>{{ cashBookRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.description">Description</span></dt>
+          <dd>
+            <span>{{ cashBookRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.vendorCustomerName">Vendor Customer Name</span></dt>
+          <dd>
+            <span>{{ cashBookRef.vendorCustomerName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.invoiceNo">Invoice No</span></dt>
+          <dd>
+            <span>{{ cashBookRef.invoiceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.invoiceDate">Invoice Date</span></dt>
+          <dd>
+            <span>{{ cashBookRef.invoiceDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.purpose">Purpose</span></dt>
+          <dd>
+            <span>{{ cashBookRef.purpose }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ cashBookRef.remarks }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.project">Project</span></dt>
+          <dd>
+            <span>{{ cashBookRef.project }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.usageUnits">Usage Units</span></dt>
+          <dd>
+            <span>{{ cashBookRef.usageUnits }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.recurringTransaction">Recurring Transaction</span></dt>
+          <dd>
+            <span>{{ cashBookRef.recurringTransaction }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.frequency">Frequency</span></dt>
+          <dd>
+            <span [sysTranslate]="'snpApp.RecurrenceFrequency.' + (cashBookRef.frequency ?? 'null')">{{
+              {
+                null: '',
+                NONE: 'NONE',
+                DAILY: 'DAILY',
+                WEEKLY: 'WEEKLY',
+                FORTNIGHTLY: 'FORTNIGHTLY',
+                MONTHLY: 'MONTHLY',
+                QUARTERLY: 'QUARTERLY',
+                HALF_YEARLY: 'HALF_YEARLY',
+                YEARLY: 'YEARLY',
+              }[cashBookRef.frequency ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.transactionType">Transaction Type</span></dt>
+          <dd>
+            @if (cashBook()!.transactionType) {
+              <div>
+                <a [routerLink]="['/transaction-type', cashBook()!.transactionType?.id, 'view']">{{ cashBookRef.transactionType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.transactionCategory">Transaction Category</span></dt>
+          <dd>
+            @if (cashBook()!.transactionCategory) {
+              <div>
+                <a [routerLink]="['/transaction-category', cashBook()!.transactionCategory?.id, 'view']">{{
+                  cashBookRef.transactionCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.paymentMethodType">Payment Method Type</span></dt>
+          <dd>
+            @if (cashBook()!.paymentMethodType) {
+              <div>
+                <a [routerLink]="['/payment-method-type', cashBook()!.paymentMethodType?.id, 'view']">{{
+                  cashBookRef.paymentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.department">Department</span></dt>
+          <dd>
+            @if (cashBook()!.department) {
+              <div>
+                <a [routerLink]="['/department', cashBook()!.department?.id, 'view']">{{ cashBookRef.department?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (cashBook()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', cashBook()!.currencyUom?.id, 'view']">{{ cashBookRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.status">Status</span></dt>
+          <dd>
+            @if (cashBook()!.status) {
+              <div>
+                <a [routerLink]="['/status', cashBook()!.status?.id, 'view']">{{ cashBookRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.order">Order</span></dt>
+          <dd>
+            @if (cashBook()!.order) {
+              <div>
+                <a [routerLink]="['/order', cashBook()!.order?.id, 'view']">{{ cashBookRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.invoice">Invoice</span></dt>
+          <dd>
+            @if (cashBook()!.invoice) {
+              <div>
+                <a [routerLink]="['/invoice', cashBook()!.invoice?.id, 'view']">{{ cashBookRef.invoice?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.fromParty">From Party</span></dt>
+          <dd>
+            @if (cashBook()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', cashBook()!.fromParty?.id, 'view']">{{ cashBookRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.cashBook.toParty">To Party</span></dt>
+          <dd>
+            @if (cashBook()!.toParty) {
+              <div>
+                <a [routerLink]="['/party', cashBook()!.toParty?.id, 'view']">{{ cashBookRef.toParty?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cash-book', cashBookRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

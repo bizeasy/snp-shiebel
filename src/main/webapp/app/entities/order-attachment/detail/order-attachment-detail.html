@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderAttachment(); as orderAttachmentRef) {
+      <div>
+        <h2 data-cy="orderAttachmentDetailsHeading"><span sysTranslate="snpApp.orderAttachment.detail.title">Order Attachment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ orderAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAttachment.order">Order</span></dt>
+          <dd>
+            @if (orderAttachment()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderAttachment()!.order?.id, 'view']">{{ orderAttachmentRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.orderAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (orderAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', orderAttachment()!.attachment?.id, 'view']">{{ orderAttachmentRef.attachment?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-attachment', orderAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

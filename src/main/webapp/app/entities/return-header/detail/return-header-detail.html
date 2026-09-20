@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (returnHeader(); as returnHeaderRef) {
+      <div>
+        <h2 data-cy="returnHeaderDetailsHeading"><span sysTranslate="snpApp.returnHeader.detail.title">Return Header</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ returnHeaderRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.needsInventoryReceive">Needs Inventory Receive</span></dt>
+          <dd>
+            <span>{{ returnHeaderRef.needsInventoryReceive }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.supplierRmaId">Supplier Rma Id</span></dt>
+          <dd>
+            <span>{{ returnHeaderRef.supplierRmaId }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.returnType">Return Type</span></dt>
+          <dd>
+            @if (returnHeader()!.returnType) {
+              <div>
+                <a [routerLink]="['/return-header-type', returnHeader()!.returnType?.id, 'view']">{{ returnHeaderRef.returnType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.status">Status</span></dt>
+          <dd>
+            @if (returnHeader()!.status) {
+              <div>
+                <a [routerLink]="['/status', returnHeader()!.status?.id, 'view']">{{ returnHeaderRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.fromParty">From Party</span></dt>
+          <dd>
+            @if (returnHeader()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', returnHeader()!.fromParty?.id, 'view']">{{ returnHeaderRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.toParty">To Party</span></dt>
+          <dd>
+            @if (returnHeader()!.toParty) {
+              <div>
+                <a [routerLink]="['/party', returnHeader()!.toParty?.id, 'view']">{{ returnHeaderRef.toParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.paymentMethod">Payment Method</span></dt>
+          <dd>
+            @if (returnHeader()!.paymentMethod) {
+              <div>
+                <a [routerLink]="['/payment-method', returnHeader()!.paymentMethod?.id, 'view']">{{
+                  returnHeaderRef.paymentMethod?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.originContactMech">Origin Contact Mech</span></dt>
+          <dd>
+            @if (returnHeader()!.originContactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', returnHeader()!.originContactMech?.id, 'view']">{{
+                  returnHeaderRef.originContactMech?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.destinationFacility">Destination Facility</span></dt>
+          <dd>
+            @if (returnHeader()!.destinationFacility) {
+              <div>
+                <a [routerLink]="['/facility', returnHeader()!.destinationFacility?.id, 'view']">{{
+                  returnHeaderRef.destinationFacility?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnHeader.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (returnHeader()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', returnHeader()!.currencyUom?.id, 'view']">{{ returnHeaderRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/return-header', returnHeaderRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

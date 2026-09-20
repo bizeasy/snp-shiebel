@@ -1,0 +1,525 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductHeading">
+    <span sysTranslate="snpApp.product.home.title">Products</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.product.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product"
+        [routerLink]="['/product/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.product.home.createLabel">Create a new Product</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (products().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.product.home.notFound">No Products found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="internalName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.internalName">Internal Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="brandName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.brandName">Brand Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="variant">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.variant">Variant</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sku">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.sku">Sku</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="introductionDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.introductionDate">Introduction Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="releaseDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.releaseDate">Release Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantityIncluded">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.quantityIncluded">Quantity Included</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="piecesIncluded">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.piecesIncluded">Pieces Included</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="weight">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.weight">Weight</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="height">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.height">Height</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="width">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.width">Width</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="depth">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.depth">Depth</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="smallImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.smallImageUrl">Small Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="mediumImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.mediumImageUrl">Medium Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="largeImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.largeImageUrl">Large Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="detailImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.detailImageUrl">Detail Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="originalImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.originalImageUrl">Original Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl1">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl1">Alt Image Url 1</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl2">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl2">Alt Image Url 2</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl3">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl3">Alt Image Url 3</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl4">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl4">Alt Image Url 4</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl5">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl5">Alt Image Url 5</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl6">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.altImageUrl6">Alt Image Url 6</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="videoUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.videoUrl">Video Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="price">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.price">Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="cgst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.cgst">Cgst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="igst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.igst">Igst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sgst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.sgst">Sgst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="cgstPercentage">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.cgstPercentage">Cgst Percentage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="igstPercentage">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.igstPercentage">Igst Percentage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sgstPercentage">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.sgstPercentage">Sgst Percentage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="totalPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.totalPrice">Total Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="longDescription">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.longDescription">Long Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="info">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.info">Info</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isVirtual">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.isVirtual">Is Virtual</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isVariant">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.isVariant">Is Variant</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="requireInventory">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.requireInventory">Require Inventory</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnable">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.returnable">Returnable</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isPopular">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.isPopular">Is Popular</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isBanner">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.isBanner">Is Banner</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="bannerUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.bannerUrl">Banner Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.productType">Product Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="primaryProductCategory.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.primaryProductCategory">Primary Product Category</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="virtualProduct.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.virtualProduct">Virtual Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItemType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.inventoryItemType">Inventory Item Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="taxSlab.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.taxSlab">Tax Slab</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="uom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.uom">Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantityUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.quantityUom">Quantity Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="weightUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.weightUom">Weight Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sizeUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.product.sizeUom">Size Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products(); track trackId(product)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
+              </td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.internalName }}</td>
+              <td>{{ product.brandName }}</td>
+              <td>{{ product.variant }}</td>
+              <td>{{ product.sku }}</td>
+              <td>{{ product.introductionDate | formatMediumDatetime }}</td>
+              <td>{{ product.releaseDate | formatMediumDatetime }}</td>
+              <td>{{ product.quantityIncluded }}</td>
+              <td>{{ product.piecesIncluded }}</td>
+              <td>{{ product.weight }}</td>
+              <td>{{ product.height }}</td>
+              <td>{{ product.width }}</td>
+              <td>{{ product.depth }}</td>
+              <td>{{ product.smallImageUrl }}</td>
+              <td>{{ product.mediumImageUrl }}</td>
+              <td>{{ product.largeImageUrl }}</td>
+              <td>{{ product.detailImageUrl }}</td>
+              <td>{{ product.originalImageUrl }}</td>
+              <td>{{ product.altImageUrl1 }}</td>
+              <td>{{ product.altImageUrl2 }}</td>
+              <td>{{ product.altImageUrl3 }}</td>
+              <td>{{ product.altImageUrl4 }}</td>
+              <td>{{ product.altImageUrl5 }}</td>
+              <td>{{ product.altImageUrl6 }}</td>
+              <td>{{ product.videoUrl }}</td>
+              <td>{{ product.quantity }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.cgst }}</td>
+              <td>{{ product.igst }}</td>
+              <td>{{ product.sgst }}</td>
+              <td>{{ product.cgstPercentage }}</td>
+              <td>{{ product.igstPercentage }}</td>
+              <td>{{ product.sgstPercentage }}</td>
+              <td>{{ product.totalPrice }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.longDescription }}</td>
+              <td>{{ product.info }}</td>
+              <td>{{ product.isVirtual }}</td>
+              <td>{{ product.isVariant }}</td>
+              <td>{{ product.requireInventory }}</td>
+              <td>{{ product.returnable }}</td>
+              <td>{{ product.isPopular }}</td>
+              <td>{{ product.isBanner }}</td>
+              <td>{{ product.bannerUrl }}</td>
+              <td>
+                @if (product.productType) {
+                  <div>
+                    <a [routerLink]="['/product-type', product.productType.id, 'view']">{{ product.productType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.primaryProductCategory) {
+                  <div>
+                    <a [routerLink]="['/product-category', product.primaryProductCategory.id, 'view']">{{
+                      product.primaryProductCategory.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.virtualProduct) {
+                  <div>
+                    <a [routerLink]="['/product', product.virtualProduct.id, 'view']">{{ product.virtualProduct.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.inventoryItemType) {
+                  <div>
+                    <a [routerLink]="['/inventory-item-type', product.inventoryItemType.id, 'view']">{{
+                      product.inventoryItemType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.taxSlab) {
+                  <div>
+                    <a [routerLink]="['/tax-slab', product.taxSlab.id, 'view']">{{ product.taxSlab.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.uom) {
+                  <div>
+                    <a [routerLink]="['/uom', product.uom.id, 'view']">{{ product.uom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.quantityUom) {
+                  <div>
+                    <a [routerLink]="['/uom', product.quantityUom.id, 'view']">{{ product.quantityUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.weightUom) {
+                  <div>
+                    <a [routerLink]="['/uom', product.weightUom.id, 'view']">{{ product.weightUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (product.sizeUom) {
+                  <div>
+                    <a [routerLink]="['/uom', product.sizeUom.id, 'view']">{{ product.sizeUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/product', product.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/product', product.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(product)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (products().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

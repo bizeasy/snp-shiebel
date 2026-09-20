@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "quoteType": {
+      "home": {
+        "title": "QuoteTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Quote Type बनाएँ",
+        "createOrEditLabel": "Quote Type बनाएँ या संपादित करें",
+        "notFound": "No Quote Types found"
+      },
+      "created": "एक नया Quote Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Quote Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Quote Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Quote Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Quote Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (partyRelationshipType(); as partyRelationshipTypeRef) {
+      <div>
+        <h2 data-cy="partyRelationshipTypeDetailsHeading">
+          <span sysTranslate="snpApp.partyRelationshipType.detail.title">Party Relationship Type</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyRelationshipTypeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationshipType.name">Name</span></dt>
+          <dd>
+            <span>{{ partyRelationshipTypeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationshipType.description">Description</span></dt>
+          <dd>
+            <span>{{ partyRelationshipTypeRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationshipType.roleTypeFrom">Role Type From</span></dt>
+          <dd>
+            @if (partyRelationshipType()!.roleTypeFrom) {
+              <div>
+                <a [routerLink]="['/role-type', partyRelationshipType()!.roleTypeFrom?.id, 'view']">{{
+                  partyRelationshipTypeRef.roleTypeFrom?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyRelationshipType.roleTypeTo">Role Type To</span></dt>
+          <dd>
+            @if (partyRelationshipType()!.roleTypeTo) {
+              <div>
+                <a [routerLink]="['/role-type', partyRelationshipType()!.roleTypeTo?.id, 'view']">{{
+                  partyRelationshipTypeRef.roleTypeTo?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party-relationship-type', partyRelationshipTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

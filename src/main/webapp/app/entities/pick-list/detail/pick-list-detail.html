@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (pickList(); as pickListRef) {
+      <div>
+        <h2 data-cy="pickListDetailsHeading"><span sysTranslate="snpApp.pickList.detail.title">Pick List</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ pickListRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.pickList.description">Description</span></dt>
+          <dd>
+            <span>{{ pickListRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.pickList.pickListDate">Pick List Date</span></dt>
+          <dd>
+            <span>{{ pickListRef.pickListDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.pickList.facility">Facility</span></dt>
+          <dd>
+            @if (pickList()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', pickList()!.facility?.id, 'view']">{{ pickListRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickList.status">Status</span></dt>
+          <dd>
+            @if (pickList()!.status) {
+              <div>
+                <a [routerLink]="['/status', pickList()!.status?.id, 'view']">{{ pickListRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.pickList.party">Party</span></dt>
+          <dd>
+            @if (pickList()!.party) {
+              <div>
+                <a [routerLink]="['/party', pickList()!.party?.id, 'view']">{{ pickListRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/pick-list', pickListRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

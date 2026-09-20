@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "shoppingListType": {
+      "home": {
+        "title": "ShoppingListTypes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shopping List Type बनाएँ",
+        "createOrEditLabel": "Shopping List Type बनाएँ या संपादित करें",
+        "notFound": "No Shopping List Types found"
+      },
+      "created": "एक नया Shopping List Type [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shopping List Type [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shopping List Type [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shopping List Type [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shopping List Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

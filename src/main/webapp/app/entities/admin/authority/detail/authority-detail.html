@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (authority(); as authorityRef) {
+      <div>
+        <h2 data-cy="authorityDetailsHeading"><span sysTranslate="snpApp.adminAuthority.detail.title">Authority</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="snpApp.adminAuthority.name">Name</span></dt>
+          <dd>
+            <span>{{ authorityRef.name }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

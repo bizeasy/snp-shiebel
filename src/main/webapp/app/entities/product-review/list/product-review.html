@@ -1,0 +1,163 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductReviewHeading">
+    <span sysTranslate="snpApp.productReview.home.title">Product Reviews</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.productReview.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-review"
+        [routerLink]="['/product-review/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.productReview.home.createLabel">Create a new Product Review</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (productReviews().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.productReview.home.notFound">No Product Reviews found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="rating">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.rating">Rating</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="ratingInfo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.ratingInfo">Rating Info</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="message">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.message">Message</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="reviewDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.reviewDate">Review Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productReview.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (productReview of productReviews(); track trackId(productReview)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product-review', productReview.id, 'view']">{{ productReview.id }}</a>
+              </td>
+              <td>{{ productReview.rating }}</td>
+              <td>{{ productReview.ratingInfo }}</td>
+              <td>{{ productReview.message }}</td>
+              <td>{{ productReview.reviewDate | formatMediumDatetime }}</td>
+              <td>
+                @if (productReview.product) {
+                  <div>
+                    <a [routerLink]="['/product', productReview.product.id, 'view']">{{ productReview.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productReview.party) {
+                  <div>
+                    <a [routerLink]="['/party', productReview.party.id, 'view']">{{ productReview.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productReview.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', productReview.orderItem.id, 'view']">{{ productReview.orderItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/product-review', productReview.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/product-review', productReview.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(productReview)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (productReviews().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

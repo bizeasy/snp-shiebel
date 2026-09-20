@@ -1,0 +1,294 @@
+<div>
+  <h2 id="page-heading" data-cy="PaymentHeading">
+    <span sysTranslate="snpApp.payment.home.title">Payments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.payment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-payment"
+        [routerLink]="['/payment/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.payment.home.createLabel">Create a new Payment</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (payments().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.payment.home.notFound">No Payments found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentRefNumber">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentRefNumber">Payment Ref Number</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="effectiveDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.effectiveDate">Effective Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentDate">Payment Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="amount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.amount">Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="actualAmount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.actualAmount">Actual Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentStatus">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentStatus">Payment Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="mihpayId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.mihpayId">Mihpay Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="txnId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.txnId">Txn Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="email">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.email">Email</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="phone">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.phone">Phone</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productInfo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.productInfo">Product Info</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentType">Payment Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethodType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentMethodType">Payment Method Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethod.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentMethod">Payment Method</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentGatewayResponse.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.paymentGatewayResponse">Payment Gateway Response</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.fromParty">From Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="toParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.toParty">To Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="roleType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.roleType">Role Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="currencyUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.payment.currencyUom">Currency Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (payment of payments(); track trackId(payment)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/payment', payment.id, 'view']">{{ payment.id }}</a>
+              </td>
+              <td>{{ payment.paymentRefNumber }}</td>
+              <td>{{ payment.effectiveDate | formatMediumDatetime }}</td>
+              <td>{{ payment.paymentDate | formatMediumDatetime }}</td>
+              <td>{{ payment.amount }}</td>
+              <td>{{ payment.actualAmount }}</td>
+              <td>{{ payment.paymentStatus }}</td>
+              <td>{{ payment.mihpayId }}</td>
+              <td>{{ payment.txnId }}</td>
+              <td>{{ payment.email }}</td>
+              <td>{{ payment.phone }}</td>
+              <td>{{ payment.productInfo }}</td>
+              <td>
+                @if (payment.paymentType) {
+                  <div>
+                    <a [routerLink]="['/payment-type', payment.paymentType.id, 'view']">{{ payment.paymentType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.paymentMethodType) {
+                  <div>
+                    <a [routerLink]="['/payment-method-type', payment.paymentMethodType.id, 'view']">{{
+                      payment.paymentMethodType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.paymentMethod) {
+                  <div>
+                    <a [routerLink]="['/payment-method', payment.paymentMethod.id, 'view']">{{ payment.paymentMethod.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.paymentGatewayResponse) {
+                  <div>
+                    <a [routerLink]="['/payment-gateway-response', payment.paymentGatewayResponse.id, 'view']">{{
+                      payment.paymentGatewayResponse.id
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.status) {
+                  <div>
+                    <a [routerLink]="['/status', payment.status.id, 'view']">{{ payment.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.fromParty) {
+                  <div>
+                    <a [routerLink]="['/party', payment.fromParty.id, 'view']">{{ payment.fromParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.toParty) {
+                  <div>
+                    <a [routerLink]="['/party', payment.toParty.id, 'view']">{{ payment.toParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.roleType) {
+                  <div>
+                    <a [routerLink]="['/role-type', payment.roleType.id, 'view']">{{ payment.roleType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (payment.currencyUom) {
+                  <div>
+                    <a [routerLink]="['/uom', payment.currencyUom.id, 'view']">{{ payment.currencyUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/payment', payment.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/payment', payment.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(payment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (payments().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

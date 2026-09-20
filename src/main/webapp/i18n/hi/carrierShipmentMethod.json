@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "carrierShipmentMethod": {
+      "home": {
+        "title": "CarrierShipmentMethods",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Carrier Shipment Method बनाएँ",
+        "createOrEditLabel": "Carrier Shipment Method बनाएँ या संपादित करें",
+        "notFound": "No Carrier Shipment Methods found"
+      },
+      "created": "एक नया Carrier Shipment Method [identifier: {{ param }}] तैयार है",
+      "updated": "एक Carrier Shipment Method [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Carrier Shipment Method [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Carrier Shipment Method [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Carrier Shipment Method"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "carrierServiceCode": "Carrier Service Code",
+      "shipmentMethodType": "Shipment Method Type",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "snpApp": {
+    "returnItemBilling": {
+      "home": {
+        "title": "Return Item Billings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Return Item Billing",
+        "createOrEditLabel": "Create or edit a Return Item Billing",
+        "notFound": "No Return Item Billings found"
+      },
+      "created": "A new Return Item Billing is created with identifier {{ param }}",
+      "updated": "A Return Item Billing is updated with identifier {{ param }}",
+      "deleted": "A Return Item Billing is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Return Item Billing {{ id }}?"
+      },
+      "detail": {
+        "title": "Return Item Billing"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "amount": "Amount",
+      "returnItem": "Return Item",
+      "orderItem": "Order Item",
+      "invoiceItem": "Invoice Item",
+      "shipmentReceipt": "Shipment Receipt"
+    }
+  }
+}

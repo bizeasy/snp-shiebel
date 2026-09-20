@@ -1,0 +1,38 @@
+{
+  "snpApp": {
+    "quoteItem": {
+      "home": {
+        "title": "Quote Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Quote Item",
+        "createOrEditLabel": "Create or edit a Quote Item",
+        "notFound": "No Quote Items found"
+      },
+      "created": "A new Quote Item is created with identifier {{ param }}",
+      "updated": "A Quote Item is updated with identifier {{ param }}",
+      "deleted": "A Quote Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Quote Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Quote Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "selectedAmount": "Selected Amount",
+      "quoteUnitPrice": "Quote Unit Price",
+      "totalAmount": "Total Amount",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "leadTimeDays": "Lead Time Days",
+      "comments": "Comments",
+      "quote": "Quote",
+      "product": "Product",
+      "productFeature": "Product Feature",
+      "uom": "Uom",
+      "status": "Status",
+      "custRequest": "Cust Request",
+      "custRequestItem": "Cust Request Item"
+    }
+  }
+}

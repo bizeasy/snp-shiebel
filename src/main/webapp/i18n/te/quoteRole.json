@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "quoteRole": {
+      "home": {
+        "title": "Quote Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Quote Role సృష్టించండి",
+        "createOrEditLabel": "Quote Role సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Quote Roles found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Quote Role సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Quote Role సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Quote Role తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Quote Role {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Quote Role"
+      },
+      "id": "ID",
+      "quote": "Quote",
+      "quoteItem": "Quote Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

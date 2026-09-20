@@ -1,0 +1,116 @@
+<div>
+  <h2 id="page-heading" data-cy="StatusValidChangeHeading">
+    <span sysTranslate="snpApp.statusValidChange.home.title">Status Valid Changes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.statusValidChange.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-status-valid-change"
+        [routerLink]="['/status-valid-change/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.statusValidChange.home.createLabel">Create a new Status Valid Change</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (statusValidChanges().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.statusValidChange.home.notFound">No Status Valid Changes found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="transitionName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.statusValidChange.transitionName">Transition Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.statusValidChange.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="statusTo.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.statusValidChange.statusTo">Status To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (statusValidChange of statusValidChanges(); track trackId(statusValidChange)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/status-valid-change', statusValidChange.id, 'view']">{{ statusValidChange.id }}</a>
+              </td>
+              <td>{{ statusValidChange.transitionName }}</td>
+              <td>
+                @if (statusValidChange.status) {
+                  <div>
+                    <a [routerLink]="['/status', statusValidChange.status.id, 'view']">{{ statusValidChange.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (statusValidChange.statusTo) {
+                  <div>
+                    <a [routerLink]="['/status', statusValidChange.statusTo.id, 'view']">{{ statusValidChange.statusTo.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/status-valid-change', statusValidChange.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/status-valid-change', statusValidChange.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(statusValidChange)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity QuoteAdjustment.
+    -->
+    <changeSet id="20231214224405-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="quote_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__quote_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quote"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="quote_item_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__quote_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quote_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="adjustment_type_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__adjustment_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_adjustment_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_feature_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__product_feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product_feature"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tax_authority_id"
+                                 baseTableName="quote_adjustment"
+                                 constraintName="fk_quote_adjustment__tax_authority_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tax_authority"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (partyContactMech(); as partyContactMechRef) {
+      <div>
+        <h2 data-cy="partyContactMechDetailsHeading">
+          <span sysTranslate="snpApp.partyContactMech.detail.title">Party Contact Mech</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyContactMechRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyContactMech.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ partyContactMechRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyContactMech.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ partyContactMechRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyContactMech.party">Party</span></dt>
+          <dd>
+            @if (partyContactMech()!.party) {
+              <div>
+                <a [routerLink]="['/party', partyContactMech()!.party?.id, 'view']">{{ partyContactMechRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyContactMech.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (partyContactMech()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', partyContactMech()!.contactMech?.id, 'view']">{{
+                  partyContactMechRef.contactMech?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyContactMech.contactMechPurpose">Contact Mech Purpose</span></dt>
+          <dd>
+            @if (partyContactMech()!.contactMechPurpose) {
+              <div>
+                <a [routerLink]="['/contact-mech-purpose', partyContactMech()!.contactMechPurpose?.id, 'view']">{{
+                  partyContactMechRef.contactMechPurpose?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party-contact-mech', partyContactMechRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

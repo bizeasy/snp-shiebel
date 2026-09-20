@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "systemParameters": {
+      "home": {
+        "title": "System Parameters",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త System Parameters సృష్టించండి",
+        "createOrEditLabel": "System Parameters సృష్టించండి లేదా సవరించండి",
+        "notFound": "No System Parameters found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త System Parameters సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త System Parameters సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త System Parameters తొలగించబడినది",
+      "delete": {
+        "question": "మీరు System Parameters {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "System Parameters"
+      },
+      "id": "ID",
+      "key": "Key",
+      "value": "Value",
+      "description": "Description",
+      "environment": "Environment"
+    }
+  }
+}

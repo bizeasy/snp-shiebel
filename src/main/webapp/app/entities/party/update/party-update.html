@@ -1,0 +1,379 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-party-heading" data-cy="PartyCreateUpdateHeading" sysTranslate="snpApp.party.home.createOrEditLabel">
+        Create or edit a Party
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isOrganisation"
+            id="field_isOrganisation"
+            data-cy="isOrganisation"
+            formControlName="isOrganisation"
+          />
+          <label class="form-check-label" for="field_isOrganisation" sysTranslate="snpApp.party.isOrganisation">Is Organisation</label>
+        </div>
+
+        @let organisationNameRef = editForm.get('organisationName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_organisationName" sysTranslate="snpApp.party.organisationName">Organisation Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="organisationName"
+            id="field_organisationName"
+            data-cy="organisationName"
+            formControlName="organisationName"
+          />
+          @if (organisationNameRef.invalid && (organisationNameRef.dirty || organisationNameRef.touched)) {
+            <div>
+              @if (organisationNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '200' }"
+                  >This field cannot be longer than 200 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let organisationShortNameRef = editForm.get('organisationShortName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_organisationShortName" sysTranslate="snpApp.party.organisationShortName"
+            >Organisation Short Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="organisationShortName"
+            id="field_organisationShortName"
+            data-cy="organisationShortName"
+            formControlName="organisationShortName"
+          />
+          @if (organisationShortNameRef.invalid && (organisationShortNameRef.dirty || organisationShortNameRef.touched)) {
+            <div>
+              @if (organisationShortNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let salutationRef = editForm.get('salutation')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_salutation" sysTranslate="snpApp.party.salutation">Salutation</label>
+          <input
+            type="text"
+            class="form-control"
+            name="salutation"
+            id="field_salutation"
+            data-cy="salutation"
+            formControlName="salutation"
+          />
+          @if (salutationRef.invalid && (salutationRef.dirty || salutationRef.touched)) {
+            <div>
+              @if (salutationRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let firstNameRef = editForm.get('firstName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_firstName" sysTranslate="snpApp.party.firstName">First Name</label>
+          <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+          @if (firstNameRef.invalid && (firstNameRef.dirty || firstNameRef.touched)) {
+            <div>
+              @if (firstNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let middleNameRef = editForm.get('middleName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_middleName" sysTranslate="snpApp.party.middleName">Middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="middleName"
+            id="field_middleName"
+            data-cy="middleName"
+            formControlName="middleName"
+          />
+          @if (middleNameRef.invalid && (middleNameRef.dirty || middleNameRef.touched)) {
+            <div>
+              @if (middleNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let lastNameRef = editForm.get('lastName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lastName" sysTranslate="snpApp.party.lastName">Last Name</label>
+          <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+          @if (lastNameRef.invalid && (lastNameRef.dirty || lastNameRef.touched)) {
+            <div>
+              @if (lastNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_gender" sysTranslate="snpApp.party.gender">Gender</label>
+          <select class="form-select" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'snpApp.Gender.null' | translate }}</option>
+            @for (gender of genderValues; track $index) {
+              <option [value]="gender">{{ 'snpApp.Gender.' + gender | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_birthDate" sysTranslate="snpApp.party.birthDate">Birth Date</label>
+          <div class="input-group">
+            <input
+              id="field_birthDate"
+              data-cy="birthDate"
+              type="text"
+              class="form-control"
+              name="birthDate"
+              ngbDatepicker
+              #birthDateDp="ngbDatepicker"
+              formControlName="birthDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="birthDateDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+          </div>
+        </div>
+
+        @let primaryPhoneRef = editForm.get('primaryPhone')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_primaryPhone" sysTranslate="snpApp.party.primaryPhone">Primary Phone</label>
+          <input
+            type="text"
+            class="form-control"
+            name="primaryPhone"
+            id="field_primaryPhone"
+            data-cy="primaryPhone"
+            formControlName="primaryPhone"
+          />
+          @if (primaryPhoneRef.invalid && (primaryPhoneRef.dirty || primaryPhoneRef.touched)) {
+            <div>
+              @if (primaryPhoneRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >This field cannot be longer than 20 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let primaryEmailRef = editForm.get('primaryEmail')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_primaryEmail" sysTranslate="snpApp.party.primaryEmail">Primary Email</label>
+          <input
+            type="text"
+            class="form-control"
+            name="primaryEmail"
+            id="field_primaryEmail"
+            data-cy="primaryEmail"
+            formControlName="primaryEmail"
+          />
+          @if (primaryEmailRef.invalid && (primaryEmailRef.dirty || primaryEmailRef.touched)) {
+            <div>
+              @if (primaryEmailRef.errors?.minlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
+                  >This field is required to be at least 5 characters.</small
+                >
+              }
+              @if (primaryEmailRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '75' }"
+                  >This field cannot be longer than 75 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isTemporaryPassword"
+            id="field_isTemporaryPassword"
+            data-cy="isTemporaryPassword"
+            formControlName="isTemporaryPassword"
+          />
+          <label class="form-check-label" for="field_isTemporaryPassword" sysTranslate="snpApp.party.isTemporaryPassword"
+            >Is Temporary Password</label
+          >
+        </div>
+
+        @let logoImageUrlRef = editForm.get('logoImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_logoImageUrl" sysTranslate="snpApp.party.logoImageUrl">Logo Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="logoImageUrl"
+            id="field_logoImageUrl"
+            data-cy="logoImageUrl"
+            formControlName="logoImageUrl"
+          />
+          @if (logoImageUrlRef.invalid && (logoImageUrlRef.dirty || logoImageUrlRef.touched)) {
+            <div>
+              @if (logoImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let profileImageUrlRef = editForm.get('profileImageUrl')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_profileImageUrl" sysTranslate="snpApp.party.profileImageUrl">Profile Image Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="profileImageUrl"
+            id="field_profileImageUrl"
+            data-cy="profileImageUrl"
+            formControlName="profileImageUrl"
+          />
+          @if (profileImageUrlRef.invalid && (profileImageUrlRef.dirty || profileImageUrlRef.touched)) {
+            <div>
+              @if (profileImageUrlRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_notes" sysTranslate="snpApp.party.notes">Notes</label>
+          <textarea class="form-control" name="notes" id="field_notes" data-cy="notes" formControlName="notes"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_postalAddress" sysTranslate="snpApp.party.postalAddress">Postal Address</label>
+          <textarea
+            class="form-control"
+            name="postalAddress"
+            id="field_postalAddress"
+            data-cy="postalAddress"
+            formControlName="postalAddress"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" sysTranslate="snpApp.party.user">User</label>
+          <select class="form-select" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection(); track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_partyType" sysTranslate="snpApp.party.partyType">Party Type</label>
+          <select
+            class="form-select"
+            id="field_partyType"
+            data-cy="partyType"
+            name="partyType"
+            formControlName="partyType"
+            [compareWith]="comparePartyType"
+          >
+            <option [ngValue]="null"></option>
+            @for (partyTypeOption of partyTypesSharedCollection(); track $index) {
+              <option [ngValue]="partyTypeOption">{{ partyTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.party.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_address" sysTranslate="snpApp.party.address">Address</label>
+          <select
+            class="form-select"
+            id="field_address"
+            data-cy="address"
+            name="address"
+            formControlName="address"
+            [compareWith]="comparePostalAddress"
+          >
+            <option [ngValue]="null"></option>
+            @for (postalAddressOption of postalAddressesSharedCollection(); track $index) {
+              <option [ngValue]="postalAddressOption">{{ postalAddressOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

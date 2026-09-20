@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (partyClassification(); as partyClassificationRef) {
+      <div>
+        <h2 data-cy="partyClassificationDetailsHeading">
+          <span sysTranslate="snpApp.partyClassification.detail.title">Party Classification</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ partyClassificationRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyClassification.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ partyClassificationRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyClassification.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ partyClassificationRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.partyClassification.party">Party</span></dt>
+          <dd>
+            @if (partyClassification()!.party) {
+              <div>
+                <a [routerLink]="['/party', partyClassification()!.party?.id, 'view']">{{ partyClassificationRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.partyClassification.classificationGroup">Classification Group</span></dt>
+          <dd>
+            @if (partyClassification()!.classificationGroup) {
+              <div>
+                <a [routerLink]="['/party-classification-group', partyClassification()!.classificationGroup?.id, 'view']">{{
+                  partyClassificationRef.classificationGroup?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/party-classification', partyClassificationRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

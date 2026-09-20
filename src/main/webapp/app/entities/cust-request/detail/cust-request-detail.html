@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (custRequest(); as custRequestRef) {
+      <div>
+        <h2 data-cy="custRequestDetailsHeading"><span sysTranslate="snpApp.custRequest.detail.title">Cust Request</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ custRequestRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.name">Name</span></dt>
+          <dd>
+            <span>{{ custRequestRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.description">Description</span></dt>
+          <dd>
+            <span>{{ custRequestRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.priority">Priority</span></dt>
+          <dd>
+            <span>{{ custRequestRef.priority }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.custRequestDate">Cust Request Date</span></dt>
+          <dd>
+            <span>{{ custRequestRef.custRequestDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.responseRequiredDate">Response Required Date</span></dt>
+          <dd>
+            <span>{{ custRequestRef.responseRequiredDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.openDateTime">Open Date Time</span></dt>
+          <dd>
+            <span>{{ custRequestRef.openDateTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.closedDateTime">Closed Date Time</span></dt>
+          <dd>
+            <span>{{ custRequestRef.closedDateTime | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.internalComment">Internal Comment</span></dt>
+          <dd>
+            <span>{{ custRequestRef.internalComment }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.billed">Billed</span></dt>
+          <dd>
+            <span>{{ custRequestRef.billed }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.custEstimatedDurationDays">Cust Estimated Duration Days</span></dt>
+          <dd>
+            <span>{{ custRequestRef.custEstimatedDurationDays }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.custRequestType">Cust Request Type</span></dt>
+          <dd>
+            @if (custRequest()!.custRequestType) {
+              <div>
+                <a [routerLink]="['/cust-request-type', custRequest()!.custRequestType?.id, 'view']">{{
+                  custRequestRef.custRequestType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.custRequestCategory">Cust Request Category</span></dt>
+          <dd>
+            @if (custRequest()!.custRequestCategory) {
+              <div>
+                <a [routerLink]="['/cust-request-category', custRequest()!.custRequestCategory?.id, 'view']">{{
+                  custRequestRef.custRequestCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.status">Status</span></dt>
+          <dd>
+            @if (custRequest()!.status) {
+              <div>
+                <a [routerLink]="['/status', custRequest()!.status?.id, 'view']">{{ custRequestRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.fromParty">From Party</span></dt>
+          <dd>
+            @if (custRequest()!.fromParty) {
+              <div>
+                <a [routerLink]="['/party', custRequest()!.fromParty?.id, 'view']">{{ custRequestRef.fromParty?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.productStore">Product Store</span></dt>
+          <dd>
+            @if (custRequest()!.productStore) {
+              <div>
+                <a [routerLink]="['/product-store', custRequest()!.productStore?.id, 'view']">{{ custRequestRef.productStore?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.salesChannel">Sales Channel</span></dt>
+          <dd>
+            @if (custRequest()!.salesChannel) {
+              <div>
+                <a [routerLink]="['/sales-channel', custRequest()!.salesChannel?.id, 'view']">{{ custRequestRef.salesChannel?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequest.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (custRequest()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', custRequest()!.currencyUom?.id, 'view']">{{ custRequestRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cust-request', custRequestRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

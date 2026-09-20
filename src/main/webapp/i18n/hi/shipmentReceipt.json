@@ -1,0 +1,36 @@
+{
+  "snpApp": {
+    "shipmentReceipt": {
+      "home": {
+        "title": "ShipmentReceipts",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Shipment Receipt बनाएँ",
+        "createOrEditLabel": "Shipment Receipt बनाएँ या संपादित करें",
+        "notFound": "No Shipment Receipts found"
+      },
+      "created": "एक नया Shipment Receipt [identifier: {{ param }}] तैयार है",
+      "updated": "एक Shipment Receipt [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Shipment Receipt [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Shipment Receipt [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Shipment Receipt"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "quantityAccepted": "Quantity Accepted",
+      "quantityRejected": "Quantity Rejected",
+      "receivedDate": "Received Date",
+      "message": "Message",
+      "shipment": "Shipment",
+      "shipmentItem": "Shipment Item",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "inventoryItem": "Inventory Item",
+      "product": "Product",
+      "receivedBy": "Received By"
+    }
+  }
+}

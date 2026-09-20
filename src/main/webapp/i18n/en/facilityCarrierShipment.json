@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "facilityCarrierShipment": {
+      "home": {
+        "title": "Facility Carrier Shipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Facility Carrier Shipment",
+        "createOrEditLabel": "Create or edit a Facility Carrier Shipment",
+        "notFound": "No Facility Carrier Shipments found"
+      },
+      "created": "A new Facility Carrier Shipment is created with identifier {{ param }}",
+      "updated": "A Facility Carrier Shipment is updated with identifier {{ param }}",
+      "deleted": "A Facility Carrier Shipment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Facility Carrier Shipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Facility Carrier Shipment"
+      },
+      "id": "ID",
+      "facility": "Facility",
+      "party": "Party",
+      "roleType": "Role Type",
+      "shipmentMethodType": "Shipment Method Type"
+    }
+  }
+}

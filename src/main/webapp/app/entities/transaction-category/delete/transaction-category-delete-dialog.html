@@ -1,0 +1,30 @@
+@if (transactionCategory) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(transactionCategory.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="transactionCategoryDeleteDialogHeading" sysTranslate="entity.delete.title">
+        Confirm delete operation
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p
+        id="sys-delete-transactionCategory-heading"
+        sysTranslate="snpApp.transactionCategory.delete.question"
+        [translateValues]="{ id: transactionCategory.id }"
+      >
+        Are you sure you want to delete Transaction Category {{ transactionCategory.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-transactionCategory" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}

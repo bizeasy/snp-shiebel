@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFeature(); as productFeatureRef) {
+      <div>
+        <h2 data-cy="productFeatureDetailsHeading"><span sysTranslate="snpApp.productFeature.detail.title">Product Feature</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.name">Name</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.description">Description</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.amount">Amount</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.abbrev">Abbrev</span></dt>
+          <dd>
+            <span>{{ productFeatureRef.abbrev }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.productFeatureType">Product Feature Type</span></dt>
+          <dd>
+            @if (productFeature()!.productFeatureType) {
+              <div>
+                <a [routerLink]="['/product-feature-type', productFeature()!.productFeatureType?.id, 'view']">{{
+                  productFeatureRef.productFeatureType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeature.productFeatureCategory">Product Feature Category</span></dt>
+          <dd>
+            @if (productFeature()!.productFeatureCategory) {
+              <div>
+                <a [routerLink]="['/product-feature-category', productFeature()!.productFeatureCategory?.id, 'view']">{{
+                  productFeatureRef.productFeatureCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-feature', productFeatureRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

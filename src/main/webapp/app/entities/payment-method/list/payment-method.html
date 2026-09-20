@@ -1,0 +1,152 @@
+<div>
+  <h2 id="page-heading" data-cy="PaymentMethodHeading">
+    <span sysTranslate="snpApp.paymentMethod.home.title">Payment Methods</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.paymentMethod.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-payment-method"
+        [routerLink]="['/payment-method/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.paymentMethod.home.createLabel">Create a new Payment Method</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (paymentMethods().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.paymentMethod.home.notFound">No Payment Methods found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethodType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.paymentMethodType">Payment Method Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentMethod.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (paymentMethod of paymentMethods(); track trackId(paymentMethod)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/payment-method', paymentMethod.id, 'view']">{{ paymentMethod.id }}</a>
+              </td>
+              <td>{{ paymentMethod.name }}</td>
+              <td>{{ paymentMethod.description }}</td>
+              <td>{{ paymentMethod.fromDate | formatMediumDatetime }}</td>
+              <td>{{ paymentMethod.thruDate | formatMediumDatetime }}</td>
+              <td>
+                @if (paymentMethod.paymentMethodType) {
+                  <div>
+                    <a [routerLink]="['/payment-method-type', paymentMethod.paymentMethodType.id, 'view']">{{
+                      paymentMethod.paymentMethodType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paymentMethod.party) {
+                  <div>
+                    <a [routerLink]="['/party', paymentMethod.party.id, 'view']">{{ paymentMethod.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/payment-method', paymentMethod.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/payment-method', paymentMethod.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(paymentMethod)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (paymentMethods().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

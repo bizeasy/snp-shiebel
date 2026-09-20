@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "orderRole": {
+      "home": {
+        "title": "Order Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Order Role సృష్టించండి",
+        "createOrEditLabel": "Order Role సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Order Roles found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Order Role సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Order Role సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Order Role తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Order Role {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Order Role"
+      },
+      "id": "ID",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

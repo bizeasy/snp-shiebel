@@ -1,0 +1,175 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductFeatureApplHeading">
+    <span sysTranslate="snpApp.productFeatureAppl.home.title">Product Feature Appls</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.productFeatureAppl.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-feature-appl"
+        [routerLink]="['/product-feature-appl/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.productFeatureAppl.home.createLabel">Create a new Product Feature Appl</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (productFeatureAppls().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.productFeatureAppl.home.notFound">No Product Feature Appls found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="amount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.amount">Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productFeature.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.productFeature">Product Feature</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="featureApplType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productFeatureAppl.featureApplType">Feature Appl Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (productFeatureAppl of productFeatureAppls(); track trackId(productFeatureAppl)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product-feature-appl', productFeatureAppl.id, 'view']">{{ productFeatureAppl.id }}</a>
+              </td>
+              <td>{{ productFeatureAppl.fromDate | formatMediumDatetime }}</td>
+              <td>{{ productFeatureAppl.thruDate | formatMediumDatetime }}</td>
+              <td>{{ productFeatureAppl.sequenceNo }}</td>
+              <td>{{ productFeatureAppl.amount }}</td>
+              <td>
+                @if (productFeatureAppl.product) {
+                  <div>
+                    <a [routerLink]="['/product', productFeatureAppl.product.id, 'view']">{{ productFeatureAppl.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productFeatureAppl.productFeature) {
+                  <div>
+                    <a [routerLink]="['/product-feature', productFeatureAppl.productFeature.id, 'view']">{{
+                      productFeatureAppl.productFeature.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productFeatureAppl.featureApplType) {
+                  <div>
+                    <a [routerLink]="['/product-feature-appl-type', productFeatureAppl.featureApplType.id, 'view']">{{
+                      productFeatureAppl.featureApplType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/product-feature-appl', productFeatureAppl.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/product-feature-appl', productFeatureAppl.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(productFeatureAppl)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (productFeatureAppls().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

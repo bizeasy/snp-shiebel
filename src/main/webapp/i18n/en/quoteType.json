@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "quoteType": {
+      "home": {
+        "title": "Quote Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Quote Type",
+        "createOrEditLabel": "Create or edit a Quote Type",
+        "notFound": "No Quote Types found"
+      },
+      "created": "A new Quote Type is created with identifier {{ param }}",
+      "updated": "A Quote Type is updated with identifier {{ param }}",
+      "deleted": "A Quote Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Quote Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Quote Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

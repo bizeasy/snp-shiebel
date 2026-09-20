@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "orderAttachment": {
+      "home": {
+        "title": "OrderAttachments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Order Attachment बनाएँ",
+        "createOrEditLabel": "Order Attachment बनाएँ या संपादित करें",
+        "notFound": "No Order Attachments found"
+      },
+      "created": "एक नया Order Attachment [identifier: {{ param }}] तैयार है",
+      "updated": "एक Order Attachment [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Order Attachment [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Order Attachment [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Order Attachment"
+      },
+      "id": "ID",
+      "name": "Name",
+      "order": "Order",
+      "attachment": "Attachment"
+    }
+  }
+}

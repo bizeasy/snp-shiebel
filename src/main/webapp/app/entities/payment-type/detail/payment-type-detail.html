@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paymentType(); as paymentTypeRef) {
+      <div>
+        <h2 data-cy="paymentTypeDetailsHeading"><span sysTranslate="snpApp.paymentType.detail.title">Payment Type</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentTypeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentType.name">Name</span></dt>
+          <dd>
+            <span>{{ paymentTypeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentType.description">Description</span></dt>
+          <dd>
+            <span>{{ paymentTypeRef.description }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment-type', paymentTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

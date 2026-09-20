@@ -1,0 +1,57 @@
+{
+  "annotations": {
+    "changelogDate": "20231214220705"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "fromDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "thruDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "costPerDay",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "totalCost",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "discount",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "ProductFacilityUser",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "productFacility",
+      "relationshipName": "productFacility",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "party",
+      "relationshipName": "party",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "status",
+      "relationshipName": "status",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

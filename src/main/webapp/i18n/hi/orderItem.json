@@ -1,0 +1,51 @@
+{
+  "snpApp": {
+    "orderItem": {
+      "home": {
+        "title": "OrderItems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Order Item बनाएँ",
+        "createOrEditLabel": "Order Item बनाएँ या संपादित करें",
+        "notFound": "No Order Items found"
+      },
+      "created": "एक नया Order Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Order Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Order Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Order Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Order Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "cancelQuantity": "Cancel Quantity",
+      "selectedAmount": "Selected Amount",
+      "unitPrice": "Unit Price",
+      "unitListPrice": "Unit List Price",
+      "isModifiedPrice": "Is Modified Price",
+      "estimatedShipDate": "Estimated Ship Date",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "shipBeforeDate": "Ship Before Date",
+      "shipAfterDate": "Ship After Date",
+      "entryDate": "Entry Date",
+      "attr1": "Attr 1",
+      "attr2": "Attr 2",
+      "attr3": "Attr 3",
+      "order": "Order",
+      "orderItemType": "Order Item Type",
+      "product": "Product",
+      "uom": "Uom",
+      "supplierProduct": "Supplier Product",
+      "supplier": "Supplier",
+      "productFeature": "Product Feature",
+      "productFacility": "Product Facility",
+      "fromInventoryItem": "From Inventory Item",
+      "shoppingListItem": "Shopping List Item",
+      "quoteItem": "Quote Item",
+      "status": "Status",
+      "taxAuthRate": "Tax Auth Rate"
+    }
+  }
+}

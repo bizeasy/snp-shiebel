@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productPrice(); as productPriceRef) {
+      <div>
+        <h2 data-cy="productPriceDetailsHeading"><span sysTranslate="snpApp.productPrice.detail.title">Product Price</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productPriceRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productPriceRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productPriceRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.price">Price</span></dt>
+          <dd>
+            <span>{{ productPriceRef.price }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.cgst">Cgst</span></dt>
+          <dd>
+            <span>{{ productPriceRef.cgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.igst">Igst</span></dt>
+          <dd>
+            <span>{{ productPriceRef.igst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.sgst">Sgst</span></dt>
+          <dd>
+            <span>{{ productPriceRef.sgst }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.totalPrice">Total Price</span></dt>
+          <dd>
+            <span>{{ productPriceRef.totalPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.product">Product</span></dt>
+          <dd>
+            @if (productPrice()!.product) {
+              <div>
+                <a [routerLink]="['/product', productPrice()!.product?.id, 'view']">{{ productPriceRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.productPriceType">Product Price Type</span></dt>
+          <dd>
+            @if (productPrice()!.productPriceType) {
+              <div>
+                <a [routerLink]="['/product-price-type', productPrice()!.productPriceType?.id, 'view']">{{
+                  productPriceRef.productPriceType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.productPricePurpose">Product Price Purpose</span></dt>
+          <dd>
+            @if (productPrice()!.productPricePurpose) {
+              <div>
+                <a [routerLink]="['/product-price-purpose', productPrice()!.productPricePurpose?.id, 'view']">{{
+                  productPriceRef.productPricePurpose?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productPrice.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (productPrice()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', productPrice()!.currencyUom?.id, 'view']">{{ productPriceRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-price', productPriceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

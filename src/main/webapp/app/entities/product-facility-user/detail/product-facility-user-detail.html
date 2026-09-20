@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFacilityUser(); as productFacilityUserRef) {
+      <div>
+        <h2 data-cy="productFacilityUserDetailsHeading">
+          <span sysTranslate="snpApp.productFacilityUser.detail.title">Product Facility User</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.costPerDay">Cost Per Day</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.costPerDay }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.totalCost">Total Cost</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.totalCost }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.discount">Discount</span></dt>
+          <dd>
+            <span>{{ productFacilityUserRef.discount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.productFacility">Product Facility</span></dt>
+          <dd>
+            @if (productFacilityUser()!.productFacility) {
+              <div>
+                <a [routerLink]="['/product-facility', productFacilityUser()!.productFacility?.id, 'view']">{{
+                  productFacilityUserRef.productFacility?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.party">Party</span></dt>
+          <dd>
+            @if (productFacilityUser()!.party) {
+              <div>
+                <a [routerLink]="['/party', productFacilityUser()!.party?.id, 'view']">{{ productFacilityUserRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.productFacilityUser.status">Status</span></dt>
+          <dd>
+            @if (productFacilityUser()!.status) {
+              <div>
+                <a [routerLink]="['/status', productFacilityUser()!.status?.id, 'view']">{{ productFacilityUserRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-facility-user', productFacilityUserRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

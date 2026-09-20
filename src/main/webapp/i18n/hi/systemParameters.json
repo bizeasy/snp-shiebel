@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "systemParameters": {
+      "home": {
+        "title": "SystemParameterses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया System Parameters बनाएँ",
+        "createOrEditLabel": "System Parameters बनाएँ या संपादित करें",
+        "notFound": "No System Parameters found"
+      },
+      "created": "एक नया System Parameters [identifier: {{ param }}] तैयार है",
+      "updated": "एक System Parameters [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "System Parameters [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "System Parameters [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "System Parameters"
+      },
+      "id": "ID",
+      "key": "Key",
+      "value": "Value",
+      "description": "Description",
+      "environment": "Environment"
+    }
+  }
+}

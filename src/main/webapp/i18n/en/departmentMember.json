@@ -1,0 +1,29 @@
+{
+  "snpApp": {
+    "departmentMember": {
+      "home": {
+        "title": "Department Members",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Department Member",
+        "createOrEditLabel": "Create or edit a Department Member",
+        "notFound": "No Department Members found"
+      },
+      "created": "A new Department Member is created with identifier {{ param }}",
+      "updated": "A Department Member is updated with identifier {{ param }}",
+      "deleted": "A Department Member is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Department Member {{ id }}?"
+      },
+      "detail": {
+        "title": "Department Member"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "isPrimary": "Is Primary",
+      "department": "Department",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

@@ -1,0 +1,146 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inventoryItemDelegate(); as inventoryItemDelegateRef) {
+      <div>
+        <h2 data-cy="inventoryItemDelegateDetailsHeading">
+          <span sysTranslate="snpApp.inventoryItemDelegate.detail.title">Inventory Item Delegate</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.effectiveDate">Effective Date</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.effectiveDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.quantityOnHandDiff">Quantity On Hand Diff</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.quantityOnHandDiff }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.availableToPromiseDiff">Available To Promise Diff</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.availableToPromiseDiff }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.accountingQuantityDiff">Accounting Quantity Diff</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.accountingQuantityDiff }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.unitCost">Unit Cost</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.unitCost }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ inventoryItemDelegateRef.remarks }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.inventoryItem">Inventory Item</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.inventoryItem) {
+              <div>
+                <a [routerLink]="['/inventory-item', inventoryItemDelegate()!.inventoryItem?.id, 'view']">{{
+                  inventoryItemDelegateRef.inventoryItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.order">Order</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.order) {
+              <div>
+                <a [routerLink]="['/order', inventoryItemDelegate()!.order?.id, 'view']">{{ inventoryItemDelegateRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.orderItem">Order Item</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', inventoryItemDelegate()!.orderItem?.id, 'view']">{{
+                  inventoryItemDelegateRef.orderItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.invoice">Invoice</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.invoice) {
+              <div>
+                <a [routerLink]="['/invoice', inventoryItemDelegate()!.invoice?.id, 'view']">{{ inventoryItemDelegateRef.invoice?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.invoiceItem">Invoice Item</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.invoiceItem) {
+              <div>
+                <a [routerLink]="['/invoice-item', inventoryItemDelegate()!.invoiceItem?.id, 'view']">{{
+                  inventoryItemDelegateRef.invoiceItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.shipment">Shipment</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', inventoryItemDelegate()!.shipment?.id, 'view']">{{
+                  inventoryItemDelegateRef.shipment?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.shipmentItem">Shipment Item</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.shipmentItem) {
+              <div>
+                <a [routerLink]="['/shipment-item', inventoryItemDelegate()!.shipmentItem?.id, 'view']">{{
+                  inventoryItemDelegateRef.shipmentItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.itemIssuance">Item Issuance</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.itemIssuance) {
+              <div>
+                <a [routerLink]="['/item-issuance', inventoryItemDelegate()!.itemIssuance?.id, 'view']">{{
+                  inventoryItemDelegateRef.itemIssuance?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.inventoryItemDelegate.receipt">Receipt</span></dt>
+          <dd>
+            @if (inventoryItemDelegate()!.receipt) {
+              <div>
+                <a [routerLink]="['/shipment-receipt', inventoryItemDelegate()!.receipt?.id, 'view']">{{
+                  inventoryItemDelegateRef.receipt?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inventory-item-delegate', inventoryItemDelegateRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

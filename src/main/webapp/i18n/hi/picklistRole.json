@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "picklistRole": {
+      "home": {
+        "title": "PicklistRoles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Picklist Role बनाएँ",
+        "createOrEditLabel": "Picklist Role बनाएँ या संपादित करें",
+        "notFound": "No Picklist Roles found"
+      },
+      "created": "एक नया Picklist Role [identifier: {{ param }}] तैयार है",
+      "updated": "एक Picklist Role [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Picklist Role [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Picklist Role [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Picklist Role"
+      },
+      "id": "ID",
+      "pickList": "Pick List",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

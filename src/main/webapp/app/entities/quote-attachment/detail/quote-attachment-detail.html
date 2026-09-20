@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quoteAttachment(); as quoteAttachmentRef) {
+      <div>
+        <h2 data-cy="quoteAttachmentDetailsHeading"><span sysTranslate="snpApp.quoteAttachment.detail.title">Quote Attachment</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ quoteAttachmentRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAttachment.name">Name</span></dt>
+          <dd>
+            <span>{{ quoteAttachmentRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAttachment.quote">Quote</span></dt>
+          <dd>
+            @if (quoteAttachment()!.quote) {
+              <div>
+                <a [routerLink]="['/quote', quoteAttachment()!.quote?.id, 'view']">{{ quoteAttachmentRef.quote?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteAttachment.attachment">Attachment</span></dt>
+          <dd>
+            @if (quoteAttachment()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', quoteAttachment()!.attachment?.id, 'view']">{{ quoteAttachmentRef.attachment?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quote-attachment', quoteAttachmentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,370 @@
+<div>
+  <h2 id="page-heading" data-cy="InventoryItemHeading">
+    <span sysTranslate="snpApp.inventoryItem.home.title">Inventory Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.inventoryItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inventory-item"
+        [routerLink]="['/inventory-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.inventoryItem.home.createLabel">Create a new Inventory Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (inventoryItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.inventoryItem.home.notFound">No Inventory Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="receivedDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.receivedDate">Received Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="manufacturedDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.manufacturedDate">Manufactured Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="expiryDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.expiryDate">Expiry Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="retestDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.retestDate">Retest Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="containerId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.containerId">Container Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="batchNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.batchNo">Batch No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="mfgBatchNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.mfgBatchNo">Mfg Batch No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="lotNoStr">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.lotNoStr">Lot No Str</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="binNumber">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.binNumber">Bin Number</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="comments">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.comments">Comments</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantityOnHandTotal">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.quantityOnHandTotal">Quantity On Hand Total</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="availableToPromiseTotal">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.availableToPromiseTotal">Available To Promise Total</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="accountingQuantityTotal">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.accountingQuantityTotal">Accounting Quantity Total</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="oldQuantityOnHand">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.oldQuantityOnHand">Old Quantity On Hand</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="oldAvailableToPromise">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.oldAvailableToPromise">Old Available To Promise</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="serialNumber">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.serialNumber">Serial Number</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="softIdentifier">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.softIdentifier">Soft Identifier</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="activationNumber">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.activationNumber">Activation Number</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="activationValidThru">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.activationValidThru">Activation Valid Thru</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="unitCost">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.unitCost">Unit Cost</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="inventoryItemType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.inventoryItemType">Inventory Item Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="supplier.organisationName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.supplier">Supplier</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="ownerParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.ownerParty">Owner Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facility.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.facility">Facility</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="facilityLocation.locationSeqId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.facilityLocation">Facility Location</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="uom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.uom">Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="currencyUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.currencyUom">Currency Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="lot.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.inventoryItem.lot">Lot</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inventoryItem of inventoryItems(); track trackId(inventoryItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inventory-item', inventoryItem.id, 'view']">{{ inventoryItem.id }}</a>
+              </td>
+              <td>{{ inventoryItem.receivedDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryItem.manufacturedDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryItem.expiryDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryItem.retestDate | formatMediumDatetime }}</td>
+              <td>{{ inventoryItem.containerId }}</td>
+              <td>{{ inventoryItem.batchNo }}</td>
+              <td>{{ inventoryItem.mfgBatchNo }}</td>
+              <td>{{ inventoryItem.lotNoStr }}</td>
+              <td>{{ inventoryItem.binNumber }}</td>
+              <td>{{ inventoryItem.comments }}</td>
+              <td>{{ inventoryItem.quantityOnHandTotal }}</td>
+              <td>{{ inventoryItem.availableToPromiseTotal }}</td>
+              <td>{{ inventoryItem.accountingQuantityTotal }}</td>
+              <td>{{ inventoryItem.oldQuantityOnHand }}</td>
+              <td>{{ inventoryItem.oldAvailableToPromise }}</td>
+              <td>{{ inventoryItem.serialNumber }}</td>
+              <td>{{ inventoryItem.softIdentifier }}</td>
+              <td>{{ inventoryItem.activationNumber }}</td>
+              <td>{{ inventoryItem.activationValidThru | formatMediumDatetime }}</td>
+              <td>{{ inventoryItem.unitCost }}</td>
+              <td>
+                @if (inventoryItem.inventoryItemType) {
+                  <div>
+                    <a [routerLink]="['/inventory-item-type', inventoryItem.inventoryItemType.id, 'view']">{{
+                      inventoryItem.inventoryItemType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', inventoryItem.product.id, 'view']">{{ inventoryItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.supplier) {
+                  <div>
+                    <a [routerLink]="['/party', inventoryItem.supplier.id, 'view']">{{ inventoryItem.supplier.organisationName }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.ownerParty) {
+                  <div>
+                    <a [routerLink]="['/party', inventoryItem.ownerParty.id, 'view']">{{ inventoryItem.ownerParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', inventoryItem.status.id, 'view']">{{ inventoryItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.facility) {
+                  <div>
+                    <a [routerLink]="['/facility', inventoryItem.facility.id, 'view']">{{ inventoryItem.facility.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.facilityLocation) {
+                  <div>
+                    <a [routerLink]="['/facility-location', inventoryItem.facilityLocation.id, 'view']">{{
+                      inventoryItem.facilityLocation.locationSeqId
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.uom) {
+                  <div>
+                    <a [routerLink]="['/uom', inventoryItem.uom.id, 'view']">{{ inventoryItem.uom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.currencyUom) {
+                  <div>
+                    <a [routerLink]="['/uom', inventoryItem.currencyUom.id, 'view']">{{ inventoryItem.currencyUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (inventoryItem.lot) {
+                  <div>
+                    <a [routerLink]="['/lot', inventoryItem.lot.id, 'view']">{{ inventoryItem.lot.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/inventory-item', inventoryItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/inventory-item', inventoryItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(inventoryItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inventoryItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

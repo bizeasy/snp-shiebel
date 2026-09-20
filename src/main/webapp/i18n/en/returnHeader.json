@@ -1,0 +1,33 @@
+{
+  "snpApp": {
+    "returnHeader": {
+      "home": {
+        "title": "Return Headers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Return Header",
+        "createOrEditLabel": "Create or edit a Return Header",
+        "notFound": "No Return Headers found"
+      },
+      "created": "A new Return Header is created with identifier {{ param }}",
+      "updated": "A Return Header is updated with identifier {{ param }}",
+      "deleted": "A Return Header is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Return Header {{ id }}?"
+      },
+      "detail": {
+        "title": "Return Header"
+      },
+      "id": "ID",
+      "needsInventoryReceive": "Needs Inventory Receive",
+      "supplierRmaId": "Supplier Rma Id",
+      "returnType": "Return Type",
+      "status": "Status",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "paymentMethod": "Payment Method",
+      "originContactMech": "Origin Contact Mech",
+      "destinationFacility": "Destination Facility",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

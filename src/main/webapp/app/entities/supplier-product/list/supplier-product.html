@@ -1,0 +1,254 @@
+<div>
+  <h2 id="page-heading" data-cy="SupplierProductHeading">
+    <span sysTranslate="snpApp.supplierProduct.home.title">Supplier Products</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.supplierProduct.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-supplier-product"
+        [routerLink]="['/supplier-product/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.supplierProduct.home.createLabel">Create a new Supplier Product</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (supplierProducts().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.supplierProduct.home.notFound">No Supplier Products found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="supplierProductId">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.supplierProductId">Supplier Product Id</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="minOrderQty">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.minOrderQty">Min Order Qty</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="lastPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.lastPrice">Last Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shippingPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.shippingPrice">Shipping Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="cgst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.cgst">Cgst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="igst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.igst">Igst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sgst">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.sgst">Sgst</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="totalPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.totalPrice">Total Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="comments">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.comments">Comments</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="leadTimeDays">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.leadTimeDays">Lead Time Days</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="unitsIncluded">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.unitsIncluded">Units Included</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="canDropShip">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.canDropShip">Can Drop Ship</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantityUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.quantityUom">Quantity Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="currencyUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.supplierProduct.currencyUom">Currency Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (supplierProduct of supplierProducts(); track trackId(supplierProduct)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/supplier-product', supplierProduct.id, 'view']">{{ supplierProduct.id }}</a>
+              </td>
+              <td>{{ supplierProduct.fromDate | formatMediumDatetime }}</td>
+              <td>{{ supplierProduct.thruDate | formatMediumDatetime }}</td>
+              <td>{{ supplierProduct.supplierProductId }}</td>
+              <td>{{ supplierProduct.minOrderQty }}</td>
+              <td>{{ supplierProduct.lastPrice }}</td>
+              <td>{{ supplierProduct.shippingPrice }}</td>
+              <td>{{ supplierProduct.cgst }}</td>
+              <td>{{ supplierProduct.igst }}</td>
+              <td>{{ supplierProduct.sgst }}</td>
+              <td>{{ supplierProduct.totalPrice }}</td>
+              <td>{{ supplierProduct.comments }}</td>
+              <td>{{ supplierProduct.leadTimeDays }}</td>
+              <td>{{ supplierProduct.unitsIncluded }}</td>
+              <td>{{ supplierProduct.canDropShip }}</td>
+              <td>
+                @if (supplierProduct.product) {
+                  <div>
+                    <a [routerLink]="['/product', supplierProduct.product.id, 'view']">{{ supplierProduct.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (supplierProduct.party) {
+                  <div>
+                    <a [routerLink]="['/party', supplierProduct.party.id, 'view']">{{ supplierProduct.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (supplierProduct.quantityUom) {
+                  <div>
+                    <a [routerLink]="['/uom', supplierProduct.quantityUom.id, 'view']">{{ supplierProduct.quantityUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (supplierProduct.currencyUom) {
+                  <div>
+                    <a [routerLink]="['/uom', supplierProduct.currencyUom.id, 'view']">{{ supplierProduct.currencyUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/supplier-product', supplierProduct.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/supplier-product', supplierProduct.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(supplierProduct)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (supplierProducts().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

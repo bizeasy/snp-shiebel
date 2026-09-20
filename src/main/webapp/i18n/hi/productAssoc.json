@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "productAssoc": {
+      "home": {
+        "title": "ProductAssocs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Assoc बनाएँ",
+        "createOrEditLabel": "Product Assoc बनाएँ या संपादित करें",
+        "notFound": "No Product Assocs found"
+      },
+      "created": "एक नया Product Assoc [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Assoc [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Assoc [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Assoc [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Assoc"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "product": "Product",
+      "productTo": "Product To",
+      "productAssocType": "Product Assoc Type"
+    }
+  }
+}

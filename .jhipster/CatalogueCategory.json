@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20231214213105"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "sequenceNo",
+      "fieldType": "Integer"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "CatalogueCategory",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "catalogue",
+      "relationshipName": "catalogue",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "productCategory",
+      "relationshipName": "productCategory",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "catalogueCategoryType",
+      "relationshipName": "catalogueCategoryType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

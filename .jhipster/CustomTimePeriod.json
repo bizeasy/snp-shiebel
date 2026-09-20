@@ -1,0 +1,27 @@
+{
+  "annotations": {
+    "changelogDate": "20231214223305"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "25"
+    },
+    {
+      "fieldName": "fromDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "thruDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "CustomTimePeriod",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

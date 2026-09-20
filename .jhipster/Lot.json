@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20231214221005"
+  },
+  "applications": ["snp"],
+  "fields": [
+    {
+      "fieldName": "creationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "expirationDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "retestDate",
+      "fieldType": "Instant"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Lot",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

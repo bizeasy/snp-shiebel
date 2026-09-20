@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (productFeatureApplType(); as productFeatureApplTypeRef) {
+      <div>
+        <h2 data-cy="productFeatureApplTypeDetailsHeading">
+          <span sysTranslate="snpApp.productFeatureApplType.detail.title">Product Feature Appl Type</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productFeatureApplTypeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureApplType.name">Name</span></dt>
+          <dd>
+            <span>{{ productFeatureApplTypeRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.productFeatureApplType.description">Description</span></dt>
+          <dd>
+            <span>{{ productFeatureApplTypeRef.description }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product-feature-appl-type', productFeatureApplTypeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

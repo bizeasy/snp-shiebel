@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facilityParty(); as facilityPartyRef) {
+      <div>
+        <h2 data-cy="facilityPartyDetailsHeading"><span sysTranslate="snpApp.facilityParty.detail.title">Facility Party</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityPartyRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityParty.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ facilityPartyRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityParty.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ facilityPartyRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityParty.facility">Facility</span></dt>
+          <dd>
+            @if (facilityParty()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', facilityParty()!.facility?.id, 'view']">{{ facilityPartyRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityParty.party">Party</span></dt>
+          <dd>
+            @if (facilityParty()!.party) {
+              <div>
+                <a [routerLink]="['/party', facilityParty()!.party?.id, 'view']">{{ facilityPartyRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityParty.roleType">Role Type</span></dt>
+          <dd>
+            @if (facilityParty()!.roleType) {
+              <div>
+                <a [routerLink]="['/role-type', facilityParty()!.roleType?.id, 'view']">{{ facilityPartyRef.roleType?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility-party', facilityPartyRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

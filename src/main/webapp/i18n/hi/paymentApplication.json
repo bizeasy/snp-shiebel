@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "paymentApplication": {
+      "home": {
+        "title": "PaymentApplications",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Payment Application बनाएँ",
+        "createOrEditLabel": "Payment Application बनाएँ या संपादित करें",
+        "notFound": "No Payment Applications found"
+      },
+      "created": "एक नया Payment Application [identifier: {{ param }}] तैयार है",
+      "updated": "एक Payment Application [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Payment Application [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Payment Application [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Payment Application"
+      },
+      "id": "ID",
+      "amountApplied": "Amount Applied",
+      "payment": "Payment",
+      "toPayment": "To Payment",
+      "invoice": "Invoice",
+      "invoiceItem": "Invoice Item",
+      "order": "Order",
+      "orderItem": "Order Item"
+    }
+  }
+}

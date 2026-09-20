@@ -1,0 +1,219 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-inventory-transfer-heading"
+        data-cy="InventoryTransferCreateUpdateHeading"
+        sysTranslate="snpApp.inventoryTransfer.home.createOrEditLabel"
+      >
+        Create or edit a Inventory Transfer
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sentDate" sysTranslate="snpApp.inventoryTransfer.sentDate">Sent Date</label>
+          <div class="d-flex">
+            <input
+              id="field_sentDate"
+              data-cy="sentDate"
+              type="datetime-local"
+              class="form-control"
+              name="sentDate"
+              formControlName="sentDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_receivedDate" sysTranslate="snpApp.inventoryTransfer.receivedDate">Received Date</label>
+          <div class="d-flex">
+            <input
+              id="field_receivedDate"
+              data-cy="receivedDate"
+              type="datetime-local"
+              class="form-control"
+              name="receivedDate"
+              formControlName="receivedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.inventoryTransfer.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItem" sysTranslate="snpApp.inventoryTransfer.inventoryItem">Inventory Item</label>
+          <select
+            class="form-select"
+            id="field_inventoryItem"
+            data-cy="inventoryItem"
+            name="inventoryItem"
+            formControlName="inventoryItem"
+            [compareWith]="compareInventoryItem"
+          >
+            @if (!editForm.get('inventoryItem')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (inventoryItemOption of inventoryItemsSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemOption">{{ inventoryItemOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['inventoryItem'])!.invalid && (editForm.get(['inventoryItem'])!.dirty || editForm.get(['inventoryItem'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['inventoryItem'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.inventoryTransfer.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facility" sysTranslate="snpApp.inventoryTransfer.facility">Facility</label>
+          <select
+            class="form-select"
+            id="field_facility"
+            data-cy="facility"
+            name="facility"
+            formControlName="facility"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityLocation" sysTranslate="snpApp.inventoryTransfer.facilityLocation"
+            >Facility Location</label
+          >
+          <select
+            class="form-select"
+            id="field_facilityLocation"
+            data-cy="facilityLocation"
+            name="facilityLocation"
+            formControlName="facilityLocation"
+            [compareWith]="compareFacilityLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityLocationOption of facilityLocationsSharedCollection(); track $index) {
+              <option [ngValue]="facilityLocationOption">{{ facilityLocationOption.locationSeqId }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityTo" sysTranslate="snpApp.inventoryTransfer.facilityTo">Facility To</label>
+          <select
+            class="form-select"
+            id="field_facilityTo"
+            data-cy="facilityTo"
+            name="facilityTo"
+            formControlName="facilityTo"
+            [compareWith]="compareFacility"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityOption of facilitiesSharedCollection(); track $index) {
+              <option [ngValue]="facilityOption">{{ facilityOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_facilityLocationTo" sysTranslate="snpApp.inventoryTransfer.facilityLocationTo"
+            >Facility Location To</label
+          >
+          <select
+            class="form-select"
+            id="field_facilityLocationTo"
+            data-cy="facilityLocationTo"
+            name="facilityLocationTo"
+            formControlName="facilityLocationTo"
+            [compareWith]="compareFacilityLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (facilityLocationOption of facilityLocationsSharedCollection(); track $index) {
+              <option [ngValue]="facilityLocationOption">{{ facilityLocationOption.locationSeqId }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_issuance" sysTranslate="snpApp.inventoryTransfer.issuance">Issuance</label>
+          <select
+            class="form-select"
+            id="field_issuance"
+            data-cy="issuance"
+            name="issuance"
+            formControlName="issuance"
+            [compareWith]="compareItemIssuance"
+          >
+            <option [ngValue]="null"></option>
+            @for (itemIssuanceOption of itemIssuancesSharedCollection(); track $index) {
+              <option [ngValue]="itemIssuanceOption">{{ itemIssuanceOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

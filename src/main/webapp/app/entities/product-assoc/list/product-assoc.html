@@ -1,0 +1,165 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductAssocHeading">
+    <span sysTranslate="snpApp.productAssoc.home.title">Product Assocs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.productAssoc.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-assoc"
+        [routerLink]="['/product-assoc/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.productAssoc.home.createLabel">Create a new Product Assoc</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (productAssocs().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.productAssoc.home.notFound">No Product Assocs found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="quantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.quantity">Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productTo.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.productTo">Product To</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productAssocType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productAssoc.productAssocType">Product Assoc Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (productAssoc of productAssocs(); track trackId(productAssoc)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product-assoc', productAssoc.id, 'view']">{{ productAssoc.id }}</a>
+              </td>
+              <td>{{ productAssoc.fromDate | formatMediumDatetime }}</td>
+              <td>{{ productAssoc.thruDate | formatMediumDatetime }}</td>
+              <td>{{ productAssoc.sequenceNo }}</td>
+              <td>{{ productAssoc.quantity }}</td>
+              <td>
+                @if (productAssoc.product) {
+                  <div>
+                    <a [routerLink]="['/product', productAssoc.product.id, 'view']">{{ productAssoc.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productAssoc.productTo) {
+                  <div>
+                    <a [routerLink]="['/product', productAssoc.productTo.id, 'view']">{{ productAssoc.productTo.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productAssoc.productAssocType) {
+                  <div>
+                    <a [routerLink]="['/product-assoc-type', productAssoc.productAssocType.id, 'view']">{{
+                      productAssoc.productAssocType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/product-assoc', productAssoc.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/product-assoc', productAssoc.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(productAssoc)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (productAssocs().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

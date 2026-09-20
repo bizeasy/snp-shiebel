@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "quoteRole": {
+      "home": {
+        "title": "QuoteRoles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Quote Role बनाएँ",
+        "createOrEditLabel": "Quote Role बनाएँ या संपादित करें",
+        "notFound": "No Quote Roles found"
+      },
+      "created": "एक नया Quote Role [identifier: {{ param }}] तैयार है",
+      "updated": "एक Quote Role [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Quote Role [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Quote Role [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Quote Role"
+      },
+      "id": "ID",
+      "quote": "Quote",
+      "quoteItem": "Quote Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

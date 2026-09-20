@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "productFeatureCategory": {
+      "home": {
+        "title": "ProductFeatureCategories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product Feature Category बनाएँ",
+        "createOrEditLabel": "Product Feature Category बनाएँ या संपादित करें",
+        "notFound": "No Product Feature Categories found"
+      },
+      "created": "एक नया Product Feature Category [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product Feature Category [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product Feature Category [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product Feature Category [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product Feature Category"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

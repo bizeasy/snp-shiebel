@@ -1,0 +1,193 @@
+<div>
+  <h2 id="page-heading" data-cy="OtpAuthHeading">
+    <span sysTranslate="snpApp.otpAuth.home.title">Otp Auths</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.otpAuth.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-otp-auth"
+        [routerLink]="['/otp-auth/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.otpAuth.home.createLabel">Create a new Otp Auth</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (otpAuths().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.otpAuth.home.notFound">No Otp Auths found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otp">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otp">Otp</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otpSent">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otpSent">Otp Sent</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="verificationSuccess">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.verificationSuccess">Verification Success</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otpExpired">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otpExpired">Otp Expired</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otpSentTime">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otpSentTime">Otp Sent Time</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sentCounter">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.sentCounter">Sent Counter</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="failCounter">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.failCounter">Fail Counter</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otpResetCounter">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otpResetCounter">Otp Reset Counter</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="maxResend">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.maxResend">Max Resend</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="maxReset">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.maxReset">Max Reset</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="maxFailures">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.maxFailures">Max Failures</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="otpActiveTime">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.otpActiveTime">Otp Active Time</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.otpAuth.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (otpAuth of otpAuths(); track trackId(otpAuth)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/otp-auth', otpAuth.id, 'view']">{{ otpAuth.id }}</a>
+              </td>
+              <td>{{ otpAuth.otp }}</td>
+              <td>{{ otpAuth.otpSent }}</td>
+              <td>{{ otpAuth.verificationSuccess }}</td>
+              <td>{{ otpAuth.otpExpired }}</td>
+              <td>{{ otpAuth.otpSentTime | formatMediumDatetime }}</td>
+              <td>{{ otpAuth.sentCounter }}</td>
+              <td>{{ otpAuth.failCounter }}</td>
+              <td>{{ otpAuth.otpResetCounter }}</td>
+              <td>{{ otpAuth.maxResend }}</td>
+              <td>{{ otpAuth.maxReset }}</td>
+              <td>{{ otpAuth.maxFailures }}</td>
+              <td>{{ otpAuth.otpActiveTime }}</td>
+              <td>
+                @if (otpAuth.party) {
+                  <div>
+                    <a [routerLink]="['/party', otpAuth.party.id, 'view']">{{ otpAuth.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/otp-auth', otpAuth.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/otp-auth', otpAuth.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(otpAuth)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (otpAuths().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

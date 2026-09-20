@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (facilityContactMech(); as facilityContactMechRef) {
+      <div>
+        <h2 data-cy="facilityContactMechDetailsHeading">
+          <span sysTranslate="snpApp.facilityContactMech.detail.title">Facility Contact Mech</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ facilityContactMechRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityContactMech.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ facilityContactMechRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityContactMech.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ facilityContactMechRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityContactMech.facility">Facility</span></dt>
+          <dd>
+            @if (facilityContactMech()!.facility) {
+              <div>
+                <a [routerLink]="['/facility', facilityContactMech()!.facility?.id, 'view']">{{ facilityContactMechRef.facility?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityContactMech.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (facilityContactMech()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', facilityContactMech()!.contactMech?.id, 'view']">{{
+                  facilityContactMechRef.contactMech?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.facilityContactMech.contactMechPurpose">Contact Mech Purpose</span></dt>
+          <dd>
+            @if (facilityContactMech()!.contactMechPurpose) {
+              <div>
+                <a [routerLink]="['/contact-mech-purpose', facilityContactMech()!.contactMechPurpose?.id, 'view']">{{
+                  facilityContactMechRef.contactMechPurpose?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/facility-contact-mech', facilityContactMechRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

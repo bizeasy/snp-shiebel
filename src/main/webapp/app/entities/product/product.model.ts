@@ -1,0 +1,66 @@
+import dayjs from 'dayjs/esm';
+
+import { IInventoryItemType } from 'app/entities/inventory-item-type/inventory-item-type.model';
+import { IProductCategory } from 'app/entities/product-category/product-category.model';
+import { IProductType } from 'app/entities/product-type/product-type.model';
+import { ITaxSlab } from 'app/entities/tax-slab/tax-slab.model';
+import { IUom } from 'app/entities/uom/uom.model';
+
+export interface IProduct {
+  id: number;
+  name?: string | null;
+  internalName?: string | null;
+  brandName?: string | null;
+  variant?: string | null;
+  sku?: string | null;
+  introductionDate?: dayjs.Dayjs | null;
+  releaseDate?: dayjs.Dayjs | null;
+  quantityIncluded?: number | null;
+  piecesIncluded?: number | null;
+  weight?: number | null;
+  height?: number | null;
+  width?: number | null;
+  depth?: number | null;
+  smallImageUrl?: string | null;
+  mediumImageUrl?: string | null;
+  largeImageUrl?: string | null;
+  detailImageUrl?: string | null;
+  originalImageUrl?: string | null;
+  altImageUrl1?: string | null;
+  altImageUrl2?: string | null;
+  altImageUrl3?: string | null;
+  altImageUrl4?: string | null;
+  altImageUrl5?: string | null;
+  altImageUrl6?: string | null;
+  videoUrl?: string | null;
+  quantity?: number | null;
+  price?: number | null;
+  cgst?: number | null;
+  igst?: number | null;
+  sgst?: number | null;
+  cgstPercentage?: number | null;
+  igstPercentage?: number | null;
+  sgstPercentage?: number | null;
+  totalPrice?: number | null;
+  description?: string | null;
+  longDescription?: string | null;
+  info?: string | null;
+  isVirtual?: boolean | null;
+  isVariant?: boolean | null;
+  requireInventory?: boolean | null;
+  returnable?: boolean | null;
+  isPopular?: boolean | null;
+  isBanner?: boolean | null;
+  bannerUrl?: string | null;
+  productType?: IProductType | null;
+  primaryProductCategory?: IProductCategory | null;
+  virtualProduct?: IProduct | null;
+  inventoryItemType?: IInventoryItemType | null;
+  taxSlab?: ITaxSlab | null;
+  uom?: IUom | null;
+  quantityUom?: IUom | null;
+  weightUom?: IUom | null;
+  sizeUom?: IUom | null;
+}
+
+export type NewProduct = Omit<IProduct, 'id'> & { id: null };

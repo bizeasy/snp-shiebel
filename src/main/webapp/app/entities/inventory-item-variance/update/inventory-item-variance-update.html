@@ -1,0 +1,119 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-inventory-item-variance-heading"
+        data-cy="InventoryItemVarianceCreateUpdateHeading"
+        sysTranslate="snpApp.inventoryItemVariance.home.createOrEditLabel"
+      >
+        Create or edit a Inventory Item Variance
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let varianceReasonRef = editForm.get('varianceReason')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_varianceReason" sysTranslate="snpApp.inventoryItemVariance.varianceReason"
+            >Variance Reason</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="varianceReason"
+            id="field_varianceReason"
+            data-cy="varianceReason"
+            formControlName="varianceReason"
+          />
+          @if (varianceReasonRef.invalid && (varianceReasonRef.dirty || varianceReasonRef.touched)) {
+            <div>
+              @if (varianceReasonRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_atpVar" sysTranslate="snpApp.inventoryItemVariance.atpVar">Atp Var</label>
+          <input type="number" class="form-control" name="atpVar" id="field_atpVar" data-cy="atpVar" formControlName="atpVar" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_qohVar" sysTranslate="snpApp.inventoryItemVariance.qohVar">Qoh Var</label>
+          <input type="number" class="form-control" name="qohVar" id="field_qohVar" data-cy="qohVar" formControlName="qohVar" />
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.inventoryItemVariance.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_inventoryItem" sysTranslate="snpApp.inventoryItemVariance.inventoryItem"
+            >Inventory Item</label
+          >
+          <select
+            class="form-select"
+            id="field_inventoryItem"
+            data-cy="inventoryItem"
+            name="inventoryItem"
+            formControlName="inventoryItem"
+            [compareWith]="compareInventoryItem"
+          >
+            @if (!editForm.get('inventoryItem')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (inventoryItemOption of inventoryItemsSharedCollection(); track $index) {
+              <option [ngValue]="inventoryItemOption">{{ inventoryItemOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['inventoryItem'])!.invalid && (editForm.get(['inventoryItem'])!.dirty || editForm.get(['inventoryItem'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['inventoryItem'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

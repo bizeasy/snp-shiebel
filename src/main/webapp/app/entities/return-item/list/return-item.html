@@ -1,0 +1,203 @@
+<div>
+  <h2 id="page-heading" data-cy="ReturnItemHeading">
+    <span sysTranslate="snpApp.returnItem.home.title">Return Items</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.returnItem.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-return-item"
+        [routerLink]="['/return-item/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.returnItem.home.createLabel">Create a new Return Item</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (returnItems().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.returnItem.home.notFound">No Return Items found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnQuantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.returnQuantity">Return Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="receivedQuantity">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.receivedQuantity">Received Quantity</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnPrice">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.returnPrice">Return Price</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnItemPurpose">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.returnItemPurpose">Return Item Purpose</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnHeader.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.returnHeader">Return Header</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="returnType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.returnType">Return Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="product.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.product">Product</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="orderItem.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.orderItem">Order Item</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.returnItem.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (returnItem of returnItems(); track trackId(returnItem)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/return-item', returnItem.id, 'view']">{{ returnItem.id }}</a>
+              </td>
+              <td>{{ returnItem.sequenceNo }}</td>
+              <td>{{ returnItem.description }}</td>
+              <td>{{ returnItem.returnQuantity }}</td>
+              <td>{{ returnItem.receivedQuantity }}</td>
+              <td>{{ returnItem.returnPrice }}</td>
+              <td>{{ returnItem.returnItemPurpose }}</td>
+              <td>
+                @if (returnItem.returnHeader) {
+                  <div>
+                    <a [routerLink]="['/return-header', returnItem.returnHeader.id, 'view']">{{ returnItem.returnHeader.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnItem.returnType) {
+                  <div>
+                    <a [routerLink]="['/return-header-type', returnItem.returnType.id, 'view']">{{ returnItem.returnType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnItem.product) {
+                  <div>
+                    <a [routerLink]="['/product', returnItem.product.id, 'view']">{{ returnItem.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnItem.orderItem) {
+                  <div>
+                    <a [routerLink]="['/order-item', returnItem.orderItem.id, 'view']">{{ returnItem.orderItem.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (returnItem.status) {
+                  <div>
+                    <a [routerLink]="['/status', returnItem.status.id, 'view']">{{ returnItem.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/return-item', returnItem.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/return-item', returnItem.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(returnItem)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (returnItems().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

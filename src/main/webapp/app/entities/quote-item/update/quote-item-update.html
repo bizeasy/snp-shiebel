@@ -1,0 +1,258 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-quote-item-heading" data-cy="QuoteItemCreateUpdateHeading" sysTranslate="snpApp.quoteItem.home.createOrEditLabel">
+        Create or edit a Quote Item
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.quoteItem.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" sysTranslate="snpApp.quoteItem.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (quantityRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!quantityRef.errors?.number" sysTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_selectedAmount" sysTranslate="snpApp.quoteItem.selectedAmount">Selected Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="selectedAmount"
+            id="field_selectedAmount"
+            data-cy="selectedAmount"
+            formControlName="selectedAmount"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quoteUnitPrice" sysTranslate="snpApp.quoteItem.quoteUnitPrice">Quote Unit Price</label>
+          <input
+            type="number"
+            class="form-control"
+            name="quoteUnitPrice"
+            id="field_quoteUnitPrice"
+            data-cy="quoteUnitPrice"
+            formControlName="quoteUnitPrice"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_totalAmount" sysTranslate="snpApp.quoteItem.totalAmount">Total Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalAmount"
+            id="field_totalAmount"
+            data-cy="totalAmount"
+            formControlName="totalAmount"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_estimatedDeliveryDate" sysTranslate="snpApp.quoteItem.estimatedDeliveryDate"
+            >Estimated Delivery Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_estimatedDeliveryDate"
+              data-cy="estimatedDeliveryDate"
+              type="datetime-local"
+              class="form-control"
+              name="estimatedDeliveryDate"
+              formControlName="estimatedDeliveryDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_leadTimeDays" sysTranslate="snpApp.quoteItem.leadTimeDays">Lead Time Days</label>
+          <input
+            type="number"
+            class="form-control"
+            name="leadTimeDays"
+            id="field_leadTimeDays"
+            data-cy="leadTimeDays"
+            formControlName="leadTimeDays"
+          />
+        </div>
+
+        @let commentsRef = editForm.get('comments')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_comments" sysTranslate="snpApp.quoteItem.comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          @if (commentsRef.invalid && (commentsRef.dirty || commentsRef.touched)) {
+            <div>
+              @if (commentsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >This field cannot be longer than 2000 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_quote" sysTranslate="snpApp.quoteItem.quote">Quote</label>
+          <select class="form-select" id="field_quote" data-cy="quote" name="quote" formControlName="quote" [compareWith]="compareQuote">
+            @if (!editForm.get('quote')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (quoteOption of quotesSharedCollection(); track $index) {
+              <option [ngValue]="quoteOption">{{ quoteOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['quote'])!.invalid && (editForm.get(['quote'])!.dirty || editForm.get(['quote'])!.touched)) {
+          <div>
+            @if (editForm.get(['quote'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" sysTranslate="snpApp.quoteItem.product">Product</label>
+          <select
+            class="form-select"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection(); track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_productFeature" sysTranslate="snpApp.quoteItem.productFeature">Product Feature</label>
+          <select
+            class="form-select"
+            id="field_productFeature"
+            data-cy="productFeature"
+            name="productFeature"
+            formControlName="productFeature"
+            [compareWith]="compareProductFeature"
+          >
+            <option [ngValue]="null"></option>
+            @for (productFeatureOption of productFeaturesSharedCollection(); track $index) {
+              <option [ngValue]="productFeatureOption">{{ productFeatureOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_uom" sysTranslate="snpApp.quoteItem.uom">Uom</label>
+          <select class="form-select" id="field_uom" data-cy="uom" name="uom" formControlName="uom" [compareWith]="compareUom">
+            <option [ngValue]="null"></option>
+            @for (uomOption of uomsSharedCollection(); track $index) {
+              <option [ngValue]="uomOption">{{ uomOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.quoteItem.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            <option [ngValue]="null"></option>
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_custRequest" sysTranslate="snpApp.quoteItem.custRequest">Cust Request</label>
+          <select
+            class="form-select"
+            id="field_custRequest"
+            data-cy="custRequest"
+            name="custRequest"
+            formControlName="custRequest"
+            [compareWith]="compareCustRequest"
+          >
+            <option [ngValue]="null"></option>
+            @for (custRequestOption of custRequestsSharedCollection(); track $index) {
+              <option [ngValue]="custRequestOption">{{ custRequestOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_custRequestItem" sysTranslate="snpApp.quoteItem.custRequestItem">Cust Request Item</label>
+          <select
+            class="form-select"
+            id="field_custRequestItem"
+            data-cy="custRequestItem"
+            name="custRequestItem"
+            formControlName="custRequestItem"
+            [compareWith]="compareCustRequestItem"
+          >
+            <option [ngValue]="null"></option>
+            @for (custRequestItemOption of custRequestItemsSharedCollection(); track $index) {
+              <option [ngValue]="custRequestItemOption">{{ custRequestItemOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

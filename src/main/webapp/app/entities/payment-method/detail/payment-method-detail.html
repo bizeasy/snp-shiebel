@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paymentMethod(); as paymentMethodRef) {
+      <div>
+        <h2 data-cy="paymentMethodDetailsHeading"><span sysTranslate="snpApp.paymentMethod.detail.title">Payment Method</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentMethodRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.name">Name</span></dt>
+          <dd>
+            <span>{{ paymentMethodRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.description">Description</span></dt>
+          <dd>
+            <span>{{ paymentMethodRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.fromDate">From Date</span></dt>
+          <dd>
+            <span>{{ paymentMethodRef.fromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.thruDate">Thru Date</span></dt>
+          <dd>
+            <span>{{ paymentMethodRef.thruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.paymentMethodType">Payment Method Type</span></dt>
+          <dd>
+            @if (paymentMethod()!.paymentMethodType) {
+              <div>
+                <a [routerLink]="['/payment-method-type', paymentMethod()!.paymentMethodType?.id, 'view']">{{
+                  paymentMethodRef.paymentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentMethod.party">Party</span></dt>
+          <dd>
+            @if (paymentMethod()!.party) {
+              <div>
+                <a [routerLink]="['/party', paymentMethod()!.party?.id, 'view']">{{ paymentMethodRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment-method', paymentMethodRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

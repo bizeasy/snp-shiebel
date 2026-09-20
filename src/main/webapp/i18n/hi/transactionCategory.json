@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "transactionCategory": {
+      "home": {
+        "title": "TransactionCategories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Transaction Category बनाएँ",
+        "createOrEditLabel": "Transaction Category बनाएँ या संपादित करें",
+        "notFound": "No Transaction Categories found"
+      },
+      "created": "एक नया Transaction Category [identifier: {{ param }}] तैयार है",
+      "updated": "एक Transaction Category [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Transaction Category [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Transaction Category [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Transaction Category"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

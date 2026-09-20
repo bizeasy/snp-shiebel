@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "facilityLocation": {
+      "home": {
+        "title": "FacilityLocations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Facility Location बनाएँ",
+        "createOrEditLabel": "Facility Location बनाएँ या संपादित करें",
+        "notFound": "No Facility Locations found"
+      },
+      "created": "एक नया Facility Location [identifier: {{ param }}] तैयार है",
+      "updated": "एक Facility Location [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Facility Location [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Facility Location [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Facility Location"
+      },
+      "id": "ID",
+      "locationSeqId": "Location Seq Id",
+      "areaId": "Area Id",
+      "aisleId": "Aisle Id",
+      "sectionId": "Section Id",
+      "levelId": "Level Id",
+      "positionId": "Position Id",
+      "facility": "Facility",
+      "locationType": "Location Type"
+    }
+  }
+}

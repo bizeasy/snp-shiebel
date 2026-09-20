@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (catalogueCategory(); as catalogueCategoryRef) {
+      <div>
+        <h2 data-cy="catalogueCategoryDetailsHeading">
+          <span sysTranslate="snpApp.catalogueCategory.detail.title">Catalogue Category</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ catalogueCategoryRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.catalogueCategory.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ catalogueCategoryRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.catalogueCategory.catalogue">Catalogue</span></dt>
+          <dd>
+            @if (catalogueCategory()!.catalogue) {
+              <div>
+                <a [routerLink]="['/catalogue', catalogueCategory()!.catalogue?.id, 'view']">{{ catalogueCategoryRef.catalogue?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.catalogueCategory.productCategory">Product Category</span></dt>
+          <dd>
+            @if (catalogueCategory()!.productCategory) {
+              <div>
+                <a [routerLink]="['/product-category', catalogueCategory()!.productCategory?.id, 'view']">{{
+                  catalogueCategoryRef.productCategory?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.catalogueCategory.catalogueCategoryType">Catalogue Category Type</span></dt>
+          <dd>
+            @if (catalogueCategory()!.catalogueCategoryType) {
+              <div>
+                <a [routerLink]="['/catalogue-category-type', catalogueCategory()!.catalogueCategoryType?.id, 'view']">{{
+                  catalogueCategoryRef.catalogueCategoryType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/catalogue-category', catalogueCategoryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

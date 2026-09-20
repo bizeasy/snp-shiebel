@@ -1,0 +1,116 @@
+package com.snp.service.criteria;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.Test;
+
+class OrderItemBillingCriteriaTest {
+
+    @Test
+    void newOrderItemBillingCriteriaHasAllFiltersNullTest() {
+        var orderItemBillingCriteria = new OrderItemBillingCriteria();
+        assertThat(orderItemBillingCriteria).is(criteriaFiltersAre(Objects::isNull));
+    }
+
+    @Test
+    void orderItemBillingCriteriaFluentMethodsCreatesFiltersTest() {
+        var orderItemBillingCriteria = new OrderItemBillingCriteria();
+
+        setAllFilters(orderItemBillingCriteria);
+
+        assertThat(orderItemBillingCriteria).is(criteriaFiltersAre(Objects::nonNull));
+    }
+
+    @Test
+    void orderItemBillingCriteriaCopyCreatesNullFilterTest() {
+        var orderItemBillingCriteria = new OrderItemBillingCriteria();
+        var copy = orderItemBillingCriteria.copy();
+
+        assertThat(orderItemBillingCriteria).satisfies(
+            criteria ->
+                assertThat(criteria).is(copyFiltersAre(copy, (a, b) -> a == null || a instanceof Boolean ? a == b : a != b && a.equals(b))),
+            criteria -> assertThat(criteria).isEqualTo(copy),
+            criteria -> assertThat(criteria).hasSameHashCodeAs(copy)
+        );
+
+        assertThat(copy).satisfies(
+            criteria -> assertThat(criteria).is(criteriaFiltersAre(Objects::isNull)),
+            criteria -> assertThat(criteria).isEqualTo(orderItemBillingCriteria)
+        );
+    }
+
+    @Test
+    void orderItemBillingCriteriaCopyDuplicatesEveryExistingFilterTest() {
+        var orderItemBillingCriteria = new OrderItemBillingCriteria();
+        setAllFilters(orderItemBillingCriteria);
+
+        var copy = orderItemBillingCriteria.copy();
+
+        assertThat(orderItemBillingCriteria).satisfies(
+            criteria ->
+                assertThat(criteria).is(copyFiltersAre(copy, (a, b) -> a == null || a instanceof Boolean ? a == b : a != b && a.equals(b))),
+            criteria -> assertThat(criteria).isEqualTo(copy),
+            criteria -> assertThat(criteria).hasSameHashCodeAs(copy)
+        );
+
+        assertThat(copy).satisfies(
+            criteria -> assertThat(criteria).is(criteriaFiltersAre(Objects::nonNull)),
+            criteria -> assertThat(criteria).isEqualTo(orderItemBillingCriteria)
+        );
+    }
+
+    @Test
+    void toStringVerifier() {
+        var orderItemBillingCriteria = new OrderItemBillingCriteria();
+
+        assertThat(orderItemBillingCriteria).hasToString("OrderItemBillingCriteria{}");
+    }
+
+    private static void setAllFilters(OrderItemBillingCriteria orderItemBillingCriteria) {
+        orderItemBillingCriteria.id();
+        orderItemBillingCriteria.quantity();
+        orderItemBillingCriteria.amount();
+        orderItemBillingCriteria.orderItemId();
+        orderItemBillingCriteria.invoiceItemId();
+        orderItemBillingCriteria.shipmentReceiptId();
+        orderItemBillingCriteria.itemIssuanceId();
+        orderItemBillingCriteria.distinct();
+    }
+
+    private static Condition<OrderItemBillingCriteria> criteriaFiltersAre(Function<Object, Boolean> condition) {
+        return new Condition<>(
+            criteria ->
+                condition.apply(criteria.getId()) &&
+                condition.apply(criteria.getQuantity()) &&
+                condition.apply(criteria.getAmount()) &&
+                condition.apply(criteria.getOrderItemId()) &&
+                condition.apply(criteria.getInvoiceItemId()) &&
+                condition.apply(criteria.getShipmentReceiptId()) &&
+                condition.apply(criteria.getItemIssuanceId()) &&
+                condition.apply(criteria.getDistinct()),
+            "every filter matches"
+        );
+    }
+
+    private static Condition<OrderItemBillingCriteria> copyFiltersAre(
+        OrderItemBillingCriteria copy,
+        BiFunction<Object, Object, Boolean> condition
+    ) {
+        return new Condition<>(
+            criteria ->
+                condition.apply(criteria.getId(), copy.getId()) &&
+                condition.apply(criteria.getQuantity(), copy.getQuantity()) &&
+                condition.apply(criteria.getAmount(), copy.getAmount()) &&
+                condition.apply(criteria.getOrderItemId(), copy.getOrderItemId()) &&
+                condition.apply(criteria.getInvoiceItemId(), copy.getInvoiceItemId()) &&
+                condition.apply(criteria.getShipmentReceiptId(), copy.getShipmentReceiptId()) &&
+                condition.apply(criteria.getItemIssuanceId(), copy.getItemIssuanceId()) &&
+                condition.apply(criteria.getDistinct(), copy.getDistinct()),
+            "every filter matches"
+        );
+    }
+}

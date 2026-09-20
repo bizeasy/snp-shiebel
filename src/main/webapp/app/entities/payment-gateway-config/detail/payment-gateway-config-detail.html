@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paymentGatewayConfig(); as paymentGatewayConfigRef) {
+      <div>
+        <h2 data-cy="paymentGatewayConfigDetailsHeading">
+          <span sysTranslate="snpApp.paymentGatewayConfig.detail.title">Payment Gateway Config</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentGatewayConfigRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayConfig.name">Name</span></dt>
+          <dd>
+            <span>{{ paymentGatewayConfigRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayConfig.authUrl">Auth Url</span></dt>
+          <dd>
+            <span>{{ paymentGatewayConfigRef.authUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayConfig.releaseUrl">Release Url</span></dt>
+          <dd>
+            <span>{{ paymentGatewayConfigRef.releaseUrl }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayConfig.refundUrl">Refund Url</span></dt>
+          <dd>
+            <span>{{ paymentGatewayConfigRef.refundUrl }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment-gateway-config', paymentGatewayConfigRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

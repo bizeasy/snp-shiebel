@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "quoteRole": {
+      "home": {
+        "title": "Quote Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Quote Role",
+        "createOrEditLabel": "Create or edit a Quote Role",
+        "notFound": "No Quote Roles found"
+      },
+      "created": "A new Quote Role is created with identifier {{ param }}",
+      "updated": "A Quote Role is updated with identifier {{ param }}",
+      "deleted": "A Quote Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Quote Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Quote Role"
+      },
+      "id": "ID",
+      "quote": "Quote",
+      "quoteItem": "Quote Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "facilityCarrierShipment": {
+      "home": {
+        "title": "Facility Carrier Shipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Facility Carrier Shipment సృష్టించండి",
+        "createOrEditLabel": "Facility Carrier Shipment సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Facility Carrier Shipments found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Facility Carrier Shipment సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Facility Carrier Shipment సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Facility Carrier Shipment తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Facility Carrier Shipment {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Facility Carrier Shipment"
+      },
+      "id": "ID",
+      "facility": "Facility",
+      "party": "Party",
+      "roleType": "Role Type",
+      "shipmentMethodType": "Shipment Method Type"
+    }
+  }
+}

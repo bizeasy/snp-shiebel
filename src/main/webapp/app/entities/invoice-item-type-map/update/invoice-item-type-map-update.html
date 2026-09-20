@@ -1,0 +1,124 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-invoice-item-type-map-heading"
+        data-cy="InvoiceItemTypeMapCreateUpdateHeading"
+        sysTranslate="snpApp.invoiceItemTypeMap.home.createOrEditLabel"
+      >
+        Create or edit a Invoice Item Type Map
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let invoiceItemMapKeyRef = editForm.get('invoiceItemMapKey')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceItemMapKey" sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemMapKey"
+            >Invoice Item Map Key</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="invoiceItemMapKey"
+            id="field_invoiceItemMapKey"
+            data-cy="invoiceItemMapKey"
+            formControlName="invoiceItemMapKey"
+          />
+          @if (invoiceItemMapKeyRef.invalid && (invoiceItemMapKeyRef.dirty || invoiceItemMapKeyRef.touched)) {
+            <div>
+              @if (invoiceItemMapKeyRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (invoiceItemMapKeyRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceType" sysTranslate="snpApp.invoiceItemTypeMap.invoiceType">Invoice Type</label>
+          <select
+            class="form-select"
+            id="field_invoiceType"
+            data-cy="invoiceType"
+            name="invoiceType"
+            formControlName="invoiceType"
+            [compareWith]="compareInvoiceType"
+          >
+            @if (!editForm.get('invoiceType')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (invoiceTypeOption of invoiceTypesSharedCollection(); track $index) {
+              <option [ngValue]="invoiceTypeOption">{{ invoiceTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['invoiceType'])!.invalid && (editForm.get(['invoiceType'])!.dirty || editForm.get(['invoiceType'])!.touched)) {
+          <div>
+            @if (editForm.get(['invoiceType'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceItemType" sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemType"
+            >Invoice Item Type</label
+          >
+          <select
+            class="form-select"
+            id="field_invoiceItemType"
+            data-cy="invoiceItemType"
+            name="invoiceItemType"
+            formControlName="invoiceItemType"
+            [compareWith]="compareInvoiceItemType"
+          >
+            @if (!editForm.get('invoiceItemType')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (invoiceItemTypeOption of invoiceItemTypesSharedCollection(); track $index) {
+              <option [ngValue]="invoiceItemTypeOption">{{ invoiceItemTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['invoiceItemType'])!.invalid &&
+          (editForm.get(['invoiceItemType'])!.dirty || editForm.get(['invoiceItemType'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['invoiceItemType'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

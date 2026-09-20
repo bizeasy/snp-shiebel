@@ -1,0 +1,122 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-order-status-heading" data-cy="OrderStatusCreateUpdateHeading" sysTranslate="snpApp.orderStatus.home.createOrEditLabel">
+        Create or edit a Order Status
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let statusDateTimeRef = editForm.get('statusDateTime')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_statusDateTime" sysTranslate="snpApp.orderStatus.statusDateTime">Status Date Time</label>
+          <div class="d-flex">
+            <input
+              id="field_statusDateTime"
+              data-cy="statusDateTime"
+              type="datetime-local"
+              class="form-control"
+              name="statusDateTime"
+              formControlName="statusDateTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (statusDateTimeRef.invalid && (statusDateTimeRef.dirty || statusDateTimeRef.touched)) {
+            <div>
+              @if (statusDateTimeRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!statusDateTimeRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sequenceNo" sysTranslate="snpApp.orderStatus.sequenceNo">Sequence No</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sequenceNo"
+            id="field_sequenceNo"
+            data-cy="sequenceNo"
+            formControlName="sequenceNo"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_order" sysTranslate="snpApp.orderStatus.order">Order</label>
+          <select class="form-select" id="field_order" data-cy="order" name="order" formControlName="order" [compareWith]="compareOrder">
+            @if (!editForm.get('order')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (orderOption of ordersSharedCollection(); track $index) {
+              <option [ngValue]="orderOption">{{ orderOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['order'])!.invalid && (editForm.get(['order'])!.dirty || editForm.get(['order'])!.touched)) {
+          <div>
+            @if (editForm.get(['order'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_status" sysTranslate="snpApp.orderStatus.status">Status</label>
+          <select
+            class="form-select"
+            id="field_status"
+            data-cy="status"
+            name="status"
+            formControlName="status"
+            [compareWith]="compareStatus"
+          >
+            @if (!editForm.get('status')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (statusOption of statusesSharedCollection(); track $index) {
+              <option [ngValue]="statusOption">{{ statusOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['status'])!.invalid && (editForm.get(['status'])!.dirty || editForm.get(['status'])!.touched)) {
+          <div>
+            @if (editForm.get(['status'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

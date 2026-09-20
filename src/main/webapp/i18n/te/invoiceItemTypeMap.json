@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "invoiceItemTypeMap": {
+      "home": {
+        "title": "Invoice Item Type Maps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Invoice Item Type Map సృష్టించండి",
+        "createOrEditLabel": "Invoice Item Type Map సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Invoice Item Type Maps found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Invoice Item Type Map సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Invoice Item Type Map సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Invoice Item Type Map తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Invoice Item Type Map {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Invoice Item Type Map"
+      },
+      "id": "ID",
+      "invoiceItemMapKey": "Invoice Item Map Key",
+      "invoiceType": "Invoice Type",
+      "invoiceItemType": "Invoice Item Type"
+    }
+  }
+}

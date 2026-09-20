@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quote(); as quoteRef) {
+      <div>
+        <h2 data-cy="quoteDetailsHeading"><span sysTranslate="snpApp.quote.detail.title">Quote</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ quoteRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.name">Name</span></dt>
+          <dd>
+            <span>{{ quoteRef.name }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.offerNo">Offer No</span></dt>
+          <dd>
+            <span>{{ quoteRef.offerNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.issueDate">Issue Date</span></dt>
+          <dd>
+            <span>{{ quoteRef.issueDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.validFromDate">Valid From Date</span></dt>
+          <dd>
+            <span>{{ quoteRef.validFromDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.validThruDate">Valid Thru Date</span></dt>
+          <dd>
+            <span>{{ quoteRef.validThruDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.description">Description</span></dt>
+          <dd>
+            <span>{{ quoteRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.offerValue">Offer Value</span></dt>
+          <dd>
+            <span>{{ quoteRef.offerValue }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ quoteRef.remarks }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.quoteType">Quote Type</span></dt>
+          <dd>
+            @if (quote()!.quoteType) {
+              <div>
+                <a [routerLink]="['/quote-type', quote()!.quoteType?.id, 'view']">{{ quoteRef.quoteType?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.custRequest">Cust Request</span></dt>
+          <dd>
+            @if (quote()!.custRequest) {
+              <div>
+                <a [routerLink]="['/cust-request', quote()!.custRequest?.id, 'view']">{{ quoteRef.custRequest?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.party">Party</span></dt>
+          <dd>
+            @if (quote()!.party) {
+              <div>
+                <a [routerLink]="['/party', quote()!.party?.id, 'view']">{{ quoteRef.party?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.status">Status</span></dt>
+          <dd>
+            @if (quote()!.status) {
+              <div>
+                <a [routerLink]="['/status', quote()!.status?.id, 'view']">{{ quoteRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.productStore">Product Store</span></dt>
+          <dd>
+            @if (quote()!.productStore) {
+              <div>
+                <a [routerLink]="['/product-store', quote()!.productStore?.id, 'view']">{{ quoteRef.productStore?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.salesChannel">Sales Channel</span></dt>
+          <dd>
+            @if (quote()!.salesChannel) {
+              <div>
+                <a [routerLink]="['/sales-channel', quote()!.salesChannel?.id, 'view']">{{ quoteRef.salesChannel?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.currencyUom">Currency Uom</span></dt>
+          <dd>
+            @if (quote()!.currencyUom) {
+              <div>
+                <a [routerLink]="['/uom', quote()!.currencyUom?.id, 'view']">{{ quoteRef.currencyUom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quote.currencyConversion">Currency Conversion</span></dt>
+          <dd>
+            @if (quote()!.currencyConversion) {
+              <div>
+                <a [routerLink]="['/uom-conversion', quote()!.currencyConversion?.id, 'view']">{{ quoteRef.currencyConversion?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quote', quoteRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

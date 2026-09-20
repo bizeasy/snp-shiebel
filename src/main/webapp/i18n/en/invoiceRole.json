@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "invoiceRole": {
+      "home": {
+        "title": "Invoice Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Invoice Role",
+        "createOrEditLabel": "Create or edit a Invoice Role",
+        "notFound": "No Invoice Roles found"
+      },
+      "created": "A new Invoice Role is created with identifier {{ param }}",
+      "updated": "A Invoice Role is updated with identifier {{ param }}",
+      "deleted": "A Invoice Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Invoice Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Invoice Role"
+      },
+      "id": "ID",
+      "invoice": "Invoice",
+      "invoiceItem": "Invoice Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

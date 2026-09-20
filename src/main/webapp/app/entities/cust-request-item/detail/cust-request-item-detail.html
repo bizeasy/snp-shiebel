@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (custRequestItem(); as custRequestItemRef) {
+      <div>
+        <h2 data-cy="custRequestItemDetailsHeading"><span sysTranslate="snpApp.custRequestItem.detail.title">Cust Request Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.priority">Priority</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.priority }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.requiredByDate">Required By Date</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.requiredByDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.selectedAmount">Selected Amount</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.selectedAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.maxAmount">Max Amount</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.maxAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.description">Description</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.description }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.story">Story</span></dt>
+          <dd>
+            <span>{{ custRequestItemRef.story }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.custRequest">Cust Request</span></dt>
+          <dd>
+            @if (custRequestItem()!.custRequest) {
+              <div>
+                <a [routerLink]="['/cust-request', custRequestItem()!.custRequest?.id, 'view']">{{ custRequestItemRef.custRequest?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.status">Status</span></dt>
+          <dd>
+            @if (custRequestItem()!.status) {
+              <div>
+                <a [routerLink]="['/status', custRequestItem()!.status?.id, 'view']">{{ custRequestItemRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.product">Product</span></dt>
+          <dd>
+            @if (custRequestItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', custRequestItem()!.product?.id, 'view']">{{ custRequestItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.uom">Uom</span></dt>
+          <dd>
+            @if (custRequestItem()!.uom) {
+              <div>
+                <a [routerLink]="['/uom', custRequestItem()!.uom?.id, 'view']">{{ custRequestItemRef.uom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.custRequestItem.shoppingListItem">Shopping List Item</span></dt>
+          <dd>
+            @if (custRequestItem()!.shoppingListItem) {
+              <div>
+                <a [routerLink]="['/shopping-list-item', custRequestItem()!.shoppingListItem?.id, 'view']">{{
+                  custRequestItemRef.shoppingListItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/cust-request-item', custRequestItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

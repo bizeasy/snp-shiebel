@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paymentGatewayResponse(); as paymentGatewayResponseRef) {
+      <div>
+        <h2 data-cy="paymentGatewayResponseDetailsHeading">
+          <span sysTranslate="snpApp.paymentGatewayResponse.detail.title">Payment Gateway Response</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ paymentGatewayResponseRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayResponse.referenceNumber">Reference Number</span></dt>
+          <dd>
+            <span>{{ paymentGatewayResponseRef.referenceNumber }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayResponse.amount">Amount</span></dt>
+          <dd>
+            <span>{{ paymentGatewayResponseRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayResponse.gatewayMessage">Gateway Message</span></dt>
+          <dd>
+            <span>{{ paymentGatewayResponseRef.gatewayMessage }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayResponse.paymentGatewayConfig">Payment Gateway Config</span></dt>
+          <dd>
+            @if (paymentGatewayResponse()!.paymentGatewayConfig) {
+              <div>
+                <a [routerLink]="['/payment-gateway-config', paymentGatewayResponse()!.paymentGatewayConfig?.id, 'view']">{{
+                  paymentGatewayResponseRef.paymentGatewayConfig?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.paymentGatewayResponse.paymentMethodType">Payment Method Type</span></dt>
+          <dd>
+            @if (paymentGatewayResponse()!.paymentMethodType) {
+              <div>
+                <a [routerLink]="['/payment-method-type', paymentGatewayResponse()!.paymentMethodType?.id, 'view']">{{
+                  paymentGatewayResponseRef.paymentMethodType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment-gateway-response', paymentGatewayResponseRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

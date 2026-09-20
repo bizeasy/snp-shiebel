@@ -1,0 +1,335 @@
+<div>
+  <h2 id="page-heading" data-cy="CashBookHeading">
+    <span sysTranslate="snpApp.cashBook.home.title">Cash Books</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.cashBook.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cash-book"
+        [routerLink]="['/cash-book/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.cashBook.home.createLabel">Create a new Cash Book</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (cashBooks().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.cashBook.home.notFound">No Cash Books found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="transactionDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.transactionDate">Transaction Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="dueDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.dueDate">Due Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="amount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.amount">Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="vendorCustomerName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.vendorCustomerName">Vendor Customer Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.invoiceNo">Invoice No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoiceDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.invoiceDate">Invoice Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="purpose">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.purpose">Purpose</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="remarks">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.remarks">Remarks</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="project">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.project">Project</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="usageUnits">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.usageUnits">Usage Units</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="recurringTransaction">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.recurringTransaction">Recurring Transaction</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="frequency">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.frequency">Frequency</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="transactionType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.transactionType">Transaction Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="transactionCategory.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.transactionCategory">Transaction Category</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethodType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.paymentMethodType">Payment Method Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="department.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.department">Department</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="currencyUom.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.currencyUom">Currency Uom</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="order.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.order">Order</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="invoice.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.invoice">Invoice</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.fromParty">From Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="toParty.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.cashBook.toParty">To Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cashBook of cashBooks(); track trackId(cashBook)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/cash-book', cashBook.id, 'view']">{{ cashBook.id }}</a>
+              </td>
+              <td>{{ cashBook.transactionDate | formatMediumDate }}</td>
+              <td>{{ cashBook.dueDate | formatMediumDate }}</td>
+              <td>{{ cashBook.amount }}</td>
+              <td>{{ cashBook.description }}</td>
+              <td>{{ cashBook.vendorCustomerName }}</td>
+              <td>{{ cashBook.invoiceNo }}</td>
+              <td>{{ cashBook.invoiceDate | formatMediumDate }}</td>
+              <td>{{ cashBook.purpose }}</td>
+              <td>{{ cashBook.remarks }}</td>
+              <td>{{ cashBook.project }}</td>
+              <td>{{ cashBook.usageUnits }}</td>
+              <td>{{ cashBook.recurringTransaction }}</td>
+              <td [sysTranslate]="'snpApp.RecurrenceFrequency.' + (cashBook.frequency ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    NONE: 'NONE',
+                    DAILY: 'DAILY',
+                    WEEKLY: 'WEEKLY',
+                    FORTNIGHTLY: 'FORTNIGHTLY',
+                    MONTHLY: 'MONTHLY',
+                    QUARTERLY: 'QUARTERLY',
+                    HALF_YEARLY: 'HALF_YEARLY',
+                    YEARLY: 'YEARLY',
+                  }[cashBook.frequency ?? 'null']
+                }}
+              </td>
+              <td>
+                @if (cashBook.transactionType) {
+                  <div>
+                    <a [routerLink]="['/transaction-type', cashBook.transactionType.id, 'view']">{{ cashBook.transactionType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.transactionCategory) {
+                  <div>
+                    <a [routerLink]="['/transaction-category', cashBook.transactionCategory.id, 'view']">{{
+                      cashBook.transactionCategory.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.paymentMethodType) {
+                  <div>
+                    <a [routerLink]="['/payment-method-type', cashBook.paymentMethodType.id, 'view']">{{
+                      cashBook.paymentMethodType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.department) {
+                  <div>
+                    <a [routerLink]="['/department', cashBook.department.id, 'view']">{{ cashBook.department.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.currencyUom) {
+                  <div>
+                    <a [routerLink]="['/uom', cashBook.currencyUom.id, 'view']">{{ cashBook.currencyUom.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.status) {
+                  <div>
+                    <a [routerLink]="['/status', cashBook.status.id, 'view']">{{ cashBook.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.order) {
+                  <div>
+                    <a [routerLink]="['/order', cashBook.order.id, 'view']">{{ cashBook.order.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.invoice) {
+                  <div>
+                    <a [routerLink]="['/invoice', cashBook.invoice.id, 'view']">{{ cashBook.invoice.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.fromParty) {
+                  <div>
+                    <a [routerLink]="['/party', cashBook.fromParty.id, 'view']">{{ cashBook.fromParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (cashBook.toParty) {
+                  <div>
+                    <a [routerLink]="['/party', cashBook.toParty.id, 'view']">{{ cashBook.toParty.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/cash-book', cashBook.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/cash-book', cashBook.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(cashBook)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (cashBooks().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

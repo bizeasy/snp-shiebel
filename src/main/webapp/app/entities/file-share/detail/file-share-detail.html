@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (fileShare(); as fileShareRef) {
+      <div>
+        <h2 data-cy="fileShareDetailsHeading"><span sysTranslate="snpApp.fileShare.detail.title">File Share</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ fileShareRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.permission">Permission</span></dt>
+          <dd>
+            <span [sysTranslate]="'snpApp.SharePermission.' + (fileShareRef.permission ?? 'null')">{{
+              { null: '', VIEW: 'VIEW', COMMENT: 'COMMENT', EDIT: 'EDIT', OWNER: 'OWNER' }[fileShareRef.permission ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.sharedWithEmail">Shared With Email</span></dt>
+          <dd>
+            <span>{{ fileShareRef.sharedWithEmail }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.sharedDate">Shared Date</span></dt>
+          <dd>
+            <span>{{ fileShareRef.sharedDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.expiryDate">Expiry Date</span></dt>
+          <dd>
+            <span>{{ fileShareRef.expiryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.accessToken">Access Token</span></dt>
+          <dd>
+            <span>{{ fileShareRef.accessToken }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.isRevoked">Is Revoked</span></dt>
+          <dd>
+            <span>{{ fileShareRef.isRevoked }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.folder">Folder</span></dt>
+          <dd>
+            @if (fileShare()!.folder) {
+              <div>
+                <a [routerLink]="['/file-folder', fileShare()!.folder?.id, 'view']">{{ fileShareRef.folder?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.attachment">Attachment</span></dt>
+          <dd>
+            @if (fileShare()!.attachment) {
+              <div>
+                <a [routerLink]="['/attachment', fileShare()!.attachment?.id, 'view']">{{ fileShareRef.attachment?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.sharedWith">Shared With</span></dt>
+          <dd>
+            @if (fileShare()!.sharedWith) {
+              <div>
+                <a [routerLink]="['/party', fileShare()!.sharedWith?.id, 'view']">{{ fileShareRef.sharedWith?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.fileShare.sharedBy">Shared By</span></dt>
+          <dd>
+            @if (fileShare()!.sharedBy) {
+              <div>
+                <a [routerLink]="['/party', fileShare()!.sharedBy?.id, 'view']">{{ fileShareRef.sharedBy?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/file-share', fileShareRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

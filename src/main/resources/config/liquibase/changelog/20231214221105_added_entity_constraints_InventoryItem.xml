@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity InventoryItem.
+    -->
+    <changeSet id="20231214221105-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="inventory_item_type_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__inventory_item_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_item_type"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="supplier_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__supplier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="owner_party_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__owner_party_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="status_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__status_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="status"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="facility_location_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__facility_location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility_location"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="uom_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="currency_uom_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__currency_uom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="uom"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="lot_id"
+                                 baseTableName="inventory_item"
+                                 constraintName="fk_inventory_item__lot_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lot"
+                                 />
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,31 @@
+{
+  "snpApp": {
+    "productFacilityUser": {
+      "home": {
+        "title": "Product Facility Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product Facility User",
+        "createOrEditLabel": "Create or edit a Product Facility User",
+        "notFound": "No Product Facility Users found"
+      },
+      "created": "A new Product Facility User is created with identifier {{ param }}",
+      "updated": "A Product Facility User is updated with identifier {{ param }}",
+      "deleted": "A Product Facility User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product Facility User {{ id }}?"
+      },
+      "detail": {
+        "title": "Product Facility User"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "costPerDay": "Cost Per Day",
+      "totalCost": "Total Cost",
+      "discount": "Discount",
+      "productFacility": "Product Facility",
+      "party": "Party",
+      "status": "Status"
+    }
+  }
+}

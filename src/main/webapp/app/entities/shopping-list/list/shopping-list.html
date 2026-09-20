@@ -1,0 +1,151 @@
+<div>
+  <h2 id="page-heading" data-cy="ShoppingListHeading">
+    <span sysTranslate="snpApp.shoppingList.home.title">Shopping Lists</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.shoppingList.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-shopping-list"
+        [routerLink]="['/shopping-list/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.shoppingList.home.createLabel">Create a new Shopping List</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (shoppingLists().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.shoppingList.home.notFound">No Shopping Lists found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shoppingList.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isActive">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shoppingList.isActive">Is Active</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="shoppingListType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shoppingList.shoppingListType">Shopping List Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shoppingList.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="status.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.shoppingList.status">Status</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (shoppingList of shoppingLists(); track trackId(shoppingList)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/shopping-list', shoppingList.id, 'view']">{{ shoppingList.id }}</a>
+              </td>
+              <td>{{ shoppingList.name }}</td>
+              <td>{{ shoppingList.isActive }}</td>
+              <td>
+                @if (shoppingList.shoppingListType) {
+                  <div>
+                    <a [routerLink]="['/shopping-list-type', shoppingList.shoppingListType.id, 'view']">{{
+                      shoppingList.shoppingListType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shoppingList.party) {
+                  <div>
+                    <a [routerLink]="['/party', shoppingList.party.id, 'view']">{{ shoppingList.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (shoppingList.status) {
+                  <div>
+                    <a [routerLink]="['/status', shoppingList.status.id, 'view']">{{ shoppingList.status.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/shopping-list', shoppingList.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/shopping-list', shoppingList.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(shoppingList)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (shoppingLists().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

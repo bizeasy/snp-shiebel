@@ -1,0 +1,158 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-department-member-heading"
+        data-cy="DepartmentMemberCreateUpdateHeading"
+        sysTranslate="snpApp.departmentMember.home.createOrEditLabel"
+      >
+        Create or edit a Department Member
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let fromDateRef = editForm.get('fromDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_fromDate" sysTranslate="snpApp.departmentMember.fromDate">From Date</label>
+          <div class="d-flex">
+            <input
+              id="field_fromDate"
+              data-cy="fromDate"
+              type="datetime-local"
+              class="form-control"
+              name="fromDate"
+              formControlName="fromDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (fromDateRef.invalid && (fromDateRef.dirty || fromDateRef.touched)) {
+            <div>
+              @if (fromDateRef.errors?.required) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!fromDateRef.errors?.datetimelocal"
+                sysTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_thruDate" sysTranslate="snpApp.departmentMember.thruDate">Thru Date</label>
+          <div class="d-flex">
+            <input
+              id="field_thruDate"
+              data-cy="thruDate"
+              type="datetime-local"
+              class="form-control"
+              name="thruDate"
+              formControlName="thruDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isPrimary"
+            id="field_isPrimary"
+            data-cy="isPrimary"
+            formControlName="isPrimary"
+          />
+          <label class="form-check-label" for="field_isPrimary" sysTranslate="snpApp.departmentMember.isPrimary">Is Primary</label>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_department" sysTranslate="snpApp.departmentMember.department">Department</label>
+          <select
+            class="form-select"
+            id="field_department"
+            data-cy="department"
+            name="department"
+            formControlName="department"
+            [compareWith]="compareDepartment"
+          >
+            @if (!editForm.get('department')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (departmentOption of departmentsSharedCollection(); track $index) {
+              <option [ngValue]="departmentOption">{{ departmentOption.name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['department'])!.invalid && (editForm.get(['department'])!.dirty || editForm.get(['department'])!.touched)) {
+          <div>
+            @if (editForm.get(['department'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.departmentMember.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            @if (!editForm.get('party')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['party'])!.invalid && (editForm.get(['party'])!.dirty || editForm.get(['party'])!.touched)) {
+          <div>
+            @if (editForm.get(['party'])?.errors?.required) {
+              <small class="form-text text-danger" sysTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_roleType" sysTranslate="snpApp.departmentMember.roleType">Role Type</label>
+          <select
+            class="form-select"
+            id="field_roleType"
+            data-cy="roleType"
+            name="roleType"
+            formControlName="roleType"
+            [compareWith]="compareRoleType"
+          >
+            <option [ngValue]="null"></option>
+            @for (roleTypeOption of roleTypesSharedCollection(); track $index) {
+              <option [ngValue]="roleTypeOption">{{ roleTypeOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

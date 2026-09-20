@@ -1,0 +1,41 @@
+{
+  "snpApp": {
+    "supplierProduct": {
+      "home": {
+        "title": "Supplier Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Supplier Product",
+        "createOrEditLabel": "Create or edit a Supplier Product",
+        "notFound": "No Supplier Products found"
+      },
+      "created": "A new Supplier Product is created with identifier {{ param }}",
+      "updated": "A Supplier Product is updated with identifier {{ param }}",
+      "deleted": "A Supplier Product is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Supplier Product {{ id }}?"
+      },
+      "detail": {
+        "title": "Supplier Product"
+      },
+      "id": "ID",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date",
+      "supplierProductId": "Supplier Product Id",
+      "minOrderQty": "Min Order Qty",
+      "lastPrice": "Last Price",
+      "shippingPrice": "Shipping Price",
+      "cgst": "Cgst",
+      "igst": "Igst",
+      "sgst": "Sgst",
+      "totalPrice": "Total Price",
+      "comments": "Comments",
+      "leadTimeDays": "Lead Time Days",
+      "unitsIncluded": "Units Included",
+      "canDropShip": "Can Drop Ship",
+      "product": "Product",
+      "party": "Party",
+      "quantityUom": "Quantity Uom",
+      "currencyUom": "Currency Uom"
+    }
+  }
+}

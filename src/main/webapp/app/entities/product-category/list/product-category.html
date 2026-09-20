@@ -1,0 +1,195 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductCategoryHeading">
+    <span sysTranslate="snpApp.productCategory.home.title">Product Categories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.productCategory.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-category"
+        [routerLink]="['/product-category/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.productCategory.home.createLabel">Create a new Product Category</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  @if (productCategories().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.productCategory.home.notFound">No Product Categories found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.name">Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="description">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.description">Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="longDescription">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.longDescription">Long Description</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="attribute">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.attribute">Attribute</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="sequenceNo">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.sequenceNo">Sequence No</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="imageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.imageUrl">Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.altImageUrl">Alt Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="bannerUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.bannerUrl">Banner Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="largeImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.largeImageUrl">Large Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="altLargeImageUrl">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.altLargeImageUrl">Alt Large Image Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="info">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.info">Info</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isBanner">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.isBanner">Is Banner</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="productCategoryType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.productCategoryType">Product Category Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="parent.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.productCategory.parent">Parent</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (productCategory of productCategories(); track trackId(productCategory)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/product-category', productCategory.id, 'view']">{{ productCategory.id }}</a>
+              </td>
+              <td>{{ productCategory.name }}</td>
+              <td>{{ productCategory.description }}</td>
+              <td>{{ productCategory.longDescription }}</td>
+              <td>{{ productCategory.attribute }}</td>
+              <td>{{ productCategory.sequenceNo }}</td>
+              <td>{{ productCategory.imageUrl }}</td>
+              <td>{{ productCategory.altImageUrl }}</td>
+              <td>{{ productCategory.bannerUrl }}</td>
+              <td>{{ productCategory.largeImageUrl }}</td>
+              <td>{{ productCategory.altLargeImageUrl }}</td>
+              <td>{{ productCategory.info }}</td>
+              <td>{{ productCategory.isBanner }}</td>
+              <td>
+                @if (productCategory.productCategoryType) {
+                  <div>
+                    <a [routerLink]="['/product-category-type', productCategory.productCategoryType.id, 'view']">{{
+                      productCategory.productCategoryType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (productCategory.parent) {
+                  <div>
+                    <a [routerLink]="['/product-category', productCategory.parent.id, 'view']">{{ productCategory.parent.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/product-category', productCategory.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/product-category', productCategory.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(productCategory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

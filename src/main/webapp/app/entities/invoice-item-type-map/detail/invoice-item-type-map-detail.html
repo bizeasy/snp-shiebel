@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (invoiceItemTypeMap(); as invoiceItemTypeMapRef) {
+      <div>
+        <h2 data-cy="invoiceItemTypeMapDetailsHeading">
+          <span sysTranslate="snpApp.invoiceItemTypeMap.detail.title">Invoice Item Type Map</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ invoiceItemTypeMapRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemMapKey">Invoice Item Map Key</span></dt>
+          <dd>
+            <span>{{ invoiceItemTypeMapRef.invoiceItemMapKey }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItemTypeMap.invoiceType">Invoice Type</span></dt>
+          <dd>
+            @if (invoiceItemTypeMap()!.invoiceType) {
+              <div>
+                <a [routerLink]="['/invoice-type', invoiceItemTypeMap()!.invoiceType?.id, 'view']">{{
+                  invoiceItemTypeMapRef.invoiceType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.invoiceItemTypeMap.invoiceItemType">Invoice Item Type</span></dt>
+          <dd>
+            @if (invoiceItemTypeMap()!.invoiceItemType) {
+              <div>
+                <a [routerLink]="['/invoice-item-type', invoiceItemTypeMap()!.invoiceItemType?.id, 'view']">{{
+                  invoiceItemTypeMapRef.invoiceItemType?.name
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/invoice-item-type-map', invoiceItemTypeMapRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

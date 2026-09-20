@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20231214210405"
+  },
+  "applications": ["snp"],
+  "fields": [],
+  "jpaMetamodelFiltering": true,
+  "name": "GeoAssoc",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "geo",
+      "relationshipName": "geo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "geo",
+      "relationshipName": "geoTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "geoAssocType",
+      "relationshipName": "geoAssocType",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

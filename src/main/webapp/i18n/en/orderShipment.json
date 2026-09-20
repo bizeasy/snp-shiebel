@@ -1,0 +1,28 @@
+{
+  "snpApp": {
+    "orderShipment": {
+      "home": {
+        "title": "Order Shipments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Order Shipment",
+        "createOrEditLabel": "Create or edit a Order Shipment",
+        "notFound": "No Order Shipments found"
+      },
+      "created": "A new Order Shipment is created with identifier {{ param }}",
+      "updated": "A Order Shipment is updated with identifier {{ param }}",
+      "deleted": "A Order Shipment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Order Shipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Order Shipment"
+      },
+      "id": "ID",
+      "quantity": "Quantity",
+      "order": "Order",
+      "orderItem": "Order Item",
+      "shipment": "Shipment",
+      "shipmentItem": "Shipment Item"
+    }
+  }
+}

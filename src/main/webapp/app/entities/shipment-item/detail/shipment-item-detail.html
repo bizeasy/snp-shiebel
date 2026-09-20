@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (shipmentItem(); as shipmentItemRef) {
+      <div>
+        <h2 data-cy="shipmentItemDetailsHeading"><span sysTranslate="snpApp.shipmentItem.detail.title">Shipment Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ shipmentItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentItem.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ shipmentItemRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ shipmentItemRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentItem.message">Message</span></dt>
+          <dd>
+            <span>{{ shipmentItemRef.message }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentItem.shipment">Shipment</span></dt>
+          <dd>
+            @if (shipmentItem()!.shipment) {
+              <div>
+                <a [routerLink]="['/shipment', shipmentItem()!.shipment?.id, 'view']">{{ shipmentItemRef.shipment?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.shipmentItem.product">Product</span></dt>
+          <dd>
+            @if (shipmentItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', shipmentItem()!.product?.id, 'view']">{{ shipmentItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/shipment-item', shipmentItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

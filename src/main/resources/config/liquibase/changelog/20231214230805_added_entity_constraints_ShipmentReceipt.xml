@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity ShipmentReceipt.
+    -->
+    <changeSet id="20231214230805-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="shipment_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__shipment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shipment"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="shipment_item_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__shipment_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shipment_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sys_order"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__order_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="order_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="inventory_item_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__inventory_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="inventory_item"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="received_by_id"
+                                 baseTableName="shipment_receipt"
+                                 constraintName="fk_shipment_receipt__received_by_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="party"
+                                 />
+    </changeSet>
+</databaseChangeLog>

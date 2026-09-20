@@ -1,0 +1,38 @@
+{
+  "snpApp": {
+    "quoteItem": {
+      "home": {
+        "title": "QuoteItems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Quote Item बनाएँ",
+        "createOrEditLabel": "Quote Item बनाएँ या संपादित करें",
+        "notFound": "No Quote Items found"
+      },
+      "created": "एक नया Quote Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Quote Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Quote Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Quote Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Quote Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "quantity": "Quantity",
+      "selectedAmount": "Selected Amount",
+      "quoteUnitPrice": "Quote Unit Price",
+      "totalAmount": "Total Amount",
+      "estimatedDeliveryDate": "Estimated Delivery Date",
+      "leadTimeDays": "Lead Time Days",
+      "comments": "Comments",
+      "quote": "Quote",
+      "product": "Product",
+      "productFeature": "Product Feature",
+      "uom": "Uom",
+      "status": "Status",
+      "custRequest": "Cust Request",
+      "custRequestItem": "Cust Request Item"
+    }
+  }
+}

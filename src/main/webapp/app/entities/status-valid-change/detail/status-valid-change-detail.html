@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (statusValidChange(); as statusValidChangeRef) {
+      <div>
+        <h2 data-cy="statusValidChangeDetailsHeading">
+          <span sysTranslate="snpApp.statusValidChange.detail.title">Status Valid Change</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ statusValidChangeRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.statusValidChange.transitionName">Transition Name</span></dt>
+          <dd>
+            <span>{{ statusValidChangeRef.transitionName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.statusValidChange.status">Status</span></dt>
+          <dd>
+            @if (statusValidChange()!.status) {
+              <div>
+                <a [routerLink]="['/status', statusValidChange()!.status?.id, 'view']">{{ statusValidChangeRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.statusValidChange.statusTo">Status To</span></dt>
+          <dd>
+            @if (statusValidChange()!.statusTo) {
+              <div>
+                <a [routerLink]="['/status', statusValidChange()!.statusTo?.id, 'view']">{{ statusValidChangeRef.statusTo?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/status-valid-change', statusValidChangeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

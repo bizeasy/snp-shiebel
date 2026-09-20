@@ -1,0 +1,36 @@
+{
+  "snpApp": {
+    "custRequestItem": {
+      "home": {
+        "title": "Cust Request Items",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cust Request Item",
+        "createOrEditLabel": "Create or edit a Cust Request Item",
+        "notFound": "No Cust Request Items found"
+      },
+      "created": "A new Cust Request Item is created with identifier {{ param }}",
+      "updated": "A Cust Request Item is updated with identifier {{ param }}",
+      "deleted": "A Cust Request Item is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cust Request Item {{ id }}?"
+      },
+      "detail": {
+        "title": "Cust Request Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "priority": "Priority",
+      "requiredByDate": "Required By Date",
+      "quantity": "Quantity",
+      "selectedAmount": "Selected Amount",
+      "maxAmount": "Max Amount",
+      "description": "Description",
+      "story": "Story",
+      "custRequest": "Cust Request",
+      "status": "Status",
+      "product": "Product",
+      "uom": "Uom",
+      "shoppingListItem": "Shopping List Item"
+    }
+  }
+}

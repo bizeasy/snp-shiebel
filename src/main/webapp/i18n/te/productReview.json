@@ -1,0 +1,30 @@
+{
+  "snpApp": {
+    "productReview": {
+      "home": {
+        "title": "Product Reviews",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Product Review సృష్టించండి",
+        "createOrEditLabel": "Product Review సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Product Reviews found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Product Review సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Product Review సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Product Review తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Product Review {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Product Review"
+      },
+      "id": "ID",
+      "rating": "Rating",
+      "ratingInfo": "Rating Info",
+      "message": "Message",
+      "reviewDate": "Review Date",
+      "product": "Product",
+      "party": "Party",
+      "orderItem": "Order Item"
+    }
+  }
+}

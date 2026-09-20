@@ -1,0 +1,27 @@
+{
+  "snpApp": {
+    "custRequestRole": {
+      "home": {
+        "title": "Cust Request Roles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cust Request Role",
+        "createOrEditLabel": "Create or edit a Cust Request Role",
+        "notFound": "No Cust Request Roles found"
+      },
+      "created": "A new Cust Request Role is created with identifier {{ param }}",
+      "updated": "A Cust Request Role is updated with identifier {{ param }}",
+      "deleted": "A Cust Request Role is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cust Request Role {{ id }}?"
+      },
+      "detail": {
+        "title": "Cust Request Role"
+      },
+      "id": "ID",
+      "custRequest": "Cust Request",
+      "custRequestItem": "Cust Request Item",
+      "party": "Party",
+      "roleType": "Role Type"
+    }
+  }
+}

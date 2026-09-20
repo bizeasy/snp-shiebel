@@ -1,0 +1,252 @@
+<div>
+  <h2 id="page-heading" data-cy="PostalAddressHeading">
+    <span sysTranslate="snpApp.postalAddress.home.title">Postal Addresses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.postalAddress.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-postal-address"
+        [routerLink]="['/postal-address/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.postalAddress.home.createLabel">Create a new Postal Address</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (postalAddresses().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.postalAddress.home.notFound">No Postal Addresses found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="toName">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.toName">To Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="address1">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.address1">Address 1</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="address2">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.address2">Address 2</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="city">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.city">City</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="landmark">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.landmark">Landmark</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="postalCode">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.postalCode">Postal Code</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isDefault">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.isDefault">Is Default</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="customAddressType">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.customAddressType">Custom Address Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="stateStr">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.stateStr">State Str</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="countryStr">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.countryStr">Country Str</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isIndianAddress">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.isIndianAddress">Is Indian Address</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="note">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.note">Note</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="directions">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.directions">Directions</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="contactMech.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.contactMech">Contact Mech</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="state.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.state">State</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="pincode.code">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.pincode">Pincode</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="country.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.country">Country</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="geoPoint.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.postalAddress.geoPoint">Geo Point</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (postalAddress of postalAddresses(); track trackId(postalAddress)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/postal-address', postalAddress.id, 'view']">{{ postalAddress.id }}</a>
+              </td>
+              <td>{{ postalAddress.toName }}</td>
+              <td>{{ postalAddress.address1 }}</td>
+              <td>{{ postalAddress.address2 }}</td>
+              <td>{{ postalAddress.city }}</td>
+              <td>{{ postalAddress.landmark }}</td>
+              <td>{{ postalAddress.postalCode }}</td>
+              <td>{{ postalAddress.isDefault }}</td>
+              <td>{{ postalAddress.customAddressType }}</td>
+              <td>{{ postalAddress.stateStr }}</td>
+              <td>{{ postalAddress.countryStr }}</td>
+              <td>{{ postalAddress.isIndianAddress }}</td>
+              <td>{{ postalAddress.note }}</td>
+              <td>{{ postalAddress.directions }}</td>
+              <td>
+                @if (postalAddress.contactMech) {
+                  <div>
+                    <a [routerLink]="['/contact-mech', postalAddress.contactMech.id, 'view']">{{ postalAddress.contactMech.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (postalAddress.state) {
+                  <div>
+                    <a [routerLink]="['/geo', postalAddress.state.id, 'view']">{{ postalAddress.state.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (postalAddress.pincode) {
+                  <div>
+                    <a [routerLink]="['/geo', postalAddress.pincode.id, 'view']">{{ postalAddress.pincode.code }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (postalAddress.country) {
+                  <div>
+                    <a [routerLink]="['/geo', postalAddress.country.id, 'view']">{{ postalAddress.country.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (postalAddress.geoPoint) {
+                  <div>
+                    <a [routerLink]="['/geo-point', postalAddress.geoPoint.id, 'view']">{{ postalAddress.geoPoint.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/postal-address', postalAddress.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/postal-address', postalAddress.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(postalAddress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (postalAddresses().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

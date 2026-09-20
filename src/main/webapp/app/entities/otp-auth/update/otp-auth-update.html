@@ -1,0 +1,177 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="sys-otp-auth-heading" data-cy="OtpAuthCreateUpdateHeading" sysTranslate="snpApp.otpAuth.home.createOrEditLabel">
+        Create or edit a Otp Auth
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let otpRef = editForm.get('otp')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_otp" sysTranslate="snpApp.otpAuth.otp">Otp</label>
+          <input type="text" class="form-control" name="otp" id="field_otp" data-cy="otp" formControlName="otp" />
+          @if (otpRef.invalid && (otpRef.dirty || otpRef.touched)) {
+            <div>
+              @if (otpRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '10' }"
+                  >This field cannot be longer than 10 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="otpSent" id="field_otpSent" data-cy="otpSent" formControlName="otpSent" />
+          <label class="form-check-label" for="field_otpSent" sysTranslate="snpApp.otpAuth.otpSent">Otp Sent</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="verificationSuccess"
+            id="field_verificationSuccess"
+            data-cy="verificationSuccess"
+            formControlName="verificationSuccess"
+          />
+          <label class="form-check-label" for="field_verificationSuccess" sysTranslate="snpApp.otpAuth.verificationSuccess"
+            >Verification Success</label
+          >
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="otpExpired"
+            id="field_otpExpired"
+            data-cy="otpExpired"
+            formControlName="otpExpired"
+          />
+          <label class="form-check-label" for="field_otpExpired" sysTranslate="snpApp.otpAuth.otpExpired">Otp Expired</label>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_otpSentTime" sysTranslate="snpApp.otpAuth.otpSentTime">Otp Sent Time</label>
+          <div class="d-flex">
+            <input
+              id="field_otpSentTime"
+              data-cy="otpSentTime"
+              type="datetime-local"
+              class="form-control"
+              name="otpSentTime"
+              formControlName="otpSentTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sentCounter" sysTranslate="snpApp.otpAuth.sentCounter">Sent Counter</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sentCounter"
+            id="field_sentCounter"
+            data-cy="sentCounter"
+            formControlName="sentCounter"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_failCounter" sysTranslate="snpApp.otpAuth.failCounter">Fail Counter</label>
+          <input
+            type="number"
+            class="form-control"
+            name="failCounter"
+            id="field_failCounter"
+            data-cy="failCounter"
+            formControlName="failCounter"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_otpResetCounter" sysTranslate="snpApp.otpAuth.otpResetCounter">Otp Reset Counter</label>
+          <input
+            type="number"
+            class="form-control"
+            name="otpResetCounter"
+            id="field_otpResetCounter"
+            data-cy="otpResetCounter"
+            formControlName="otpResetCounter"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_maxResend" sysTranslate="snpApp.otpAuth.maxResend">Max Resend</label>
+          <input type="number" class="form-control" name="maxResend" id="field_maxResend" data-cy="maxResend" formControlName="maxResend" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_maxReset" sysTranslate="snpApp.otpAuth.maxReset">Max Reset</label>
+          <input type="number" class="form-control" name="maxReset" id="field_maxReset" data-cy="maxReset" formControlName="maxReset" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_maxFailures" sysTranslate="snpApp.otpAuth.maxFailures">Max Failures</label>
+          <input
+            type="number"
+            class="form-control"
+            name="maxFailures"
+            id="field_maxFailures"
+            data-cy="maxFailures"
+            formControlName="maxFailures"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_otpActiveTime" sysTranslate="snpApp.otpAuth.otpActiveTime">Otp Active Time</label>
+          <input
+            type="number"
+            class="form-control"
+            name="otpActiveTime"
+            id="field_otpActiveTime"
+            data-cy="otpActiveTime"
+            formControlName="otpActiveTime"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_party" sysTranslate="snpApp.otpAuth.party">Party</label>
+          <select class="form-select" id="field_party" data-cy="party" name="party" formControlName="party" [compareWith]="compareParty">
+            <option [ngValue]="null"></option>
+            @for (partyOption of partiesSharedCollection(); track $index) {
+              <option [ngValue]="partyOption">{{ partyOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

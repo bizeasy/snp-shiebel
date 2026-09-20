@@ -1,0 +1,164 @@
+<div>
+  <h2 id="page-heading" data-cy="DepartmentMemberHeading">
+    <span sysTranslate="snpApp.departmentMember.home.title">Department Members</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.departmentMember.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-department-member"
+        [routerLink]="['/department-member/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.departmentMember.home.createLabel">Create a new Department Member</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (departmentMembers().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.departmentMember.home.notFound">No Department Members found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="fromDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.fromDate">From Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="thruDate">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.thruDate">Thru Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="isPrimary">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.isPrimary">Is Primary</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="department.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.department">Department</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="party.id">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.party">Party</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="roleType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.departmentMember.roleType">Role Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (departmentMember of departmentMembers(); track trackId(departmentMember)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/department-member', departmentMember.id, 'view']">{{ departmentMember.id }}</a>
+              </td>
+              <td>{{ departmentMember.fromDate | formatMediumDatetime }}</td>
+              <td>{{ departmentMember.thruDate | formatMediumDatetime }}</td>
+              <td>{{ departmentMember.isPrimary }}</td>
+              <td>
+                @if (departmentMember.department) {
+                  <div>
+                    <a [routerLink]="['/department', departmentMember.department.id, 'view']">{{ departmentMember.department.name }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (departmentMember.party) {
+                  <div>
+                    <a [routerLink]="['/party', departmentMember.party.id, 'view']">{{ departmentMember.party.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (departmentMember.roleType) {
+                  <div>
+                    <a [routerLink]="['/role-type', departmentMember.roleType.id, 'view']">{{ departmentMember.roleType.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/department-member', departmentMember.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/department-member', departmentMember.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(departmentMember)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (departmentMembers().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,36 @@
+{
+  "snpApp": {
+    "custRequestItem": {
+      "home": {
+        "title": "CustRequestItems",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Cust Request Item बनाएँ",
+        "createOrEditLabel": "Cust Request Item बनाएँ या संपादित करें",
+        "notFound": "No Cust Request Items found"
+      },
+      "created": "एक नया Cust Request Item [identifier: {{ param }}] तैयार है",
+      "updated": "एक Cust Request Item [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Cust Request Item [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Cust Request Item [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Cust Request Item"
+      },
+      "id": "ID",
+      "sequenceNo": "Sequence No",
+      "priority": "Priority",
+      "requiredByDate": "Required By Date",
+      "quantity": "Quantity",
+      "selectedAmount": "Selected Amount",
+      "maxAmount": "Max Amount",
+      "description": "Description",
+      "story": "Story",
+      "custRequest": "Cust Request",
+      "status": "Status",
+      "product": "Product",
+      "uom": "Uom",
+      "shoppingListItem": "Shopping List Item"
+    }
+  }
+}

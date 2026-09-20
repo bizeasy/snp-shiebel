@@ -1,0 +1,155 @@
+<div>
+  <h2 id="page-heading" data-cy="PaymentGatewayResponseHeading">
+    <span sysTranslate="snpApp.paymentGatewayResponse.home.title">Payment Gateway Responses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span sysTranslate="snpApp.paymentGatewayResponse.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-payment-gateway-response"
+        [routerLink]="['/payment-gateway-response/new']"
+      >
+        <fa-icon icon="plus" />
+        <span sysTranslate="snpApp.paymentGatewayResponse.home.createLabel">Create a new Payment Gateway Response</span>
+      </button>
+    </div>
+  </h2>
+
+  <sys-alert-error />
+
+  <sys-alert />
+
+  <sys-filter [filters]="filters" />
+
+  @if (paymentGatewayResponses().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span sysTranslate="snpApp.paymentGatewayResponse.home.notFound">No Payment Gateway Responses found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr sysSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" sysSortBy="id">
+              <div class="d-flex">
+                <span sysTranslate="global.field.id">ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="referenceNumber">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentGatewayResponse.referenceNumber">Reference Number</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="amount">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentGatewayResponse.amount">Amount</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="gatewayMessage">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentGatewayResponse.gatewayMessage">Gateway Message</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentGatewayConfig.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentGatewayResponse.paymentGatewayConfig">Payment Gateway Config</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" sysSortBy="paymentMethodType.name">
+              <div class="d-flex">
+                <span sysTranslate="snpApp.paymentGatewayResponse.paymentMethodType">Payment Method Type</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (paymentGatewayResponse of paymentGatewayResponses(); track trackId(paymentGatewayResponse)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/payment-gateway-response', paymentGatewayResponse.id, 'view']">{{ paymentGatewayResponse.id }}</a>
+              </td>
+              <td>{{ paymentGatewayResponse.referenceNumber }}</td>
+              <td>{{ paymentGatewayResponse.amount }}</td>
+              <td>{{ paymentGatewayResponse.gatewayMessage }}</td>
+              <td>
+                @if (paymentGatewayResponse.paymentGatewayConfig) {
+                  <div>
+                    <a [routerLink]="['/payment-gateway-config', paymentGatewayResponse.paymentGatewayConfig.id, 'view']">{{
+                      paymentGatewayResponse.paymentGatewayConfig.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (paymentGatewayResponse.paymentMethodType) {
+                  <div>
+                    <a [routerLink]="['/payment-method-type', paymentGatewayResponse.paymentMethodType.id, 'view']">{{
+                      paymentGatewayResponse.paymentMethodType.name
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/payment-gateway-response', paymentGatewayResponse.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/payment-gateway-response', paymentGatewayResponse.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="button" (click)="delete(paymentGatewayResponse)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" sysTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (paymentGatewayResponses().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <sys-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

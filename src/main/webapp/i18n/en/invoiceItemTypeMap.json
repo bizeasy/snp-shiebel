@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "invoiceItemTypeMap": {
+      "home": {
+        "title": "Invoice Item Type Maps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Invoice Item Type Map",
+        "createOrEditLabel": "Create or edit a Invoice Item Type Map",
+        "notFound": "No Invoice Item Type Maps found"
+      },
+      "created": "A new Invoice Item Type Map is created with identifier {{ param }}",
+      "updated": "A Invoice Item Type Map is updated with identifier {{ param }}",
+      "deleted": "A Invoice Item Type Map is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Invoice Item Type Map {{ id }}?"
+      },
+      "detail": {
+        "title": "Invoice Item Type Map"
+      },
+      "id": "ID",
+      "invoiceItemMapKey": "Invoice Item Map Key",
+      "invoiceType": "Invoice Type",
+      "invoiceItemType": "Invoice Item Type"
+    }
+  }
+}

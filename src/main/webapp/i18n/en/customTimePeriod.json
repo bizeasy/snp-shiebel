@@ -1,0 +1,26 @@
+{
+  "snpApp": {
+    "customTimePeriod": {
+      "home": {
+        "title": "Custom Time Periods",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Custom Time Period",
+        "createOrEditLabel": "Create or edit a Custom Time Period",
+        "notFound": "No Custom Time Periods found"
+      },
+      "created": "A new Custom Time Period is created with identifier {{ param }}",
+      "updated": "A Custom Time Period is updated with identifier {{ param }}",
+      "deleted": "A Custom Time Period is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Custom Time Period {{ id }}?"
+      },
+      "detail": {
+        "title": "Custom Time Period"
+      },
+      "id": "ID",
+      "name": "Name",
+      "fromDate": "From Date",
+      "thruDate": "Thru Date"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "snpApp": {
+    "transactionCategory": {
+      "home": {
+        "title": "Transaction Categories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Transaction Category",
+        "createOrEditLabel": "Create or edit a Transaction Category",
+        "notFound": "No Transaction Categories found"
+      },
+      "created": "A new Transaction Category is created with identifier {{ param }}",
+      "updated": "A Transaction Category is updated with identifier {{ param }}",
+      "deleted": "A Transaction Category is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Transaction Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Transaction Category"
+      },
+      "id": "ID",
+      "name": "Name",
+      "description": "Description"
+    }
+  }
+}

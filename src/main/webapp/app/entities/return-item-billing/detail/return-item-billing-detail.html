@@ -1,0 +1,78 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (returnItemBilling(); as returnItemBillingRef) {
+      <div>
+        <h2 data-cy="returnItemBillingDetailsHeading">
+          <span sysTranslate="snpApp.returnItemBilling.detail.title">Return Item Billing</span>
+        </h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ returnItemBillingRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ returnItemBillingRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.amount">Amount</span></dt>
+          <dd>
+            <span>{{ returnItemBillingRef.amount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.returnItem">Return Item</span></dt>
+          <dd>
+            @if (returnItemBilling()!.returnItem) {
+              <div>
+                <a [routerLink]="['/return-item', returnItemBilling()!.returnItem?.id, 'view']">{{
+                  returnItemBillingRef.returnItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.orderItem">Order Item</span></dt>
+          <dd>
+            @if (returnItemBilling()!.orderItem) {
+              <div>
+                <a [routerLink]="['/order-item', returnItemBilling()!.orderItem?.id, 'view']">{{ returnItemBillingRef.orderItem?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.invoiceItem">Invoice Item</span></dt>
+          <dd>
+            @if (returnItemBilling()!.invoiceItem) {
+              <div>
+                <a [routerLink]="['/invoice-item', returnItemBilling()!.invoiceItem?.id, 'view']">{{
+                  returnItemBillingRef.invoiceItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.returnItemBilling.shipmentReceipt">Shipment Receipt</span></dt>
+          <dd>
+            @if (returnItemBilling()!.shipmentReceipt) {
+              <div>
+                <a [routerLink]="['/shipment-receipt', returnItemBilling()!.shipmentReceipt?.id, 'view']">{{
+                  returnItemBillingRef.shipmentReceipt?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/return-item-billing', returnItemBillingRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

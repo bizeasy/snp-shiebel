@@ -1,0 +1,122 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (postalAddress(); as postalAddressRef) {
+      <div>
+        <h2 data-cy="postalAddressDetailsHeading"><span sysTranslate="snpApp.postalAddress.detail.title">Postal Address</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.toName">To Name</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.toName }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.address1">Address 1</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.address1 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.address2">Address 2</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.address2 }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.city">City</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.city }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.landmark">Landmark</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.landmark }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.postalCode">Postal Code</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.postalCode }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.isDefault">Is Default</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.isDefault }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.customAddressType">Custom Address Type</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.customAddressType }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.stateStr">State Str</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.stateStr }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.countryStr">Country Str</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.countryStr }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.isIndianAddress">Is Indian Address</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.isIndianAddress }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.note">Note</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.note }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.directions">Directions</span></dt>
+          <dd>
+            <span>{{ postalAddressRef.directions }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.contactMech">Contact Mech</span></dt>
+          <dd>
+            @if (postalAddress()!.contactMech) {
+              <div>
+                <a [routerLink]="['/contact-mech', postalAddress()!.contactMech?.id, 'view']">{{ postalAddressRef.contactMech?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.state">State</span></dt>
+          <dd>
+            @if (postalAddress()!.state) {
+              <div>
+                <a [routerLink]="['/geo', postalAddress()!.state?.id, 'view']">{{ postalAddressRef.state?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.pincode">Pincode</span></dt>
+          <dd>
+            @if (postalAddress()!.pincode) {
+              <div>
+                <a [routerLink]="['/geo', postalAddress()!.pincode?.id, 'view']">{{ postalAddressRef.pincode?.code }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.country">Country</span></dt>
+          <dd>
+            @if (postalAddress()!.country) {
+              <div>
+                <a [routerLink]="['/geo', postalAddress()!.country?.id, 'view']">{{ postalAddressRef.country?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.postalAddress.geoPoint">Geo Point</span></dt>
+          <dd>
+            @if (postalAddress()!.geoPoint) {
+              <div>
+                <a [routerLink]="['/geo-point', postalAddress()!.geoPoint?.id, 'view']">{{ postalAddressRef.geoPoint?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/postal-address', postalAddressRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

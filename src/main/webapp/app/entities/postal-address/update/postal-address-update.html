@@ -1,0 +1,339 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="sys-postal-address-heading"
+        data-cy="PostalAddressCreateUpdateHeading"
+        sysTranslate="snpApp.postalAddress.home.createOrEditLabel"
+      >
+        Create or edit a Postal Address
+      </h2>
+
+      <div>
+        <sys-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" sysTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let toNameRef = editForm.get('toName')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_toName" sysTranslate="snpApp.postalAddress.toName">To Name</label>
+          <input type="text" class="form-control" name="toName" id="field_toName" data-cy="toName" formControlName="toName" />
+          @if (toNameRef.invalid && (toNameRef.dirty || toNameRef.touched)) {
+            <div>
+              @if (toNameRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let address1Ref = editForm.get('address1')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_address1" sysTranslate="snpApp.postalAddress.address1">Address 1</label>
+          <input type="text" class="form-control" name="address1" id="field_address1" data-cy="address1" formControlName="address1" />
+          @if (address1Ref.invalid && (address1Ref.dirty || address1Ref.touched)) {
+            <div>
+              @if (address1Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '200' }"
+                  >This field cannot be longer than 200 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let address2Ref = editForm.get('address2')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_address2" sysTranslate="snpApp.postalAddress.address2">Address 2</label>
+          <input type="text" class="form-control" name="address2" id="field_address2" data-cy="address2" formControlName="address2" />
+          @if (address2Ref.invalid && (address2Ref.dirty || address2Ref.touched)) {
+            <div>
+              @if (address2Ref.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '200' }"
+                  >This field cannot be longer than 200 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let cityRef = editForm.get('city')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_city" sysTranslate="snpApp.postalAddress.city">City</label>
+          <input type="text" class="form-control" name="city" id="field_city" data-cy="city" formControlName="city" />
+          @if (cityRef.invalid && (cityRef.dirty || cityRef.touched)) {
+            <div>
+              @if (cityRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let landmarkRef = editForm.get('landmark')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_landmark" sysTranslate="snpApp.postalAddress.landmark">Landmark</label>
+          <input type="text" class="form-control" name="landmark" id="field_landmark" data-cy="landmark" formControlName="landmark" />
+          @if (landmarkRef.invalid && (landmarkRef.dirty || landmarkRef.touched)) {
+            <div>
+              @if (landmarkRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '60' }"
+                  >This field cannot be longer than 60 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let postalCodeRef = editForm.get('postalCode')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_postalCode" sysTranslate="snpApp.postalAddress.postalCode">Postal Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalCode"
+            id="field_postalCode"
+            data-cy="postalCode"
+            formControlName="postalCode"
+          />
+          @if (postalCodeRef.invalid && (postalCodeRef.dirty || postalCodeRef.touched)) {
+            <div>
+              @if (postalCodeRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '10' }"
+                  >This field cannot be longer than 10 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isDefault"
+            id="field_isDefault"
+            data-cy="isDefault"
+            formControlName="isDefault"
+          />
+          <label class="form-check-label" for="field_isDefault" sysTranslate="snpApp.postalAddress.isDefault">Is Default</label>
+        </div>
+
+        @let customAddressTypeRef = editForm.get('customAddressType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_customAddressType" sysTranslate="snpApp.postalAddress.customAddressType"
+            >Custom Address Type</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="customAddressType"
+            id="field_customAddressType"
+            data-cy="customAddressType"
+            formControlName="customAddressType"
+          />
+          @if (customAddressTypeRef.invalid && (customAddressTypeRef.dirty || customAddressTypeRef.touched)) {
+            <div>
+              @if (customAddressTypeRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '25' }"
+                  >This field cannot be longer than 25 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let stateStrRef = editForm.get('stateStr')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_stateStr" sysTranslate="snpApp.postalAddress.stateStr">State Str</label>
+          <input type="text" class="form-control" name="stateStr" id="field_stateStr" data-cy="stateStr" formControlName="stateStr" />
+          @if (stateStrRef.invalid && (stateStrRef.dirty || stateStrRef.touched)) {
+            <div>
+              @if (stateStrRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '40' }"
+                  >This field cannot be longer than 40 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let countryStrRef = editForm.get('countryStr')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_countryStr" sysTranslate="snpApp.postalAddress.countryStr">Country Str</label>
+          <input
+            type="text"
+            class="form-control"
+            name="countryStr"
+            id="field_countryStr"
+            data-cy="countryStr"
+            formControlName="countryStr"
+          />
+          @if (countryStrRef.invalid && (countryStrRef.dirty || countryStrRef.touched)) {
+            <div>
+              @if (countryStrRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '40' }"
+                  >This field cannot be longer than 40 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isIndianAddress"
+            id="field_isIndianAddress"
+            data-cy="isIndianAddress"
+            formControlName="isIndianAddress"
+          />
+          <label class="form-check-label" for="field_isIndianAddress" sysTranslate="snpApp.postalAddress.isIndianAddress"
+            >Is Indian Address</label
+          >
+        </div>
+
+        @let noteRef = editForm.get('note')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_note" sysTranslate="snpApp.postalAddress.note">Note</label>
+          <input type="text" class="form-control" name="note" id="field_note" data-cy="note" formControlName="note" />
+          @if (noteRef.invalid && (noteRef.dirty || noteRef.touched)) {
+            <div>
+              @if (noteRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let directionsRef = editForm.get('directions')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_directions" sysTranslate="snpApp.postalAddress.directions">Directions</label>
+          <input
+            type="text"
+            class="form-control"
+            name="directions"
+            id="field_directions"
+            data-cy="directions"
+            formControlName="directions"
+          />
+          @if (directionsRef.invalid && (directionsRef.dirty || directionsRef.touched)) {
+            <div>
+              @if (directionsRef.errors?.maxlength) {
+                <small class="form-text text-danger" sysTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_contactMech" sysTranslate="snpApp.postalAddress.contactMech">Contact Mech</label>
+          <select
+            class="form-select"
+            id="field_contactMech"
+            data-cy="contactMech"
+            name="contactMech"
+            formControlName="contactMech"
+            [compareWith]="compareContactMech"
+          >
+            <option [ngValue]="null"></option>
+            @for (contactMechOption of contactMechesSharedCollection(); track $index) {
+              <option [ngValue]="contactMechOption">{{ contactMechOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_state" sysTranslate="snpApp.postalAddress.state">State</label>
+          <select class="form-select" id="field_state" data-cy="state" name="state" formControlName="state" [compareWith]="compareGeo">
+            <option [ngValue]="null"></option>
+            @for (geoOption of geosSharedCollection(); track $index) {
+              <option [ngValue]="geoOption">{{ geoOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_pincode" sysTranslate="snpApp.postalAddress.pincode">Pincode</label>
+          <select
+            class="form-select"
+            id="field_pincode"
+            data-cy="pincode"
+            name="pincode"
+            formControlName="pincode"
+            [compareWith]="compareGeo"
+          >
+            <option [ngValue]="null"></option>
+            @for (geoOption of geosSharedCollection(); track $index) {
+              <option [ngValue]="geoOption">{{ geoOption.code }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_country" sysTranslate="snpApp.postalAddress.country">Country</label>
+          <select
+            class="form-select"
+            id="field_country"
+            data-cy="country"
+            name="country"
+            formControlName="country"
+            [compareWith]="compareGeo"
+          >
+            <option [ngValue]="null"></option>
+            @for (geoOption of geosSharedCollection(); track $index) {
+              <option [ngValue]="geoOption">{{ geoOption.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_geoPoint" sysTranslate="snpApp.postalAddress.geoPoint">Geo Point</label>
+          <select
+            class="form-select"
+            id="field_geoPoint"
+            data-cy="geoPoint"
+            name="geoPoint"
+            formControlName="geoPoint"
+            [compareWith]="compareGeoPoint"
+          >
+            <option [ngValue]="null"></option>
+            @for (geoPointOption of geoPointsSharedCollection(); track $index) {
+              <option [ngValue]="geoPointOption">{{ geoPointOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span sysTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quoteItem(); as quoteItemRef) {
+      <div>
+        <h2 data-cy="quoteItemDetailsHeading"><span sysTranslate="snpApp.quoteItem.detail.title">Quote Item</span></h2>
+
+        <hr />
+
+        <sys-alert-error />
+
+        <sys-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span sysTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.id }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.sequenceNo">Sequence No</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.sequenceNo }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.quantity }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.selectedAmount">Selected Amount</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.selectedAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.quoteUnitPrice">Quote Unit Price</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.quoteUnitPrice }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.totalAmount">Total Amount</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.totalAmount }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.estimatedDeliveryDate">Estimated Delivery Date</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.estimatedDeliveryDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.leadTimeDays">Lead Time Days</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.leadTimeDays }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.comments">Comments</span></dt>
+          <dd>
+            <span>{{ quoteItemRef.comments }}</span>
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.quote">Quote</span></dt>
+          <dd>
+            @if (quoteItem()!.quote) {
+              <div>
+                <a [routerLink]="['/quote', quoteItem()!.quote?.id, 'view']">{{ quoteItemRef.quote?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.product">Product</span></dt>
+          <dd>
+            @if (quoteItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', quoteItem()!.product?.id, 'view']">{{ quoteItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.productFeature">Product Feature</span></dt>
+          <dd>
+            @if (quoteItem()!.productFeature) {
+              <div>
+                <a [routerLink]="['/product-feature', quoteItem()!.productFeature?.id, 'view']">{{ quoteItemRef.productFeature?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.uom">Uom</span></dt>
+          <dd>
+            @if (quoteItem()!.uom) {
+              <div>
+                <a [routerLink]="['/uom', quoteItem()!.uom?.id, 'view']">{{ quoteItemRef.uom?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.status">Status</span></dt>
+          <dd>
+            @if (quoteItem()!.status) {
+              <div>
+                <a [routerLink]="['/status', quoteItem()!.status?.id, 'view']">{{ quoteItemRef.status?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.custRequest">Cust Request</span></dt>
+          <dd>
+            @if (quoteItem()!.custRequest) {
+              <div>
+                <a [routerLink]="['/cust-request', quoteItem()!.custRequest?.id, 'view']">{{ quoteItemRef.custRequest?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span sysTranslate="snpApp.quoteItem.custRequestItem">Cust Request Item</span></dt>
+          <dd>
+            @if (quoteItem()!.custRequestItem) {
+              <div>
+                <a [routerLink]="['/cust-request-item', quoteItem()!.custRequestItem?.id, 'view']">{{
+                  quoteItemRef.custRequestItem?.id
+                }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span sysTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quote-item', quoteItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span sysTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,28 @@
+@if (taxAuthority) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(taxAuthority.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="taxAuthorityDeleteDialogHeading" sysTranslate="entity.delete.title">Confirm delete operation</h4>
+    </div>
+
+    <div class="modal-body">
+      <sys-alert-error />
+      <p
+        id="sys-delete-taxAuthority-heading"
+        sysTranslate="snpApp.taxAuthority.delete.question"
+        [translateValues]="{ id: taxAuthority.id }"
+      >
+        Are you sure you want to delete Tax Authority {{ taxAuthority.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span sysTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button id="sys-confirm-delete-taxAuthority" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span sysTranslate="entity.action.delete">Delete</span>
+      </button>
+    </div>
+  </form>
+}
