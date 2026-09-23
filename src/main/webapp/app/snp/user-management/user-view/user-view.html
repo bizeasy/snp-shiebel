@@ -1,0 +1,40 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">View User</h2>
+    <div class="d-flex gap-2">
+      @if (userId() !== null) {
+        <a
+          class="btn btn-outline-primary btn-sm"
+          [routerLink]="['/user-management/userList/edit']"
+          [queryParams]="{ id: userId(), edit: true }"
+        >
+          <fa-icon icon="pencil-alt" />
+          <span class="ms-1">Edit</span>
+        </a>
+      }
+      <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/user-management/userList']">
+        <fa-icon icon="arrow-left" />
+        <span class="ms-1">Back to list</span>
+      </a>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  <div class="card">
+    <div class="card-body">
+      @if (loading()) {
+        <p class="text-muted mb-0">Loading user…</p>
+      } @else if (user()) {
+        <dl class="sys-detail">
+          @for (f of fields(); track f.label) {
+            <dt>{{ f.label }}</dt>
+            <dd>{{ f.value }}</dd>
+          }
+        </dl>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+}
+
+.sys-detail {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  row-gap: 10px;
+  column-gap: 16px;
+  margin: 0;
+
+  dt {
+    font-size: $size-xxsmall;
+    font-weight: $weight-medium;
+    color: $slate-500;
+  }
+
+  dd {
+    margin: 0;
+    font-size: $size-xsmall;
+    color: $slate-800;
+    word-break: break-word;
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr;
+    row-gap: 2px;
+
+    dd {
+      margin-bottom: 8px;
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
+
+.sys-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .form-label {
+    font-size: $size-xxsmall;
+    font-weight: $weight-medium;
+    color: $slate-600;
+  }
+
+  select {
+    max-width: 360px;
+  }
+}
+
+.sys-selectable {
+  cursor: pointer;
+}
+
+/* Confirm dialog — a plain overlay rather than pulling in a modal library */
+.sys-confirm {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1080;
+
+  &__box {
+    background: $white;
+    border-radius: $br-10;
+    box-shadow: $shadow-lg;
+    padding: 20px 22px;
+    width: min(420px, calc(100vw - 32px));
+  }
+
+  &__title {
+    margin: 0 0 10px;
+    font-size: $size-xsmall;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+}

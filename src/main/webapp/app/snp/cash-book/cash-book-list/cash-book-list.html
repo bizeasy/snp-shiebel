@@ -1,0 +1,264 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Cash Book</h2>
+    <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/cash-book/create-cash-book']">
+      <fa-icon icon="plus" />
+      <span class="ms-1">New Entry</span>
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+  @if (notice()) {
+    <div class="alert alert-success" role="alert">{{ notice() }}</div>
+  }
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row g-2 align-items-end">
+        <div class="col-md-2">
+          <label class="form-label small mb-1" for="cbFrom">From</label>
+          <input
+            id="cbFrom"
+            type="date"
+            class="form-control form-control-sm"
+            [ngModel]="dateFrom()"
+            (ngModelChange)="dateFrom.set($event)"
+          />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label small mb-1" for="cbTo">To</label>
+          <input id="cbTo" type="date" class="form-control form-control-sm" [ngModel]="dateTo()" (ngModelChange)="dateTo.set($event)" />
+        </div>
+        <div class="col-md-2">
+          <label class="form-label small mb-1" for="cbType">Type</label>
+          <select
+            id="cbType"
+            class="form-select form-select-sm"
+            [value]="typeId() ?? ''"
+            (change)="onTypeChange($any($event.target).value)"
+          >
+            <option value="">All types</option>
+            @for (t of types(); track t.id) {
+              <option [value]="t.id">{{ t.description || t.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label small mb-1" for="cbCategory">Category</label>
+          <select
+            id="cbCategory"
+            class="form-select form-select-sm"
+            [value]="categoryId() ?? ''"
+            (change)="categoryId.set($any($event.target).value ? +$any($event.target).value : null)"
+          >
+            <option value="">All categories</option>
+            @for (c of categoryOptions(); track c.id) {
+              <option [value]="c.id">{{ c.description || c.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label small mb-1" for="cbDept">Department</label>
+          <select
+            id="cbDept"
+            class="form-select form-select-sm"
+            [value]="departmentId() ?? ''"
+            (change)="departmentId.set($any($event.target).value ? +$any($event.target).value : null)"
+          >
+            <option value="">All departments</option>
+            @for (d of departments(); track d.id) {
+              <option [value]="d.id">{{ d.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-1">
+          <button type="button" class="btn btn-primary btn-sm flex-grow-1" (click)="applyFilters()">
+            <fa-icon icon="filter" />
+            <span class="ms-1">Apply</span>
+          </button>
+          @if (hasFilters()) {
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="resetFilters()" title="Reset filters">
+              <fa-icon icon="times" />
+            </button>
+          }
+        </div>
+        <div class="col-md-6">
+          <label class="form-label small mb-1" for="cbSearch">Search description</label>
+          <input
+            id="cbSearch"
+            type="search"
+            class="form-control form-control-sm"
+            placeholder="Search by description"
+            [ngModel]="search()"
+            (ngModelChange)="search.set($event)"
+            (keyup.enter)="applyFilters()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body border-top sys-cashbook-summary">
+      @if (summary(); as s) {
+        <div class="sys-cashbook-summary__item text-success">
+          <span class="sys-cashbook-summary__label">Income</span>
+          <span class="sys-cashbook-summary__value">{{ s.income | number: '1.2-2' }}</span>
+        </div>
+        <div class="sys-cashbook-summary__item text-danger">
+          <span class="sys-cashbook-summary__label">Expense</span>
+          <span class="sys-cashbook-summary__value">{{ s.expense | number: '1.2-2' }}</span>
+        </div>
+        <div class="sys-cashbook-summary__item text-muted">
+          <span class="sys-cashbook-summary__label">Transfer</span>
+          <span class="sys-cashbook-summary__value">{{ s.transfer | number: '1.2-2' }}</span>
+        </div>
+        <div class="sys-cashbook-summary__item" [class.text-success]="s.net >= 0" [class.text-danger]="s.net < 0">
+          <span class="sys-cashbook-summary__label">Net</span>
+          <span class="sys-cashbook-summary__value">{{ s.net | number: '1.2-2' }}</span>
+        </div>
+        @if (s.truncated) {
+          <span class="text-muted small">(based on the first {{ s.count }} matching rows)</span>
+        }
+      } @else if (summaryLoading()) {
+        <span class="text-muted small">Calculating totals…</span>
+      }
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header sys-page__toolbar">
+      <span class="text-muted small">{{ totalRecords() }} entries match the current filter</span>
+      <div class="sys-page__toolbar-right">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportCsv()" [disabled]="busy() || totalRecords() === 0">
+          <fa-icon icon="file-csv" />
+          <span class="ms-1">Export CSV</span>
+        </button>
+        <label class="sys-page__size">
+          <span>Rows</span>
+          <select class="form-select form-select-sm" [value]="size()" (change)="changeSize($any($event.target).value)">
+            @for (opt of sizeOptions; track opt) {
+              <option [value]="opt">{{ opt }}</option>
+            }
+          </select>
+        </label>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="load()" [disabled]="loading()">
+          <fa-icon icon="sync" [animation]="loading() ? 'spin' : undefined" />
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">Category</th>
+            <th scope="col">Department</th>
+            <th scope="col">Description</th>
+            <th scope="col">Vendor / Customer</th>
+            <th scope="col">Invoice No</th>
+            <th scope="col" class="text-end">Amount</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading()) {
+            <tr>
+              <td colspan="10" class="text-center py-4 text-muted">Loading…</td>
+            </tr>
+          } @else if (rows().length === 0) {
+            <tr>
+              <td colspan="10" class="text-center py-4 text-muted">
+                @if (hasFilters()) {
+                  No entries match this filter.
+                } @else {
+                  No cash book entries yet.
+                }
+              </td>
+            </tr>
+          } @else {
+            @for (row of rows(); track row.id) {
+              <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.transactionDate ? (row.transactionDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td>{{ row.transactionType?.name || '—' }}</td>
+                <td>{{ categoryLabel(row) }}</td>
+                <td>{{ row.department?.name || '—' }}</td>
+                <td [title]="row.description ?? ''">{{ row.description || '—' }}</td>
+                <td>{{ partyLabel(row) }}</td>
+                <td>{{ row.invoiceNo || '—' }}</td>
+                <td
+                  class="text-end"
+                  [class.text-success]="row.transactionType?.name === 'INCOME'"
+                  [class.text-danger]="row.transactionType?.name === 'EXPENSE'"
+                >
+                  {{ row.amount != null ? (signedAmount(row) | number: '1.2-2') : '—' }}
+                </td>
+                <td class="text-end">
+                  <div ngbDropdown container="body" placement="bottom-end">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary btn-sm"
+                      ngbDropdownToggle
+                      [disabled]="busy()"
+                      aria-label="Row actions"
+                    >
+                      <fa-icon icon="cogs" />
+                    </button>
+                    <div ngbDropdownMenu>
+                      <a ngbDropdownItem [routerLink]="['/cash-book/create-cash-book']" [queryParams]="{ id: row.id, edit: true }">
+                        <fa-icon icon="pencil-alt" class="me-2" />Edit
+                      </a>
+                      <button type="button" ngbDropdownItem (click)="askDelete(row)">
+                        <fa-icon icon="trash-alt" class="me-2" />Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer sys-page__pager">
+      <span class="text-muted">Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ totalRecords() }} entries</span>
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(0)" [disabled]="page() === 0">First</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(page() - 1)" [disabled]="page() === 0">Prev</button>
+        <span class="btn btn-outline-secondary disabled">{{ page() + 1 }} / {{ totalPages() }}</span>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+          Next
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="goToPage(totalPages() - 1)"
+          [disabled]="page() + 1 >= totalPages()"
+        >
+          Last
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (confirmDelete(); as target) {
+    <div class="sys-confirm">
+      <div class="sys-confirm__box">
+        <h3 class="sys-confirm__title">Delete entry</h3>
+        <p class="mb-3">
+          Delete cash book entry <strong>#{{ target.id }}</strong
+          >?
+        </p>
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-secondary btn-sm me-2" (click)="cancelDelete()" [disabled]="busy()">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="doDelete()" [disabled]="busy()">Delete</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

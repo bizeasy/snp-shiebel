@@ -1,0 +1,168 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">
+      Sales Invoice
+      @if (invoice(); as inv) {
+        <span class="text-muted ms-2">{{ inv.invoiceNo }}</span>
+      }
+    </h2>
+    <div class="d-flex align-items-center gap-2 sys-page__actions">
+      <a class="btn btn-outline-secondary btn-sm" routerLink="/sales-invoice/invoice-list">
+        <fa-icon icon="arrow-left" class="me-1" />Back to list
+      </a>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="print()">
+        <fa-icon icon="file-invoice" class="me-1" />Print
+      </button>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+  @if (notice()) {
+    <div class="alert alert-success" role="status">{{ notice() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="card"><div class="card-body text-muted">Loading invoice…</div></div>
+  } @else if (invoice(); as inv) {
+    <div class="card mb-3">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">{{ inv.type || 'Invoice' }}</span>
+        <div class="d-flex align-items-center gap-2 sys-page__actions">
+          <span class="badge" [class]="statusClass()">{{ inv.status || '—' }}</span>
+          <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="!canApprove()" (click)="setStatus('INVOICE_APPROVED')">
+            Approve
+          </button>
+          <button type="button" class="btn btn-outline-success btn-sm" [disabled]="!canSettle()" (click)="setStatus('INVOICE_PAID')">
+            Mark paid
+          </button>
+          <button type="button" class="btn btn-outline-danger btn-sm" [disabled]="!canCancel()" (click)="setStatus('INVOICE_CANCELLED')">
+            Cancel
+          </button>
+        </div>
+      </div>
+      <div class="card-body sys-summary">
+        <div>
+          <span class="sys-summary__label">Invoice number</span><span>{{ inv.invoiceNo || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Invoice date</span
+          ><span>{{ inv.invoiceDate ? (inv.invoiceDate | date: 'dd MMM yyyy') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Due date</span><span>{{ inv.dueDate ? (inv.dueDate | date: 'dd MMM yyyy') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Paid on</span><span>{{ inv.paidDate ? (inv.paidDate | date: 'dd MMM yyyy') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Customer</span><span>{{ inv.customer || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Against order</span>
+          <span>
+            @if (inv.orderId) {
+              <a [routerLink]="['/sales-order/sales-order-list/View-sales-order']" [queryParams]="{ id: inv.orderId, view: true }">
+                {{ inv.orderRefNo || inv.orderName || inv.orderId }}
+              </a>
+            } @else {
+              —
+            }
+          </span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Project</span><span>{{ inv.projectName || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Currency</span><span>{{ inv.currency || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header fw-semibold">Items</div>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item</th>
+              <th scope="col" class="text-end">Quantity</th>
+              <th scope="col" class="text-end">Unit price</th>
+              <th scope="col" class="text-end">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (line of productLines(); track line.id) {
+              <tr>
+                <td>{{ line.sequenceNo ?? '—' }}</td>
+                <td>
+                  {{ line.product || line.label || '—' }}
+                  @if (line.uom) {
+                    <span class="text-muted small ms-1">({{ line.uom }})</span>
+                  }
+                </td>
+                <td class="text-end">{{ line.quantity != null ? (line.quantity | number: '1.0-2') : '—' }}</td>
+                <td class="text-end">{{ line.unitPrice != null ? (line.unitPrice | number: '1.2-2') : '—' }}</td>
+                <td class="text-end">{{ line.amount != null ? (line.amount | number: '1.2-2') : '—' }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">This invoice has no product lines.</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" class="text-end text-muted">Subtotal</td>
+              <td class="text-end">{{ subtotal() | number: '1.2-2' }}</td>
+            </tr>
+            @for (adj of adjustmentLines(); track adj.id) {
+              <tr>
+                <td colspan="4" class="text-end text-muted">{{ adj.label || 'Adjustment' }}</td>
+                <td class="text-end">{{ adj.amount != null ? (adj.amount | number: '1.2-2') : '—' }}</td>
+              </tr>
+            }
+            <tr class="sys-grand">
+              <td colspan="4" class="text-end">Grand total</td>
+              <td class="text-end">{{ inv.grandTotal != null ? (inv.grandTotal | number: '1.2-2') : '—' }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    @if (inv.paymentTerms || inv.deliveryTerms || inv.remarks || inv.invoiceMessage) {
+      <div class="card">
+        <div class="card-header fw-semibold">Terms and notes</div>
+        <div class="card-body sys-notes">
+          @if (inv.paymentTerms) {
+            <div>
+              <span class="sys-summary__label">Payment terms</span>
+              <p class="mb-0">{{ inv.paymentTerms }}</p>
+            </div>
+          }
+          @if (inv.deliveryTerms) {
+            <div>
+              <span class="sys-summary__label">Delivery terms</span>
+              <p class="mb-0">{{ inv.deliveryTerms }}</p>
+            </div>
+          }
+          @if (inv.invoiceMessage) {
+            <div>
+              <span class="sys-summary__label">Message</span>
+              <p class="mb-0">{{ inv.invoiceMessage }}</p>
+            </div>
+          }
+          @if (inv.remarks) {
+            <div>
+              <span class="sys-summary__label">Remarks</span>
+              <p class="mb-0">{{ inv.remarks }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

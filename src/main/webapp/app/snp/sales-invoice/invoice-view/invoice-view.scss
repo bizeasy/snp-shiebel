@@ -1,0 +1,67 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+}
+
+.sys-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-variant-numeric: tabular-nums;
+    color: $slate-800;
+  }
+
+  &__label {
+    font-size: $size-xxsmall;
+    font-weight: $weight-semibold;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: $slate-500;
+  }
+}
+
+.sys-notes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  white-space: pre-line;
+  color: $slate-700;
+}
+
+.sys-grand {
+  font-weight: $weight-semibold;
+  color: $slate-800;
+}
+
+// Printing an invoice should give the customer the document, not the application chrome.
+@media print {
+  .sys-page__actions,
+  .card-header .btn,
+  .btn {
+    display: none !important;
+  }
+
+  .card {
+    border-color: $slate-300;
+    break-inside: avoid;
+  }
+}

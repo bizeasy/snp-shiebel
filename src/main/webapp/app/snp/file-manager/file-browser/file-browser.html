@@ -1,0 +1,284 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Drop Box</h2>
+    <div class="d-flex align-items-center gap-2">
+      <a class="btn btn-outline-secondary btn-sm" routerLink="/dropbox/shared-list">
+        <fa-icon icon="users" class="me-1" />Shared with me
+      </a>
+      <a class="btn btn-outline-secondary btn-sm" routerLink="/dropbox/trash"> <fa-icon icon="trash-alt" class="me-1" />Trash </a>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="showNewFolder.set(!showNewFolder())">
+        <fa-icon icon="folder-open" class="me-1" />New folder
+      </button>
+      <label class="btn btn-primary btn-sm mb-0" [class.disabled]="uploading()">
+        <fa-icon icon="plus" class="me-1" />{{ uploading() ? 'Uploading…' : 'Upload' }}
+        <input type="file" class="d-none" (change)="onFileSelected($event)" [disabled]="uploading()" />
+      </label>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+  @if (notice()) {
+    <div class="alert alert-success" role="status">{{ notice() }}</div>
+  }
+
+  <div class="card">
+    <div class="card-header sys-page__toolbar">
+      <nav aria-label="Folder path">
+        <ol class="sys-crumbs">
+          @for (crumb of trail(); track crumb.id; let i = $index; let last = $last) {
+            <li>
+              @if (last) {
+                <span class="fw-semibold">{{ crumb.name }}</span>
+              } @else {
+                <button type="button" class="btn btn-link btn-sm p-0" (click)="goTo(i)">{{ crumb.name }}</button>
+                <span class="text-muted mx-1">/</span>
+              }
+            </li>
+          }
+        </ol>
+      </nav>
+      <div class="sys-page__toolbar-right">
+        <div class="sys-page__search">
+          <fa-icon icon="search" class="sys-page__search-icon" />
+          <input
+            type="search"
+            class="form-control form-control-sm"
+            placeholder="Search this folder"
+            [ngModel]="search()"
+            (ngModelChange)="search.set($event)"
+          />
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="load()" [disabled]="loading()">
+          <fa-icon icon="sync" [animation]="loading() ? 'spin' : undefined" />
+        </button>
+      </div>
+    </div>
+
+    @if (showNewFolder()) {
+      <div class="card-body border-bottom d-flex gap-2 align-items-center">
+        <input
+          type="text"
+          class="form-control form-control-sm sys-newfolder"
+          placeholder="Folder name"
+          [ngModel]="newFolderName()"
+          (ngModelChange)="newFolderName.set($event)"
+          (keyup.enter)="createFolder()"
+        />
+        <button type="button" class="btn btn-primary btn-sm" (click)="createFolder()" [disabled]="!newFolderName().trim()">Create</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="showNewFolder.set(false)">Cancel</button>
+      </div>
+    }
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 40px"></th>
+            <th scope="col">Name</th>
+            <th scope="col" class="text-end">Size</th>
+            <th scope="col">Uploaded</th>
+            <th scope="col">Owner</th>
+            <th scope="col" class="text-end">Shares</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading()) {
+            <tr>
+              <td colspan="7" class="text-center text-muted py-4">Loading…</td>
+            </tr>
+          } @else {
+            @for (folder of filteredFolders(); track folder.id) {
+              <tr>
+                <td class="text-warning"><fa-icon icon="folder-open" /></td>
+                <td>
+                  <button type="button" class="btn btn-link p-0 fw-semibold" (click)="openFolder(folder)">{{ folder.name }}</button>
+                </td>
+                <td class="text-end text-muted">—</td>
+                <td>{{ folder.createdDate ? (folder.createdDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td>{{ folder.owner || '—' }}</td>
+                <td class="text-end text-muted">—</td>
+                <td class="text-end">
+                  <button type="button" class="btn btn-outline-danger btn-sm" (click)="trashFolder(folder)" aria-label="Trash folder">
+                    <fa-icon icon="trash-alt" />
+                  </button>
+                </td>
+              </tr>
+            }
+            @for (file of filteredFiles(); track file.id) {
+              <tr>
+                <td class="text-secondary"><fa-icon [icon]="icon(file)" /></td>
+                <td>
+                  <button type="button" class="btn btn-link p-0" (click)="openPreview(file)">{{ file.name }}</button>
+                  <span class="text-muted small ms-2">{{ file.storageProvider }}</span>
+                </td>
+                <td class="text-end">{{ size(file.fileSize) }}</td>
+                <td>{{ file.uploadedDate ? (file.uploadedDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td>{{ file.owner || '—' }}</td>
+                <td class="text-end">
+                  @if (file.shareCount > 0) {
+                    <span class="badge bg-primary-subtle text-primary-emphasis">{{ file.shareCount }}</span>
+                  } @else {
+                    <span class="text-muted">—</span>
+                  }
+                </td>
+                <td class="text-end">
+                  <div class="btn-group btn-group-sm">
+                    <button type="button" class="btn btn-outline-secondary" (click)="download(file)" title="Download">
+                      <fa-icon icon="cloud" />
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="openShare(file)" title="Share">
+                      <fa-icon icon="users" />
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" (click)="trashFile(file)" title="Move to trash">
+                      <fa-icon icon="trash-alt" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+            @if (isEmpty()) {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-5">This folder is empty. Upload a file to get started.</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  @if (shareFor(); as file) {
+    <div class="card mt-3">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">Share “{{ file.name }}”</span>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeShare()">Close</button>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <h6 class="sys-share__heading">Someone with an account</h6>
+            <div class="d-flex gap-2 align-items-start">
+              <select class="form-select form-select-sm" [ngModel]="sharePartyId()" (ngModelChange)="sharePartyId.set($event)">
+                <option [ngValue]="null">Select a person…</option>
+                @for (p of people(); track p.id) {
+                  <option [ngValue]="p.id">{{ p.name }}</option>
+                }
+              </select>
+              <select
+                class="form-select form-select-sm sys-share__perm"
+                [ngModel]="sharePermission()"
+                (ngModelChange)="sharePermission.set($event)"
+              >
+                <option value="VIEW">View</option>
+                <option value="COMMENT">Comment</option>
+                <option value="EDIT">Edit</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm text-nowrap"
+                (click)="shareInternally()"
+                [disabled]="sharePartyId() === null || sharing()"
+              >
+                Share
+              </button>
+            </div>
+            <p class="text-muted small mb-0 mt-2">They will see it under Shared with me. No link is created.</p>
+          </div>
+
+          <div class="col-lg-6">
+            <h6 class="sys-share__heading">Someone outside, by email</h6>
+            <div class="d-flex gap-2 align-items-start">
+              <input
+                type="email"
+                class="form-control form-control-sm"
+                placeholder="name@company.com"
+                [ngModel]="shareEmail()"
+                (ngModelChange)="shareEmail.set($event)"
+              />
+              <select
+                class="form-select form-select-sm sys-share__perm"
+                [ngModel]="shareExpiryDays()"
+                (ngModelChange)="shareExpiryDays.set($event)"
+              >
+                <option [ngValue]="1">1 day</option>
+                <option [ngValue]="7">7 days</option>
+                <option [ngValue]="14">14 days</option>
+                <option [ngValue]="30">30 days</option>
+              </select>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm text-nowrap"
+                (click)="shareByEmail()"
+                [disabled]="!shareEmail().trim() || sharing()"
+              >
+                Create link
+              </button>
+            </div>
+            <p class="text-muted small mb-0 mt-2">
+              Creates a link that works without signing in, so treat it as the key to the file. It stops working on the expiry date, or as
+              soon as you revoke it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive border-top">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Shared with</th>
+              <th scope="col">Permission</th>
+              <th scope="col">Shared</th>
+              <th scope="col">Expires</th>
+              <th scope="col" class="text-end">Opened</th>
+              <th scope="col">Link</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of shares(); track s.id) {
+              <tr [class.sys-share--revoked]="s.isRevoked">
+                <td>
+                  {{ s.sharedWithEmail || s.sharedWith || '—' }}
+                  @if (s.external) {
+                    <span class="badge bg-warning-subtle text-warning-emphasis ms-1">external</span>
+                  }
+                </td>
+                <td>{{ s.permission }}</td>
+                <td>{{ s.sharedDate ? (s.sharedDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td>{{ s.expiryDate ? (s.expiryDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td class="text-end">{{ s.downloadCount ?? 0 }}</td>
+                <td>
+                  @if (s.external && !s.isRevoked) {
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="copyLink(s)">
+                      {{ copiedToken() === s.accessToken ? 'Copied' : 'Copy link' }}
+                    </button>
+                  } @else {
+                    <span class="text-muted">—</span>
+                  }
+                </td>
+                <td class="text-end">
+                  @if (s.isRevoked) {
+                    <span class="text-muted">Revoked</span>
+                  } @else {
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="revoke(s)">Revoke</button>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-4">Not shared with anyone yet.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
+
+<sys-file-preview #preview />

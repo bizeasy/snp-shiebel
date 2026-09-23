@@ -1,0 +1,301 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Raise Sales Invoice</h2>
+    <div class="d-flex align-items-center gap-2">
+      @if (invoiceNo()) {
+        <span class="badge bg-primary-subtle text-primary-emphasis">{{ invoiceNo() }}</span>
+      }
+      <a class="btn btn-outline-secondary btn-sm" routerLink="/sales-invoice/invoice-list">
+        <fa-icon icon="list" class="me-1" />Invoice list
+      </a>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (!order()) {
+    <div class="card">
+      <div class="card-header sys-page__toolbar">
+        <div class="sys-page__search">
+          <fa-icon icon="search" class="sys-page__search-icon" />
+          <input
+            type="search"
+            class="form-control form-control-sm"
+            placeholder="Search sales orders"
+            [ngModel]="orderSearch()"
+            (ngModelChange)="orderSearch.set($event)"
+          />
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="loadOrders()" [disabled]="loadingOrders()">
+          <fa-icon icon="sync" [animation]="loadingOrders() ? 'spin' : undefined" />
+        </button>
+      </div>
+
+      <p class="text-muted small px-3 pt-3 mb-0">
+        Pick the sales order to bill. Orders that have already been invoiced in full are not listed.
+      </p>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Reference</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Order Date</th>
+              <th scope="col" class="text-end">Order Value</th>
+              <th scope="col" class="text-end">Left to Invoice</th>
+              <th scope="col" class="text-end"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loadingOrders()) {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-4">Loading…</td>
+              </tr>
+            } @else {
+              @for (o of filteredOrders(); track o.id) {
+                <tr>
+                  <td>{{ o.name || o.id }}</td>
+                  <td>{{ o.refNo || '—' }}</td>
+                  <td>{{ o.customer || '—' }}</td>
+                  <td>{{ o.orderDate ? (o.orderDate | date: 'dd MMM yyyy') : '—' }}</td>
+                  <td class="text-end">{{ o.grandTotal != null ? (o.grandTotal | number: '1.2-2') : '—' }}</td>
+                  <td class="text-end fw-semibold">{{ o.outstandingValue | number: '1.2-2' }}</td>
+                  <td class="text-end">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="chooseOrder(o.id)">Select</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="7" class="text-center text-muted py-4">Every sales order has been invoiced in full.</td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (loadingOrder()) {
+    <div class="card"><div class="card-body text-muted">Loading order…</div></div>
+  }
+
+  @if (order(); as o) {
+    <div class="card mb-3">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">{{ o.orderName || 'Order ' + o.orderId }}</span>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="clearOrder()">
+          <fa-icon icon="arrow-left" class="me-1" />Choose a different order
+        </button>
+      </div>
+      <div class="card-body sys-summary">
+        <div>
+          <span class="sys-summary__label">Order reference</span><span>{{ o.orderRefNo || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Customer</span><span>{{ o.customer || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Order date</span><span>{{ o.orderDate ? (o.orderDate | date: 'dd MMM yyyy') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Order value</span
+          ><span>{{ o.grandTotal != null ? (o.grandTotal | number: '1.2-2') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Left to invoice</span><span>{{ o.outstandingValue | number: '1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">Lines to invoice</span>
+        <div class="btn-group btn-group-sm">
+          <button type="button" class="btn btn-outline-secondary" (click)="billAll()">Bill all remaining</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="billNone()">Clear</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">Bill</th>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col" class="text-end">Ordered</th>
+              <th scope="col" class="text-end">Already billed</th>
+              <th scope="col" class="text-end">Remaining</th>
+              <th scope="col" class="text-end">Qty to invoice</th>
+              <th scope="col" class="text-end">Unit price</th>
+              <th scope="col" class="text-end">Line total</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (line of lines(); track line.orderItemId) {
+              <tr [class.sys-line--done]="line.remainingQuantity === 0">
+                <td class="text-center">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    [checked]="line.selected"
+                    [disabled]="line.remainingQuantity === 0"
+                    (change)="toggleLine(line.orderItemId, $any($event.target).checked)"
+                    [attr.aria-label]="'Invoice ' + (line.product || line.orderItemId)"
+                  />
+                </td>
+                <td>{{ line.sequenceNo ?? '—' }}</td>
+                <td>
+                  {{ line.product || '—' }}
+                  @if (line.uom) {
+                    <span class="text-muted small ms-1">({{ line.uom }})</span>
+                  }
+                </td>
+                <td class="text-end">{{ line.orderedQuantity | number: '1.0-2' }}</td>
+                <td class="text-end">{{ line.billedQuantity | number: '1.0-2' }}</td>
+                <td class="text-end fw-semibold">{{ line.remainingQuantity | number: '1.0-2' }}</td>
+                <td class="text-end">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm text-end sys-line__input"
+                    min="0"
+                    [max]="line.remainingQuantity"
+                    [value]="line.billQuantity"
+                    [disabled]="line.remainingQuantity === 0"
+                    (input)="setQuantity(line.orderItemId, $any($event.target).value)"
+                    [attr.aria-label]="'Quantity to invoice for ' + (line.product || line.orderItemId)"
+                  />
+                </td>
+                <td class="text-end">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm text-end sys-line__input"
+                    min="0"
+                    step="0.01"
+                    [value]="line.price"
+                    [disabled]="line.remainingQuantity === 0"
+                    (input)="setPrice(line.orderItemId, $any($event.target).value)"
+                    [attr.aria-label]="'Unit price for ' + (line.product || line.orderItemId)"
+                  />
+                </td>
+                <td class="text-end">{{ lineTotal(line) | number: '1.2-2' }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="9" class="text-center text-muted py-4">This order has no lines.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="card h-100">
+          <div class="card-header fw-semibold">Invoice details</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label" for="invoiceDate">Invoice date</label>
+                <input
+                  id="invoiceDate"
+                  type="date"
+                  class="form-control"
+                  [ngModel]="invoiceDate()"
+                  (ngModelChange)="invoiceDate.set($event)"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="dueDate">Due date</label>
+                <input id="dueDate" type="date" class="form-control" [ngModel]="dueDate()" (ngModelChange)="dueDate.set($event)" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="taxSlab">Tax</label>
+                <select id="taxSlab" class="form-select" [ngModel]="taxSlabId()" (ngModelChange)="taxSlabId.set($event)">
+                  <option [ngValue]="null">No tax</option>
+                  @for (slab of taxSlabs(); track slab.id) {
+                    <option [ngValue]="slab.id">{{ slab.rate | number: '1.0-2' }}%</option>
+                  }
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="paymentTerms">Payment terms</label>
+                <sys-terms-input
+                  inputId="paymentTerms"
+                  kind="paymentTerms"
+                  placeholder="e.g. 50% advance, balance against delivery"
+                  [ngModel]="paymentTerms()"
+                  (ngModelChange)="paymentTerms.set($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="deliveryTerms">Delivery terms</label>
+                <sys-terms-input
+                  inputId="deliveryTerms"
+                  kind="deliveryTerms"
+                  placeholder="e.g. Ex-works, 4 weeks from order"
+                  [ngModel]="deliveryTerms()"
+                  (ngModelChange)="deliveryTerms.set($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="invoiceMessage">Message on invoice</label>
+                <input
+                  id="invoiceMessage"
+                  type="text"
+                  class="form-control"
+                  maxlength="255"
+                  [ngModel]="invoiceMessage()"
+                  (ngModelChange)="invoiceMessage.set($event)"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="remarks">Remarks</label>
+                <input
+                  id="remarks"
+                  type="text"
+                  class="form-control"
+                  maxlength="2000"
+                  [ngModel]="remarks()"
+                  (ngModelChange)="remarks.set($event)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card h-100">
+          <div class="card-header fw-semibold">Totals</div>
+          <div class="card-body">
+            <dl class="sys-totals">
+              <dt>Lines selected</dt>
+              <dd>{{ selectedCount() }}</dd>
+              <dt>Subtotal</dt>
+              <dd>{{ subtotal() | number: '1.2-2' }}</dd>
+              <dt>Tax ({{ taxRate() | number: '1.0-2' }}%)</dt>
+              <dd>{{ taxAmount() | number: '1.2-2' }}</dd>
+              <dt class="sys-totals__grand">Grand total</dt>
+              <dd class="sys-totals__grand">{{ grandTotal() | number: '1.2-2' }}</dd>
+            </dl>
+            <button type="button" class="btn btn-primary w-100" [disabled]="!canSave()" (click)="save()">
+              <fa-icon icon="save" class="me-1" />
+              {{ saving() ? 'Raising…' : 'Raise invoice' }}
+            </button>
+            @if (selectedCount() === 0) {
+              <p class="text-muted small mt-2 mb-0">Select at least one line with a quantity to invoice.</p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

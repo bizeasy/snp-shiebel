@@ -1,0 +1,199 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Dashboard</h2>
+    <div class="sys-range" role="group" aria-label="Time range">
+      @for (m of monthOptions; track m) {
+        <button
+          type="button"
+          class="btn btn-sm"
+          [class.btn-primary]="months() === m"
+          [class.btn-outline-secondary]="months() !== m"
+          (click)="changeMonths(m)"
+        >
+          {{ m }}m
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="card"><div class="card-body text-muted">Loading dashboard…</div></div>
+  } @else if (kpis(); as k) {
+    <div class="sys-kpis">
+      <div class="sys-kpi">
+        <span class="sys-kpi__label">Sales Orders</span>
+        <span class="sys-kpi__value">{{ k.salesOrderCount | number }}</span>
+        <span class="sys-kpi__sub">{{ k.salesOrderValue | number: '1.0-0' }} total value</span>
+      </div>
+      <div class="sys-kpi">
+        <span class="sys-kpi__label">Purchase Orders</span>
+        <span class="sys-kpi__value">{{ k.purchaseOrderCount | number }}</span>
+        <span class="sys-kpi__sub">{{ k.purchaseOrderValue | number: '1.0-0' }} total value</span>
+      </div>
+      <div class="sys-kpi">
+        <span class="sys-kpi__label">Customers</span>
+        <span class="sys-kpi__value">{{ k.customerCount | number }}</span>
+        <span class="sys-kpi__sub">active parties</span>
+      </div>
+      <div class="sys-kpi">
+        <span class="sys-kpi__label">Suppliers</span>
+        <span class="sys-kpi__value">{{ k.supplierCount | number }}</span>
+        <span class="sys-kpi__sub">active parties</span>
+      </div>
+      <div class="sys-kpi">
+        <span class="sys-kpi__label">Products</span>
+        <span class="sys-kpi__value">{{ k.productCount | number }}</span>
+        <span class="sys-kpi__sub">catalogue rows</span>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-0">
+      <div class="col-lg-7">
+        <div class="card h-100">
+          <div class="card-header sys-chart__head">
+            <span class="fw-semibold">Order value by month</span>
+            <span class="sys-legend">
+              <span class="sys-legend__item"> <span class="sys-legend__swatch" [style.background]="colourSales"></span>Sales </span>
+              <span class="sys-legend__item"> <span class="sys-legend__swatch" [style.background]="colourPurchase"></span>Purchase </span>
+            </span>
+          </div>
+          <div class="card-body">
+            @if (!hasOrderData()) {
+              <p class="text-muted mb-0">No orders in this period.</p>
+            } @else {
+              <svg
+                class="sys-chart"
+                [attr.viewBox]="'0 0 ' + width + ' ' + height"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                aria-label="Sales and purchase order value by month"
+              >
+                @for (g of gridLines(); track g.y) {
+                  <line class="sys-chart__grid" [attr.x1]="padLeft" [attr.x2]="plotRight" [attr.y1]="g.y" [attr.y2]="g.y" />
+                  <text class="sys-chart__tick" [attr.x]="padLeft - 8" [attr.y]="g.y + 3" text-anchor="end">
+                    {{ g.value | number: '1.0-0' }}
+                  </text>
+                }
+
+                <path class="sys-chart__line" [attr.d]="purchasePath()" [attr.stroke]="colourPurchase" />
+                <path class="sys-chart__line" [attr.d]="salesPath()" [attr.stroke]="colourSales" />
+
+                @for (p of points(); track p.month) {
+                  <circle [attr.cx]="p.x" [attr.cy]="p.yPurchase" r="4.5" [attr.fill]="colourPurchase" class="sys-chart__dot" />
+                  <circle [attr.cx]="p.x" [attr.cy]="p.ySales" r="4.5" [attr.fill]="colourSales" class="sys-chart__dot" />
+                  @if (p.showLabel) {
+                    <text class="sys-chart__tick" [attr.x]="p.x" [attr.y]="plotBottom + 18" text-anchor="middle">{{ p.label }}</text>
+                  }
+                  <rect
+                    class="sys-chart__hit"
+                    [attr.x]="p.x - 18"
+                    [attr.y]="0"
+                    width="36"
+                    [attr.height]="plotBottom"
+                    (mouseenter)="onHover(p)"
+                    (mouseleave)="onHover(null)"
+                  />
+                }
+              </svg>
+
+              <!-- always rendered, so the card does not resize as the pointer moves -->
+              <div class="sys-chart__tooltip" [class.sys-chart__tooltip--idle]="!hovered()">
+                @if (hovered(); as h) {
+                  <strong>{{ h.label }}</strong>
+                  <span
+                    ><span class="sys-legend__swatch" [style.background]="colourSales"></span>Sales {{ h.sales | number: '1.0-0' }}</span
+                  >
+                  <span
+                    ><span class="sys-legend__swatch" [style.background]="colourPurchase"></span>Purchase
+                    {{ h.purchase | number: '1.0-0' }}</span
+                  >
+                } @else {
+                  <span class="text-muted">Hover a month for its totals.</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card h-100">
+          <div class="card-header sys-chart__head">
+            <span class="fw-semibold">Cash book spend by category</span>
+            <span class="text-muted small">{{ spendTotal() | number: '1.0-0' }} total</span>
+          </div>
+          <div class="card-body">
+            @if (spendBars().length === 0) {
+              <p class="text-muted mb-0">No cash book entries in this period.</p>
+            } @else {
+              <ul class="sys-bars">
+                @for (b of spendBars(); track b.category) {
+                  <li class="sys-bars__row">
+                    <span class="sys-bars__label" [title]="b.category">{{ b.category }}</span>
+                    <span class="sys-bars__track">
+                      <span class="sys-bars__fill" [style.width.%]="b.percent" [style.background]="colourSales"></span>
+                    </span>
+                    <span class="sys-bars__value">{{ b.amount | number: '1.0-0' }}</span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header sys-chart__head">
+        <span class="fw-semibold">Recent sales orders</span>
+        <a class="btn btn-sm btn-outline-secondary" routerLink="/sales-order"> <fa-icon icon="list"></fa-icon>&nbsp;All orders </a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Reference</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Date</th>
+              <th scope="col" class="text-end">Grand total</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (o of recent(); track o.id) {
+              <tr>
+                <td>{{ o.name || '-' }}</td>
+                <td>{{ o.refNo || '-' }}</td>
+                <td>{{ o.customer || '-' }}</td>
+                <td>{{ o.orderDate ? (o.orderDate | date: 'dd MMM yyyy') : '-' }}</td>
+                <td class="text-end">{{ o.grandTotal != null ? (o.grandTotal | number: '1.2-2') : '-' }}</td>
+                <td>
+                  @if (o.status) {
+                    <span class="badge bg-light text-dark">{{ o.status }}</span>
+                  } @else {
+                    -
+                  }
+                </td>
+                <td class="text-end">
+                  <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/sales-order', o.id, 'view']" aria-label="View order">
+                    <fa-icon icon="eye"></fa-icon>
+                  </a>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-4">No sales orders yet.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

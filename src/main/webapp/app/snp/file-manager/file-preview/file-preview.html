@@ -1,0 +1,62 @@
+@if (file(); as f) {
+  <div class="sys-preview" role="dialog" aria-modal="true" [attr.aria-label]="'Preview of ' + f.name">
+    <div class="sys-preview__backdrop" (click)="close()"></div>
+
+    <div class="sys-preview__panel">
+      <div class="sys-preview__head">
+        <span class="sys-preview__name" [title]="f.name">{{ f.name }}</span>
+        <div class="d-flex align-items-center gap-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="download()">
+            <fa-icon icon="cloud" class="me-1" />Download
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="close()" aria-label="Close preview">
+            <fa-icon icon="times" />
+          </button>
+        </div>
+      </div>
+
+      <div class="sys-preview__body">
+        @if (loading()) {
+          <div class="sys-preview__status text-muted">Loading…</div>
+        } @else if (error()) {
+          <div class="sys-preview__status">
+            <div class="alert alert-danger mb-3">{{ error() }}</div>
+            <button type="button" class="btn btn-primary btn-sm" (click)="download()">
+              <fa-icon icon="cloud" class="me-1" />Download instead
+            </button>
+          </div>
+        } @else if (tooLarge()) {
+          <div class="sys-preview__status">
+            <p class="text-muted mb-3">This file is too large to preview in the browser.</p>
+            <button type="button" class="btn btn-primary btn-sm" (click)="download()">
+              <fa-icon icon="cloud" class="me-1" />Download instead
+            </button>
+          </div>
+        } @else if (kind() === 'legacy-doc') {
+          <div class="sys-preview__status">
+            <p class="text-muted mb-3">
+              This is a legacy .doc file. In-app preview only reads the modern .docx format; save it as .docx to preview it here, or
+              download it to open in Word.
+            </p>
+            <button type="button" class="btn btn-primary btn-sm" (click)="download()"><fa-icon icon="cloud" class="me-1" />Download</button>
+          </div>
+        } @else if (kind() === 'unsupported') {
+          <div class="sys-preview__status">
+            <p class="text-muted mb-3">There is no in-app viewer for this file type yet.</p>
+            <button type="button" class="btn btn-primary btn-sm" (click)="download()"><fa-icon icon="cloud" class="me-1" />Download</button>
+          </div>
+        } @else if (kind() === 'pdf') {
+          <iframe class="sys-preview__frame" [src]="resourceUrl()" [title]="f.name"></iframe>
+        } @else if (kind() === 'image') {
+          <div class="sys-preview__image-wrap">
+            <img class="sys-preview__image" [src]="resourceUrl()" [alt]="f.name" />
+          </div>
+        } @else if (kind() === 'text') {
+          <pre class="sys-preview__text">{{ textContent() }}</pre>
+        } @else if (kind() === 'docx') {
+          <div class="sys-preview__docx" [innerHTML]="htmlContent()"></div>
+        }
+      </div>
+    </div>
+  </div>
+}

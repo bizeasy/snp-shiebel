@@ -1,0 +1,185 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">{{ title() }}</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/cash-book/cash-book-list']">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to cash book</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  <div class="card">
+    <div class="card-body">
+      @if (loading()) {
+        <p class="text-muted mb-0">Loading entry…</p>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="transactionDate">Date <span class="text-danger">*</span></label>
+              <input id="transactionDate" type="date" class="form-control" formControlName="transactionDate" />
+              @if (invalid('transactionDate')) {
+                <div class="form-text text-danger">A date is required.</div>
+              }
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="transactionTypeId">Type <span class="text-danger">*</span></label>
+              <select id="transactionTypeId" class="form-select" formControlName="transactionTypeId">
+                <option [ngValue]="null">Select…</option>
+                @for (t of types(); track t.id) {
+                  <option [ngValue]="t.id">{{ t.description || t.name }}</option>
+                }
+              </select>
+              @if (invalid('transactionTypeId')) {
+                <div class="form-text text-danger">A transaction type is required.</div>
+              }
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="transactionCategoryId">Category</label>
+              <select id="transactionCategoryId" class="form-select" formControlName="transactionCategoryId">
+                <option [ngValue]="null">Select…</option>
+                @for (c of categoryOptions(); track c.id) {
+                  <option [ngValue]="c.id">{{ c.description || c.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="amount">Amount <span class="text-danger">*</span></label>
+              <input id="amount" type="number" step="0.01" class="form-control text-end" formControlName="amount" />
+              @if (invalid('amount')) {
+                <div class="form-text text-danger">An amount of zero or more is required.</div>
+              }
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="currencyUomId">Currency</label>
+              <select id="currencyUomId" class="form-select" formControlName="currencyUomId">
+                <option [ngValue]="null">Select…</option>
+                @for (u of currencies(); track u.id) {
+                  <option [ngValue]="u.id">{{ u.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="paymentMethodTypeId">Payment Mode</label>
+              <select id="paymentMethodTypeId" class="form-select" formControlName="paymentMethodTypeId">
+                <option [ngValue]="null">Select…</option>
+                @for (p of paymentMethods(); track p.id) {
+                  <option [ngValue]="p.id">{{ p.description || p.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="departmentId">Department</label>
+              <select id="departmentId" class="form-select" formControlName="departmentId">
+                <option [ngValue]="null">Select…</option>
+                @for (d of departments(); track d.id) {
+                  <option [ngValue]="d.id">{{ d.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="invoiceNo">Invoice Number</label>
+              <input id="invoiceNo" type="text" class="form-control" formControlName="invoiceNo" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="invoiceDate">Invoice Date</label>
+              <input id="invoiceDate" type="date" class="form-control" formControlName="invoiceDate" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="description">{{ descriptionLabel() }}</label>
+              <input id="description" type="text" class="form-control" formControlName="description" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="purpose">Purpose</label>
+              <input id="purpose" type="text" class="form-control" formControlName="purpose" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="vendorCustomerName">{{ partyLabel() }}</label>
+              <input
+                id="vendorCustomerName"
+                type="text"
+                class="form-control"
+                formControlName="vendorCustomerName"
+                placeholder="Free text, e.g. a one-off payee"
+              />
+            </div>
+
+            @if (partyKind()) {
+              <div class="col-md-4">
+                <label class="form-label" for="partyId">{{ partyPickerLabel() }} (optional)</label>
+                <select id="partyId" class="form-select" formControlName="partyId">
+                  <option [ngValue]="null">Not linked to a {{ partyPickerLabel() | lowercase }} record…</option>
+                  @for (p of partyOptions(); track p.id) {
+                    <option [ngValue]="p.id">{{ p.name }}</option>
+                  }
+                </select>
+              </div>
+            }
+
+            <div class="col-md-4">
+              <label class="form-label" for="project">Project</label>
+              <input id="project" type="text" class="form-control" formControlName="project" />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="usageUnits">Usage Units</label>
+              <input id="usageUnits" type="text" class="form-control" formControlName="usageUnits" placeholder="e.g. kWh, litres" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="dueDate">Due Date</label>
+              <input id="dueDate" type="date" class="form-control" formControlName="dueDate" />
+            </div>
+
+            <div class="col-md-3">
+              <span class="form-label d-block">Recurring</span>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="recurringTransaction" formControlName="recurringTransaction" />
+                <label class="form-check-label" for="recurringTransaction">Recurring transaction</label>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="frequency">Frequency</label>
+              <select id="frequency" class="form-select" formControlName="frequency">
+                @for (f of frequencies; track f) {
+                  <option [value]="f">{{ f }}</option>
+                }
+              </select>
+              @if (!recurring()) {
+                <div class="form-text">Enable Recurring to set a frequency.</div>
+              }
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="remarks">Remarks</label>
+              <textarea id="remarks" rows="2" class="form-control" formControlName="remarks"></textarea>
+            </div>
+          </div>
+
+          <div class="sys-page__actions">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+              <fa-icon icon="save" />
+              <span class="ms-1">{{ saving() ? 'Saving…' : isEdit() ? 'Update Entry' : 'Create Entry' }}</span>
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+</div>

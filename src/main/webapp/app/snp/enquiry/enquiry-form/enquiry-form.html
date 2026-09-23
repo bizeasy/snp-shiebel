@@ -1,0 +1,173 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">{{ title() }}</h2>
+    <a class="btn btn-outline-secondary btn-sm" routerLink="/enquiry-entry/enquiry-list">
+      <fa-icon icon="arrow-left" class="me-1" />Back to list
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="card"><div class="card-body text-muted">Loading enquiry…</div></div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="card mb-3">
+        <div class="card-header">Enquiry</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="partyId">Customer <span class="text-danger">*</span></label>
+              <select id="partyId" class="form-select" formControlName="partyId" [class.is-invalid]="invalid('partyId')">
+                <option [ngValue]="null">Select a customer…</option>
+                @for (c of customers(); track c.id) {
+                  <option [ngValue]="c.id">{{ c.name }}</option>
+                }
+              </select>
+              @if (invalid('partyId')) {
+                <div class="invalid-feedback d-block">A customer is required.</div>
+              }
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="name">Enquiry No</label>
+              <input id="name" type="text" class="form-control" formControlName="name" placeholder="Generated if left blank" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="currencyUomId">Currency</label>
+              <select id="currencyUomId" class="form-select" formControlName="currencyUomId">
+                <option [ngValue]="null">Select…</option>
+                @for (u of currencies(); track u.id) {
+                  <option [ngValue]="u.id">{{ u.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="receivedDate">Enquiry Date</label>
+              <input id="receivedDate" type="date" class="form-control" formControlName="receivedDate" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="responseRequiredDate">Response Required By</label>
+              <input id="responseRequiredDate" type="date" class="form-control" formControlName="responseRequiredDate" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="description">Mode of Shipment / Notes</label>
+              <input id="description" type="text" class="form-control" formControlName="description" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="remarks">Remarks</label>
+              <input id="remarks" type="text" class="form-control" formControlName="remarks" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header sys-page__toolbar">
+          <span class="fw-semibold"
+            >Products enquired <span class="text-muted fw-normal">({{ lines.length }})</span></span
+          >
+          @if (!isView()) {
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="addLine()">
+              <fa-icon icon="plus" /><span class="ms-1">Add line</span>
+            </button>
+          }
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-middle mb-0" formArrayName="lines">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 60px">#</th>
+                <th scope="col">Product <span class="text-danger">*</span></th>
+                <th scope="col">Description</th>
+                <th scope="col" class="text-end">Quantity <span class="text-danger">*</span></th>
+                <th scope="col">Required By</th>
+                <th scope="col" class="text-end">Budget</th>
+                @if (!isView()) {
+                  <th scope="col" style="width: 132px" class="text-end">Actions</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (ctrl of lines.controls; track ctrl; let i = $index) {
+                <tr [formGroupName]="i">
+                  <td class="text-muted">{{ i + 1 }}</td>
+                  <td>
+                    <select class="form-select form-select-sm" formControlName="productId" [class.is-invalid]="lineInvalid(i, 'productId')">
+                      <option [ngValue]="null">Select…</option>
+                      @for (p of products(); track p.id) {
+                        <option [ngValue]="p.id">{{ p.productName }}</option>
+                      }
+                    </select>
+                  </td>
+                  <td><input type="text" class="form-control form-control-sm" formControlName="description" /></td>
+                  <td>
+                    <input
+                      type="number"
+                      step="0.001"
+                      class="form-control form-control-sm text-end"
+                      formControlName="quantity"
+                      [class.is-invalid]="lineInvalid(i, 'quantity')"
+                    />
+                  </td>
+                  <td><input type="date" class="form-control form-control-sm" formControlName="requiredByDate" /></td>
+                  <td><input type="number" step="0.01" class="form-control form-control-sm text-end" formControlName="maxAmount" /></td>
+                  @if (!isView()) {
+                    <td class="text-end">
+                      <div class="btn-group btn-group-sm" role="group" aria-label="Line actions">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          (click)="moveLine(i, -1)"
+                          [disabled]="i === 0"
+                          title="Move up"
+                        >
+                          <fa-icon icon="chevron-up" />
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          (click)="moveLine(i, 1)"
+                          [disabled]="i === lines.length - 1"
+                          title="Move down"
+                        >
+                          <fa-icon icon="chevron-down" />
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" (click)="duplicateLine(i)" title="Copy to next row">
+                          <fa-icon icon="clone" />
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          (click)="removeLine(i)"
+                          [disabled]="lines.length === 1"
+                          title="Remove"
+                        >
+                          <fa-icon icon="trash-alt" />
+                        </button>
+                      </div>
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        @if (!isView()) {
+          <div class="card-footer sys-page__actions">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+              <fa-icon icon="save" />
+              <span class="ms-1">{{ saving() ? 'Saving…' : 'Raise Enquiry' }}</span>
+            </button>
+          </div>
+        }
+      </div>
+    </form>
+  }
+</div>

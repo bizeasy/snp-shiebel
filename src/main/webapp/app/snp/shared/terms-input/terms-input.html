@@ -1,0 +1,32 @@
+<textarea
+  [id]="inputId()"
+  class="form-control"
+  [rows]="rows()"
+  [attr.list]="options().length ? listId() : null"
+  [attr.placeholder]="placeholder() || null"
+  [value]="value()"
+  [disabled]="disabled()"
+  (input)="update($any($event.target).value)"
+  (blur)="touched()"
+></textarea>
+
+@if (options().length) {
+  <datalist [id]="listId()">
+    @for (option of options(); track option) {
+      <option [value]="option"></option>
+    }
+  </datalist>
+  <div class="sys-terms__hints">
+    @for (option of options().slice(0, 4); track option) {
+      <button type="button" class="btn btn-sm sys-terms__chip" [disabled]="disabled()" (click)="update(option)">
+        {{ option }}
+      </button>
+    }
+  </div>
+}
+
+@if (looksLikeAnId()) {
+  <p class="sys-terms__warn">
+    That looks like a record id rather than terms. Enter the wording that should print on the order and invoice.
+  </p>
+}

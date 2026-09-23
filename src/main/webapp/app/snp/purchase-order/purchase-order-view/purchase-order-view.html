@@ -1,0 +1,162 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Purchase Order</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/purchase-order/purchase-order-list']">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to list</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="card"><div class="card-body text-muted">Loading purchase order…</div></div>
+  } @else if (order(); as o) {
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-header">Order</div>
+          <div class="card-body">
+            <dl class="sys-detail">
+              @for (f of header(); track f.label) {
+                <dt>{{ f.label }}</dt>
+                <dd>{{ f.value }}</dd>
+              }
+              <dt>Order Date</dt>
+              <dd>{{ o.orderDate ? (o.orderDate | date: 'dd MMM yyyy') : '—' }}</dd>
+              <dt>Delivery Date</dt>
+              <dd>{{ o.deliveryDate ? (o.deliveryDate | date: 'dd MMM yyyy') : '—' }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-header">Terms</div>
+          <div class="card-body">
+            <dl class="sys-detail">
+              @for (f of terms(); track f.label) {
+                <dt>{{ f.label }}</dt>
+                <dd>{{ f.value }}</dd>
+              }
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-header">Customer</div>
+          <div class="card-body">
+            @if (party('customerDetails').length === 0) {
+              <span class="text-muted">No customer recorded.</span>
+            } @else {
+              <dl class="sys-detail sys-detail--narrow">
+                @for (f of party('customerDetails'); track f.label) {
+                  <dt>{{ f.label }}</dt>
+                  <dd>{{ f.value }}</dd>
+                }
+              </dl>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-header">Consignee</div>
+          <div class="card-body">
+            @if (party('consigneeDetails').length === 0) {
+              <span class="text-muted">Same as customer.</span>
+            } @else {
+              <dl class="sys-detail sys-detail--narrow">
+                @for (f of party('consigneeDetails'); track f.label) {
+                  <dt>{{ f.label }}</dt>
+                  <dd>{{ f.value }}</dd>
+                }
+              </dl>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card h-100">
+          <div class="card-header">Supplier</div>
+          <div class="card-body">
+            @if (party('supplierDetails').length === 0) {
+              <span class="text-muted">No supplier on this order.</span>
+            } @else {
+              <dl class="sys-detail sys-detail--narrow">
+                @for (f of party('supplierDetails'); track f.label) {
+                  <dt>{{ f.label }}</dt>
+                  <dd>{{ f.value }}</dd>
+                }
+              </dl>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">Line items</div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tag No</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Flange</th>
+                  <th scope="col" class="text-end">Qty</th>
+                  <th scope="col" class="text-end">Unit Price</th>
+                  <th scope="col" class="text-end">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if (items().length === 0) {
+                  <tr>
+                    <td colspan="7" class="text-center py-4 text-muted">This order has no line items.</td>
+                  </tr>
+                } @else {
+                  @for (it of items(); track it.orderItemId) {
+                    <tr>
+                      <td>{{ it.serialNo ?? '—' }}</td>
+                      <td>{{ it.tagNo || '—' }}</td>
+                      <td>{{ it.description || '—' }}</td>
+                      <td>{{ it.flange || '—' }}</td>
+                      <td class="text-end">{{ it.qty != null ? (it.qty | number: '1.0-3') : '—' }}</td>
+                      <td class="text-end">{{ it.unitPrice != null ? (it.unitPrice | number: '1.2-2') : '—' }}</td>
+                      <td class="text-end">{{ it.totalPrice != null ? (it.totalPrice | number: '1.2-2') : '—' }}</td>
+                    </tr>
+                  }
+                }
+              </tbody>
+              @if (items().length > 0) {
+                <tfoot>
+                  <tr>
+                    <th colspan="6" class="text-end">Sum of lines</th>
+                    <th class="text-end">{{ computedTotal() | number: '1.2-2' }}</th>
+                  </tr>
+                  <tr>
+                    <th colspan="6" class="text-end">Order grand total</th>
+                    <th class="text-end">{{ o.grandTotal != null ? (o.grandTotal | number: '1.2-2') : '—' }}</th>
+                  </tr>
+                </tfoot>
+              }
+            </table>
+          </div>
+          @if (totalsDiffer()) {
+            <div class="card-footer">
+              <span class="text-danger small">The stored grand total does not match the sum of the line items.</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

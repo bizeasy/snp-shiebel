@@ -1,0 +1,109 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__search {
+    position: relative;
+    flex: 1 1 260px;
+    max-width: 340px;
+
+    input {
+      padding-left: 30px;
+    }
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $slate-400;
+    font-size: $size-xxsmall;
+    pointer-events: none;
+  }
+}
+
+// Read-only order header above the line table.
+.sys-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-variant-numeric: tabular-nums;
+    color: $slate-800;
+  }
+
+  &__label {
+    font-size: $size-xxsmall;
+    font-weight: $weight-semibold;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: $slate-500;
+  }
+}
+
+.sys-line {
+  // A line with nothing left to bill stays visible for context but is clearly inactive.
+  &--done {
+    color: $slate-400;
+    background: $slate-50;
+  }
+
+  &__input {
+    width: 96px;
+    display: inline-block;
+  }
+}
+
+.sys-totals {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  margin: 0 0 14px;
+  font-variant-numeric: tabular-nums;
+
+  dt {
+    font-weight: $weight-regular;
+    color: $slate-500;
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    color: $slate-800;
+  }
+
+  &__grand {
+    padding-top: 8px;
+    border-top: 1px solid $slate-200;
+    font-weight: $weight-semibold;
+    font-size: $size-small;
+    color: $slate-800;
+  }
+}

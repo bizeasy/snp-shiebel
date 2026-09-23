@@ -1,0 +1,126 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Enquiries</h2>
+    <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/enquiry-entry/enquiry-list/create-enquiry']">
+      <fa-icon icon="plus" />
+      <span class="ms-1">New Enquiry</span>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-header sys-page__toolbar">
+      <div class="sys-page__search">
+        <fa-icon icon="search" class="sys-page__search-icon" />
+        <input
+          type="search"
+          class="form-control form-control-sm"
+          placeholder="Search enquiries"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+        />
+      </div>
+      <div class="sys-page__toolbar-right">
+        <label class="sys-page__size">
+          <span>Rows</span>
+          <select class="form-select form-select-sm" [value]="size()" (change)="changeSize($any($event.target).value)">
+            @for (opt of sizeOptions; track opt) {
+              <option [value]="opt">{{ opt }}</option>
+            }
+          </select>
+        </label>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="load()" [disabled]="loading()">
+          <fa-icon icon="sync" [animation]="loading() ? 'spin' : undefined" />
+        </button>
+      </div>
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-danger m-3 mb-0" role="alert">{{ error() }}</div>
+    }
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Enquiry No</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Enquiry Date</th>
+            <th scope="col">Response By</th>
+            <th scope="col" class="text-end">Lines</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (loading()) {
+            <tr>
+              <td colspan="7" class="text-center text-muted py-4">Loading…</td>
+            </tr>
+          } @else {
+            @for (row of filteredRows(); track row.id) {
+              <tr>
+                <td class="fw-semibold">{{ row.enquiryNo || '—' }}</td>
+                <td>{{ row.customer || '—' }}</td>
+                <td>{{ row.enquiryDate ? (row.enquiryDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td>{{ row.responseRequiredDate ? (row.responseRequiredDate | date: 'dd MMM yyyy') : '—' }}</td>
+                <td class="text-end">{{ row.lineCount }}</td>
+                <td>
+                  <span class="badge" [class]="statusClass(row)">{{ row.status || '—' }}</span>
+                </td>
+                <td class="text-end">
+                  <div ngbDropdown container="body" placement="bottom-end">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" ngbDropdownToggle aria-label="Row actions">
+                      <fa-icon icon="cogs" />
+                    </button>
+                    <div ngbDropdownMenu>
+                      <a
+                        ngbDropdownItem
+                        [routerLink]="['/enquiry-entry/enquiry-list/create-enquiry']"
+                        [queryParams]="{ id: row.id, view: true }"
+                      >
+                        <fa-icon icon="eye" class="me-2" />View
+                      </a>
+                      <a ngbDropdownItem [routerLink]="['/quote/quote-list/create-quote']" [queryParams]="{ enquiryId: row.id }">
+                        <fa-icon icon="quote-left" class="me-2" />Record a quote
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-4">No enquiries yet.</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer sys-page__pager">
+      <span class="text-muted">
+        @if (search()) {
+          Showing {{ filteredRows().length }} of {{ rows().length }} on this page (filtered)
+        } @else {
+          Showing {{ rangeStart() }} to {{ rangeEnd() }} of {{ totalRecords() }} entries
+        }
+      </span>
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(0)" [disabled]="page() === 0">First</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(page() - 1)" [disabled]="page() === 0">Prev</button>
+        <span class="btn btn-outline-secondary disabled">{{ page() + 1 }} / {{ totalPages() }}</span>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPage(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+          Next
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="goToPage(totalPages() - 1)"
+          [disabled]="page() + 1 >= totalPages()"
+        >
+          Last
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

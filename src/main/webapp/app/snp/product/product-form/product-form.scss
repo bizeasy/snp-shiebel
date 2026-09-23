@@ -1,0 +1,57 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid $slate-200;
+  }
+}
+
+.form-label {
+  font-size: $size-xxsmall;
+  font-weight: $weight-medium;
+  color: $slate-600;
+}
+
+.sys-detail-rows {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid $slate-200;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-xsmall;
+    font-weight: $weight-semibold;
+    color: $slate-700;
+  }
+
+  &__row + &__row {
+    margin-top: 8px;
+  }
+}

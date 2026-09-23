@@ -1,0 +1,40 @@
+@use '../../../shared/styles/variables' as *;
+
+// The component has no wrapper element, so the block lives on the host.
+:host {
+  display: block;
+}
+
+.sys-terms {
+  &__hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  // Previously used wording, one click away.
+  &__chip {
+    border: 1px solid $slate-200;
+    background: $slate-50;
+    color: $slate-600;
+    font-size: $size-xxsmall;
+    border-radius: 999px;
+    padding: 2px 10px;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      background: $slate-100;
+      color: $slate-800;
+    }
+  }
+
+  &__warn {
+    margin: 6px 0 0;
+    font-size: $size-xxsmall;
+    color: $dark-orange;
+  }
+}

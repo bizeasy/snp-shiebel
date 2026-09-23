@@ -1,0 +1,177 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Manage Products</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/supplier/supplier-list']">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to suppliers</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+  @if (notice()) {
+    <div class="alert alert-success" role="alert">{{ notice() }}</div>
+  }
+
+  <div class="card mb-3">
+    <div class="card-body sys-picker">
+      <label class="form-label mb-0" for="supplier">Supplier</label>
+      <select
+        id="supplier"
+        class="form-select form-select-sm"
+        [value]="selectedSupplierId() ?? ''"
+        (change)="onSupplierChange($any($event.target).value)"
+        [disabled]="loadingSuppliers()"
+      >
+        <option value="">Select a supplier…</option>
+        @for (s of suppliers(); track s.id) {
+          <option [value]="s.id">
+            {{ s.name }}
+            @if (s.code) {
+              ({{ s.code }})
+            }
+          </option>
+        }
+      </select>
+      @if (loadingSuppliers()) {
+        <span class="text-muted small">Loading suppliers…</span>
+      }
+    </div>
+  </div>
+
+  @if (selectedSupplierId() === null) {
+    <div class="card">
+      <div class="card-body text-center text-muted py-5">Select a supplier to manage its products.</div>
+    </div>
+  } @else {
+    <div class="card mb-3">
+      <div class="card-header sys-page__toolbar">
+        <span class="fw-semibold">Products supplied by {{ selectedSupplier()?.name }}</span>
+        <button type="button" class="btn btn-primary btn-sm" (click)="toggleAddPanel()" [disabled]="busy()">
+          <fa-icon [icon]="showAddPanel() ? 'times' : 'plus'" />
+          <span class="ms-1">{{ showAddPanel() ? 'Close' : 'Add products' }}</span>
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Product</th>
+              <th scope="col">Code</th>
+              <th scope="col" class="text-end">Price</th>
+              <th scope="col" class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loadingProducts()) {
+              <tr>
+                <td colspan="5" class="text-center py-4 text-muted">Loading…</td>
+              </tr>
+            } @else if (linked().length === 0) {
+              <tr>
+                <td colspan="5" class="text-center py-4 text-muted">This supplier has no products yet.</td>
+              </tr>
+            } @else {
+              @for (p of linked(); track p.id) {
+                <tr>
+                  <td>{{ p.id }}</td>
+                  <td>{{ p.name || '—' }}</td>
+                  <td>{{ p.code || '—' }}</td>
+                  <td class="text-end">{{ p.price != null ? (p.price | number: '1.2-2') : '—' }}</td>
+                  <td class="text-end">
+                    <button type="button" class="btn btn-outline-danger btn-sm" (click)="askRemove(p)" [disabled]="busy()">
+                      <fa-icon icon="trash-alt" />
+                    </button>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (showAddPanel()) {
+      <div class="card">
+        <div class="card-header sys-page__toolbar">
+          <span class="fw-semibold">Available products</span>
+          <span class="text-muted small">{{ checkedCount() }} selected</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 44px">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    [checked]="allChecked()"
+                    (change)="toggleAll()"
+                    [disabled]="addable().length === 0"
+                    aria-label="Select all"
+                  />
+                </th>
+                <th scope="col">Id</th>
+                <th scope="col">Product</th>
+                <th scope="col">Code</th>
+                <th scope="col" class="text-end">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if (addable().length === 0) {
+                <tr>
+                  <td colspan="5" class="text-center py-4 text-muted">No further products available to add.</td>
+                </tr>
+              } @else {
+                @for (p of addable(); track p.id) {
+                  <tr (click)="toggleChecked(p.id)" class="sys-selectable">
+                    <td>
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        [checked]="checked().has(p.id)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleChecked(p.id)"
+                        [attr.aria-label]="'Select ' + (p.name || p.id)"
+                      />
+                    </td>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.name || '—' }}</td>
+                    <td>{{ p.code || '—' }}</td>
+                    <td class="text-end">{{ p.price != null ? (p.price | number: '1.2-2') : '—' }}</td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card-footer text-end">
+          <button type="button" class="btn btn-primary btn-sm" (click)="addSelected()" [disabled]="busy() || checkedCount() === 0">
+            <fa-icon icon="plus" />
+            <span class="ms-1">Add {{ checkedCount() }} product(s)</span>
+          </button>
+        </div>
+      </div>
+    }
+  }
+
+  @if (confirmRemove(); as target) {
+    <div class="sys-confirm">
+      <div class="sys-confirm__box">
+        <h3 class="sys-confirm__title">Remove product</h3>
+        <p class="mb-3">
+          Remove <strong>{{ target.name || target.id }}</strong> from {{ selectedSupplier()?.name }}?
+        </p>
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-secondary btn-sm me-2" (click)="cancelRemove()" [disabled]="busy()">Cancel</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="doRemove()" [disabled]="busy()">Remove</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

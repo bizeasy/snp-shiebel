@@ -1,0 +1,75 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__search {
+    position: relative;
+    flex: 1 1 260px;
+    max-width: 340px;
+
+    input {
+      padding-left: 30px;
+    }
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $slate-400;
+    font-size: $size-xxsmall;
+    pointer-events: none;
+  }
+
+  &__toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__size {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: $size-xxsmall;
+    color: $slate-500;
+
+    select {
+      width: auto;
+    }
+  }
+
+  &__pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: $size-xxsmall;
+    background: $white;
+  }
+}

@@ -1,0 +1,199 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">Record Supplier Quote</h2>
+    <a class="btn btn-outline-secondary btn-sm" routerLink="/quote/quote-list"> <fa-icon icon="arrow-left" class="me-1" />Quote list </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (!selected()) {
+    <div class="card">
+      <div class="card-header sys-page__toolbar">
+        <div class="sys-page__search">
+          <fa-icon icon="search" class="sys-page__search-icon" />
+          <input
+            type="search"
+            class="form-control form-control-sm"
+            placeholder="Search enquiry lines"
+            [ngModel]="search()"
+            (ngModelChange)="search.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="loadLines()" [disabled]="loading()">
+          <fa-icon icon="sync" [animation]="loading() ? 'spin' : undefined" />
+        </button>
+      </div>
+
+      <p class="text-muted small px-3 pt-3 mb-0">Pick the enquiry line this quote answers.</p>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Enquiry</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Product</th>
+              <th scope="col" class="text-end">Qty</th>
+              <th scope="col">Required By</th>
+              <th scope="col" class="text-end">Quotes so far</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-end"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loading()) {
+              <tr>
+                <td colspan="8" class="text-center text-muted py-4">Loading…</td>
+              </tr>
+            } @else {
+              @for (l of filteredLines(); track l.custRequestItemId) {
+                <tr>
+                  <td class="fw-semibold">{{ l.enquiryNo || '—' }}</td>
+                  <td>{{ l.customer || '—' }}</td>
+                  <td>{{ l.product || '—' }}</td>
+                  <td class="text-end">{{ l.quantity != null ? (l.quantity | number: '1.0-3') : '—' }}</td>
+                  <td>{{ l.requiredByDate ? (l.requiredByDate | date: 'dd MMM yyyy') : '—' }}</td>
+                  <td class="text-end">{{ l.quoteCount }}</td>
+                  <td>
+                    <span class="badge bg-light text-dark">{{ l.status || '—' }}</span>
+                  </td>
+                  <td class="text-end">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="choose(l)">Select</button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="8" class="text-center text-muted py-4">No enquiry lines to quote against. Raise an enquiry first.</td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (selected(); as line) {
+    <div class="card mb-3">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">{{ line.enquiryNo }} — {{ line.product }}</span>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="clearSelection()">
+          <fa-icon icon="arrow-left" class="me-1" />Choose a different line
+        </button>
+      </div>
+      <div class="card-body sys-summary">
+        <div>
+          <span class="sys-summary__label">Customer</span><span>{{ line.customer || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Product</span><span>{{ line.product || '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Enquired qty</span
+          ><span>{{ line.quantity != null ? (line.quantity | number: '1.0-3') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Required by</span
+          ><span>{{ line.requiredByDate ? (line.requiredByDate | date: 'dd MMM yyyy') : '—' }}</span>
+        </div>
+        <div>
+          <span class="sys-summary__label">Quotes so far</span><span>{{ line.quoteCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="card">
+        <div class="card-header">Quote</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="partyId">Supplier <span class="text-danger">*</span></label>
+              <select id="partyId" class="form-select" formControlName="partyId" [class.is-invalid]="invalid('partyId')">
+                <option [ngValue]="null">Select a supplier…</option>
+                @for (s of suppliers(); track s.id) {
+                  <option [ngValue]="s.id">{{ s.name }}</option>
+                }
+              </select>
+              @if (invalid('partyId')) {
+                <div class="invalid-feedback d-block">A supplier is required.</div>
+              }
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="quoteNumber">Quote No</label>
+              <input
+                id="quoteNumber"
+                type="text"
+                class="form-control"
+                formControlName="quoteNumber"
+                placeholder="Generated if left blank"
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="issueDate">Issue Date</label>
+              <input id="issueDate" type="date" class="form-control" formControlName="issueDate" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="quantity">Quantity <span class="text-danger">*</span></label>
+              <input
+                id="quantity"
+                type="number"
+                step="0.001"
+                class="form-control text-end"
+                formControlName="quantity"
+                [class.is-invalid]="invalid('quantity')"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="unitPrice">Unit Price <span class="text-danger">*</span></label>
+              <input
+                id="unitPrice"
+                type="number"
+                step="0.01"
+                class="form-control text-end"
+                formControlName="unitPrice"
+                [class.is-invalid]="invalid('unitPrice')"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="leadTimeDays">Lead Time (days)</label>
+              <input id="leadTimeDays" type="number" class="form-control text-end" formControlName="leadTimeDays" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="quoteValue">Quote Value</label>
+              <input id="quoteValue" type="text" class="form-control text-end" [value]="lineTotal() | number: '1.2-2'" readonly />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="validThruDate">Valid Until</label>
+              <input id="validThruDate" type="date" class="form-control" formControlName="validThruDate" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="estimatedDeliveryDate">Estimated Delivery</label>
+              <input id="estimatedDeliveryDate" type="date" class="form-control" formControlName="estimatedDeliveryDate" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="remarks">Remarks</label>
+              <input id="remarks" type="text" class="form-control" formControlName="remarks" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="comments">Comments</label>
+              <input id="comments" type="text" class="form-control" formControlName="comments" />
+            </div>
+          </div>
+        </div>
+        <div class="card-footer sys-page__actions">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+            <fa-icon icon="save" /><span class="ms-1">{{ saving() ? 'Saving…' : 'Record Quote' }}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</div>

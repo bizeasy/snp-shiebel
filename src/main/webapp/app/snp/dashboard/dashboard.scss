@@ -1,0 +1,202 @@
+@use '../../shared/styles/variables' as *;
+
+.sys-page {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $size-mini;
+    font-weight: $weight-semibold;
+    color: $slate-800;
+  }
+}
+
+.sys-range {
+  display: flex;
+  gap: 6px;
+}
+
+// Stat tiles. Headline numbers are text, not one-bar charts.
+.sys-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.sys-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  background: $white;
+  border: 1px solid $slate-200;
+  border-radius: 10px;
+
+  &__label {
+    font-size: $size-xxsmall;
+    font-weight: $weight-semibold;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: $slate-500;
+  }
+
+  &__value {
+    font-size: 26px;
+    font-weight: $weight-semibold;
+    line-height: 1.2;
+    color: $slate-800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__sub {
+    font-size: $size-xxsmall;
+    color: $slate-500;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.sys-chart {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  // Grid and axis text stay recessive; the data owns the contrast.
+  &__grid {
+    stroke: $slate-200;
+    stroke-width: 1;
+  }
+
+  &__tick {
+    fill: $slate-500;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // 2px lines, no fill; a surface ring keeps overlapping markers separable.
+  &__line {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  &__dot {
+    stroke: $white;
+    stroke-width: 2;
+  }
+
+  // Hit target is far wider than the marker so hover is easy to land.
+  &__hit {
+    fill: transparent;
+    cursor: crosshair;
+  }
+
+  &__tooltip {
+    min-height: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+    padding: 7px 10px;
+    background: $slate-50;
+    border: 1px solid $slate-200;
+    border-radius: 8px;
+    font-size: $size-xxsmall;
+    color: $slate-700;
+    font-variant-numeric: tabular-nums;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    &--idle {
+      background: transparent;
+      border-color: transparent;
+    }
+  }
+}
+
+.sys-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: $size-xxsmall;
+  color: $slate-600;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex: 0 0 auto;
+  }
+}
+
+// Horizontal bars. Length already encodes magnitude, so every bar takes one hue.
+.sys-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 120px 1fr 78px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__label {
+    font-size: $size-xxsmall;
+    color: $slate-700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__track {
+    display: block;
+    height: 12px;
+    background: $slate-100;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    display: block;
+    height: 100%;
+    border-radius: 0 4px 4px 0;
+    min-width: 2px;
+  }
+
+  &__value {
+    text-align: right;
+    font-size: $size-xxsmall;
+    color: $slate-700;
+    font-variant-numeric: tabular-nums;
+  }
+}

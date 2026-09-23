@@ -1,0 +1,96 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">{{ title() }}</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/product/product-list']">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to list</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  <div class="card">
+    <div class="card-body">
+      @if (loading()) {
+        <p class="text-muted mb-0">Loading product…</p>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label" for="name">Name of the Product <span class="text-danger">*</span></label>
+              <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter Name of the Product" />
+              @if (nameInvalid()) {
+                <div class="form-text text-danger">Product name is required (max 100 characters).</div>
+              }
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="price">Price Reference</label>
+              <input
+                id="price"
+                type="number"
+                step="0.01"
+                class="form-control"
+                formControlName="price"
+                placeholder="Enter Price Reference"
+              />
+            </div>
+          </div>
+
+          <div class="sys-detail-rows" formArrayName="prodListDTO">
+            <div class="sys-detail-rows__head">
+              <h3 class="sys-detail-rows__title">Tests &amp; Specifications</h3>
+              @if (!isView()) {
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="addDetail()">
+                  <fa-icon icon="plus" />
+                  <span class="ms-1">Add row</span>
+                </button>
+              }
+            </div>
+
+            @for (ctrl of details.controls; track $index; let i = $index) {
+              <div class="row g-2 align-items-end sys-detail-rows__row" [formGroupName]="i">
+                <div class="col-md-5">
+                  @if (i === 0) {
+                    <label class="form-label">Name Of The Test</label>
+                  }
+                  <input type="text" class="form-control" formControlName="test" placeholder="Enter Name of The Test" />
+                </div>
+                <div class="col-md-6">
+                  @if (i === 0) {
+                    <label class="form-label">Specification</label>
+                  }
+                  <input type="text" class="form-control" formControlName="specification" placeholder="Enter Specification" />
+                </div>
+                <div class="col-md-1 text-end">
+                  @if (!isView()) {
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger btn-sm"
+                      (click)="removeDetail(i)"
+                      [disabled]="details.length === 1"
+                      aria-label="Remove row"
+                    >
+                      <fa-icon icon="trash-alt" />
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          @if (!isView()) {
+            <div class="sys-page__actions">
+              <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+                <fa-icon icon="save" />
+                <span class="ms-1">{{ saving() ? 'Saving…' : 'Create Product' }}</span>
+              </button>
+            </div>
+          }
+        </form>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+@use '../../../shared/styles/variables' as *;
+
+.sys-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 1050; // above the app shell and the ng-bootstrap dropdowns it uses
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+  }
+
+  &__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(1000px, 100%);
+    height: min(85vh, 900px);
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $shadow-lg;
+    overflow: hidden;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid $slate-200;
+    flex: 0 0 auto;
+  }
+
+  &__name {
+    font-weight: $weight-semibold;
+    color: $slate-800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    background: $slate-50;
+  }
+
+  &__status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 32px;
+    text-align: center;
+  }
+
+  &__frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    // The PDF sits on white regardless of the panel background, so a light-mode viewer
+    // doesn't flash the page's own grey while it loads.
+    background: $white;
+  }
+
+  &__image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 16px;
+  }
+
+  &__image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: $shadow-md;
+  }
+
+  &__text {
+    margin: 0;
+    padding: 20px;
+    height: 100%;
+    background: $white;
+    color: $slate-800;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: $size-xxsmall;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  // mammoth's output is plain structural HTML (h1-h6, p, table, strong, em); this gives it
+  // readable spacing without pulling in a full document stylesheet.
+  &__docx {
+    padding: 32px 40px;
+    background: $white;
+    color: $slate-800;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 auto;
+
+    :first-child {
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: $slate-900;
+      margin-top: 1.4em;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+    }
+
+    td,
+    th {
+      border: 1px solid $slate-200;
+      padding: 6px 10px;
+      text-align: left;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+}

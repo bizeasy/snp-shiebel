@@ -1,0 +1,85 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">{{ title() }}</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/supplier/supplier-list']">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to list</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  <div class="card">
+    <div class="card-body">
+      @if (loading()) {
+        <p class="text-muted mb-0">Loading supplier…</p>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label" for="name">Supplier Name <span class="text-danger">*</span></label>
+              <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter Supplier Name" />
+              @if (invalid('name')) {
+                <div class="form-text text-danger">Supplier name is required (max 200 characters).</div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="code">Code <span class="text-danger">*</span></label>
+              <input id="code" type="text" class="form-control" formControlName="code" placeholder="Enter Code" />
+              @if (invalid('code')) {
+                <div class="form-text text-danger">Code is required (max 20 characters).</div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="vatNo">VAT Number <span class="text-danger">*</span></label>
+              <input id="vatNo" type="text" class="form-control" formControlName="vatNo" placeholder="Enter VAT Number" />
+              @if (invalid('vatNo')) {
+                <div class="form-text text-danger">VAT number is required (max 100 characters).</div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="tanNo">TAN Number</label>
+              <input id="tanNo" type="text" class="form-control" formControlName="tanNo" placeholder="Enter TAN Number" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="phone">Phone Number</label>
+              <input id="phone" type="tel" class="form-control" formControlName="phone" placeholder="Enter Phone Number" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="email">Email</label>
+              <input id="email" type="email" class="form-control" formControlName="email" placeholder="Enter Email" />
+              @if (invalid('email')) {
+                <div class="form-text text-danger">Enter a valid email address.</div>
+              }
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="address">Address</label>
+              <textarea id="address" rows="3" class="form-control" formControlName="address" placeholder="Enter Address"></textarea>
+              @if (addressLooksLikeId()) {
+                <div class="form-text text-warning-emphasis">
+                  That looks like a record id rather than an address. Enter the address that should print on orders and invoices.
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="sys-page__actions">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+              <fa-icon icon="save" />
+              <span class="ms-1">{{ saving() ? 'Saving…' : isEdit() ? 'Update Supplier' : 'Create Supplier' }}</span>
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+</div>
