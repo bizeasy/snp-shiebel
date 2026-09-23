@@ -1,0 +1,315 @@
+<div class="sys-page">
+  <div class="sys-page__head">
+    <h2 class="sys-page__title">{{ title() }}</h2>
+    <a class="btn btn-outline-secondary btn-sm" [routerLink]="[listRoute()]">
+      <fa-icon icon="arrow-left" />
+      <span class="ms-1">Back to list</span>
+    </a>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="card"><div class="card-body text-muted">Loading order…</div></div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="card mb-3">
+        <div class="card-header">Order</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="existingPartyId">Customer <span class="text-danger">*</span></label>
+              <select id="existingPartyId" class="form-select" formControlName="existingPartyId">
+                <option [ngValue]="null">Select a customer…</option>
+                @for (c of customers(); track c.id) {
+                  <option [ngValue]="c.id">{{ c.name }}</option>
+                }
+              </select>
+              @if (invalid('existingPartyId')) {
+                <div class="form-text text-danger">A customer is required.</div>
+              }
+              @if (customers().length === 0) {
+                <div class="form-text">No customers yet — create one under Customer first.</div>
+              }
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="supplierId">Supplier</label>
+              <select id="supplierId" class="form-select" formControlName="supplierId">
+                <option [ngValue]="null">None</option>
+                @for (s of suppliers(); track s.id) {
+                  <option [ngValue]="s.id">{{ s.name }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="projectName">Project / Name <span class="text-danger">*</span></label>
+              <input id="projectName" type="text" class="form-control" formControlName="projectName" placeholder="Project name" />
+              @if (invalid('projectName')) {
+                <div class="form-text text-danger">Project name is required.</div>
+              }
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="refNo">Reference No.</label>
+              <input id="refNo" type="text" class="form-control" formControlName="refNo" (blur)="checkRefNo()" placeholder="Reference" />
+              @if (refNoTaken()) {
+                <div class="form-text text-danger">That reference is already in use.</div>
+              }
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="customerOrderRef">Customer Order Ref</label>
+              <input
+                id="customerOrderRef"
+                type="text"
+                class="form-control"
+                formControlName="customerOrderRef"
+                placeholder="Their PO number"
+              />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="deliveryDate">Delivery Date</label>
+              <input id="deliveryDate" type="date" class="form-control" formControlName="deliveryDate" />
+            </div>
+
+            <div class="col-md-8">
+              <label class="form-label" for="factoryRef">Factory Offer Reference</label>
+              <input
+                id="factoryRef"
+                type="text"
+                class="form-control"
+                formControlName="factoryRef"
+                maxlength="255"
+                placeholder="The factory quotation or offer this order is placed against"
+              />
+              @if (factoryRefLooksLikeId()) {
+                <div class="form-text text-warning-emphasis">
+                  That looks like a record id rather than a reference. Enter the factory offer reference.
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header">Terms</div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="currencyId">Currency</label>
+              <select id="currencyId" class="form-select" formControlName="currencyId">
+                <option [ngValue]="null">Select…</option>
+                @for (u of currencies(); track u.id) {
+                  <option [ngValue]="u.id">{{ u.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="paymentTerms">Payment Terms</label>
+              <sys-terms-input
+                inputId="paymentTerms"
+                kind="paymentTerms"
+                placeholder="e.g. 50% advance, balance against delivery"
+                formControlName="paymentTerms"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="deliveryTerms">Delivery Terms</label>
+              <sys-terms-input
+                inputId="deliveryTerms"
+                kind="deliveryTerms"
+                placeholder="e.g. Ex-works, 4 weeks from order"
+                formControlName="deliveryTerms"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="remarks">Remarks</label>
+              <input id="remarks" type="text" class="form-control" formControlName="remarks" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header sys-page__toolbar">
+          <span class="fw-semibold"
+            >Line items <span class="text-muted fw-normal">({{ lines.length }})</span></span
+          >
+          <div class="sys-lines__tools">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              (click)="duplicateLastLine()"
+              title="Copy the last line into a new row"
+            >
+              <fa-icon icon="clone" />
+              <span class="ms-1">Copy last row</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              (click)="sortLinesBySerial()"
+              title="Reorder the rows by the S.No typed into them"
+            >
+              <fa-icon icon="sort" />
+              <span class="ms-1">Sort by S.No</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              (click)="renumber()"
+              title="Renumber S.No as 1 to n in the current order"
+            >
+              <fa-icon icon="list-ol" />
+              <span class="ms-1">Renumber</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="addLine()">
+              <fa-icon icon="plus" />
+              <span class="ms-1">Add line</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 sys-lines" formArrayName="productDetailsList">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 34px" aria-label="Reorder"></th>
+                <th scope="col" style="width: 74px">S.No</th>
+                <th scope="col">Tag No <span class="text-danger">*</span></th>
+                <th scope="col">Description <span class="text-danger">*</span></th>
+                <th scope="col">Flange</th>
+                <th scope="col">Motor Duty</th>
+                <th scope="col">Control Voltage</th>
+                <th scope="col" class="text-end">Qty <span class="text-danger">*</span></th>
+                <th scope="col" class="text-end">Unit Price <span class="text-danger">*</span></th>
+                <th scope="col" class="text-end">Total</th>
+                <th scope="col" style="width: 132px" class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="dropLine($event)">
+              @for (ctrl of lines.controls; track ctrl; let i = $index) {
+                <tr [formGroupName]="i" cdkDrag cdkDragLockAxis="y" class="sys-lines__row">
+                  <td class="sys-lines__grip" cdkDragHandle title="Drag to reorder">
+                    <fa-icon icon="bars" />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control form-control-sm text-center sys-lines__serial"
+                      formControlName="serialNo"
+                      min="1"
+                      aria-label="Serial number"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="tagNo"
+                      [class.is-invalid]="lineInvalid(i, 'tagNo')"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="description"
+                      [class.is-invalid]="lineInvalid(i, 'description')"
+                    />
+                  </td>
+                  <td><input type="text" class="form-control form-control-sm" formControlName="flange" /></td>
+                  <td><input type="text" class="form-control form-control-sm" formControlName="actuatorMotorDuty" /></td>
+                  <td><input type="text" class="form-control form-control-sm" formControlName="actuatorControlVoltage" /></td>
+                  <td>
+                    <input
+                      type="number"
+                      step="0.001"
+                      class="form-control form-control-sm text-end"
+                      formControlName="qty"
+                      [class.is-invalid]="lineInvalid(i, 'qty')"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      step="0.01"
+                      class="form-control form-control-sm text-end"
+                      formControlName="unitPrice"
+                      [class.is-invalid]="lineInvalid(i, 'unitPrice')"
+                    />
+                  </td>
+                  <td class="text-end">{{ lineTotal(i) | number: '1.2-2' }}</td>
+                  <td class="text-end">
+                    <div class="btn-group btn-group-sm sys-lines__actions" role="group" aria-label="Line actions">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="moveLine(i, -1)"
+                        [disabled]="i === 0"
+                        title="Move up"
+                        aria-label="Move line up"
+                      >
+                        <fa-icon icon="chevron-up" />
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="moveLine(i, 1)"
+                        [disabled]="i === lines.length - 1"
+                        title="Move down"
+                        aria-label="Move line down"
+                      >
+                        <fa-icon icon="chevron-down" />
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="duplicateLine(i)"
+                        title="Copy to next row"
+                        aria-label="Duplicate line"
+                      >
+                        <fa-icon icon="clone" />
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        (click)="removeLine(i)"
+                        [disabled]="lines.length === 1"
+                        title="Remove"
+                        aria-label="Remove line"
+                      >
+                        <fa-icon icon="trash-alt" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="9" class="text-end">Grand total</th>
+                <th class="text-end">{{ grandTotal() | number: '1.2-2' }}</th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="card-footer sys-page__actions">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancel()" [disabled]="saving()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+            <fa-icon icon="save" />
+            <span class="ms-1">{{ saving() ? 'Saving…' : isEdit() ? 'Update Order' : 'Create Order' }}</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</div>
